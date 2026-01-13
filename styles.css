@@ -6,22 +6,7 @@
 b, strong { margin-right:5px; font-family:muli; font-size:10px; text-transform:uppercase; letter-spacing:1px; color: #b3323b; }
 i, strong { color: #c57676; }
 
-a.tab:active, a.tab:link, a.tab:visited {
-    background-color: #a1000b;
-    border: 0.32% solid #fff; /* 3px of 942px roughly */
-    border-radius: 2.11%; /* 50px of 942px? approx */
-    display: inline-block;
-    height: 3.02%; /* 20px of 661px */
-    width: 3.02%; /* 20px of 661px */
-    margin-left: 4.0%; /* 30px of 942px */
-    text-decoration: none;
-    -webkit-transition: all 0.4s ease-in;
-    -moz-transition: all 0.4s ease-in;
-    -ms-transition: all 0.4s ease-in;
-    -o-transition: all 0.4s ease-in;
-    transition: all 0.4s ease-in;
-    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
-}
+
 
 a.tab:hover {
 background-color: #800008;
@@ -327,14 +312,31 @@ html, body {
 }
 
 /* TABS */
+#thetabs {
+    background-color: transparent;
+    box-sizing: border-box;
+    border: 0.36% dotted pink; /* 2px of 554px ≈ 0.36% */
+    position: relative; /* now relative to parent #tabFindSweetSpot */
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
 a.tab:active, a.tab:link, a.tab:visited {
     background-color: #a1000b;
-    border: 0.32% solid #fff; /* 3px of 942px roughly */
-    border-radius: 2.11%; /* 50px of 942px? approx */
+    border: 0.54% solid #fff; /* 3px of 554px ≈ 0.54% */
+    border-radius: 9.03%; /* 50px of 554px ≈ 9.03% */
     display: inline-block;
-    height: 3.02%; /* 20px of 661px */
-    width: 3.02%; /* 20px of 661px */
-    margin-left: 4.0%; /* 30px of 942px */
+    /*height: 55.9%;  20px of 35.844px ≈ 55.9% */
+
+    height:89%;
+    width: 55.9%;  /* 20px of 35.844px ≈ 55.9% */
+    /* 30px of 554px ≈ 5.42% */
     text-decoration: none;
     -webkit-transition: all 0.4s ease-in;
     -moz-transition: all 0.4s ease-in;
@@ -343,6 +345,7 @@ a.tab:active, a.tab:link, a.tab:visited {
     transition: all 0.4s ease-in;
     cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
 }
+
 
 
 
@@ -364,14 +367,20 @@ border-bottom: 1px solid #b3323b; }
 
 #thetabs {
 background-color: transparent;
-height: 25px;
-left: 480px;
+
 box-sizing: border-box;
 border:2px dotted pink;
-position: fixed;
+/* chatGpt change the border to a percentage value */
+position: relative;
 text-align: left;
-bottom: 405px;
-width: 1000px;
+display:flex;
+flex-direction: row;
+justify-content:center;
+align-items:center;
+gap: 5%;
+
+width:100%;
+height:100%;
 z-index: 9999; }
 
 
