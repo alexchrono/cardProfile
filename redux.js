@@ -87,12 +87,21 @@ function handleButtonClick(event) {
     if (previousClickedId) {
         if (previousClickedId==="stats"){
             prevTab = document.getElementById("info");
-            if (prevTab) prevTab.style.visibility = "hidden";
+            if (prevTab) {
+                prevTab.style.opacity = "0";
+                prevTab.style.visibility = "hidden";
+
+            }
         }
         else {
             console.log('')
             prevTab = document.getElementById(previousClickedId + "Tab");
-        if (prevTab) prevTab.style.visibility = "hidden";
+        if (prevTab){
+            prevTab.style.visibility = "visible";
+                prevTab.style.opacity = "1";
+
+
+            }
         }
 
     }

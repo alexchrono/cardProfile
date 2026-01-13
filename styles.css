@@ -185,6 +185,8 @@ html, body {
   opacity: 0;
   overflow: auto;
   z-index: 4;
+  visibility: hidden;
+  transition: opacity 0.25s ease;
 }
 
 .dragon:target {
