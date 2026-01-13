@@ -189,6 +189,7 @@ html, body {
   transition: opacity 0.25s ease;
 }
 
+
 .dragon:target {
   bottom: 26.25%;
   bottom: 6.25%;
