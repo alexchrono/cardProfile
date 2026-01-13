@@ -146,7 +146,7 @@ html, body {
 /* =========================
    INFO PANEL
 ========================= */
-#info {
+#statsTab {
   position: absolute;
   left: 30.68%;
   bottom: 6.25%;
