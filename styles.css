@@ -179,13 +179,18 @@ html, body {
 
 /* MAIN PANEL */
 #main {
-    width: min(61vw, calc(61vh * 2.5625));
-    height: min(61vh, calc(61vw / 2.5625));
+    /* width: min(61vw, calc(61vh * 2.5625));
+    height: min(61vh, calc(61vw / 2.5625)); */
+
+    width:100%;
+    height:100%;
     background: #700007;
     border: 3px solid #fff;
     border-radius: 25px 25px 25px 0px;
     border-right: solid 3px #fff;
     z-index: -1;
+
+
 }
 
 
@@ -283,6 +288,10 @@ html, body {
     position:relative;
     width:100%;
     height:52%;
+    /* display:flex;
+    justify-content:center;
+    align-items:center; */
+
 }
 
 #spacer {
