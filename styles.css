@@ -1,596 +1,303 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-
-
-
-b, strong { margin-right:5px; font-family:muli; font-size:10px; text-transform:uppercase; letter-spacing:1px; color: #b3323b; }
-i, strong { color: #c57676; }
-
-
-
-a.tab:hover {
-background-color: #800008;
-border: solid 1px #fff;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;}
-
-a:active, a:link, a:visited {
-color: #be6565;
-text-decoration: none;
--webkit-transition: all 0.4s ease-in;
--moz-transition: all 0.4s ease-in;
--ms-transition: all 0.4s ease-in;
--o-transition: all 0.4s ease-in;
-transition: all 0.4s ease-in;
-cursor: url('http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png'), progress;}
-
-a:hover {
-color:#c57676;
--moz-transition-duration:0.5s;
--webkit-transition-duration:0.5s;
--o-transition-duration:0.5s;
-transition-duration:0.5s;
-cursor: url('http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png'), progress;}
-
-
-
-
- /* #background-image {
-  position: fixed;
-  inset: 0;
-
-  background-image: url('https://i.ibb.co/4g46zxHD/maybe-can-find-bigger-upscayl-4x-upscayl-standard-4x.png');
-  background-repeat: no-repeat;
-
-
-  background-size: cover;
-  background-position: 100% 0%;
-
-  background-attachment: fixed;
-
-
-  z-index: -5;
-} */
 
 html, body {
   margin: 0;
   padding: 0;
-  overflow-y:hidden;
-  overflow-x: hidden; /* only once */
-  background-color: #800008; /* fallback */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #800008;
   cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
 }
 
-/* #background-image {
-    position: fixed;
-    inset: 0;
-    background-image: url('./assets/cropTry1.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 100% 0%;
-    background-attachment: fixed;
-    z-index: 0;
-    pointer-events: none;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-} */
-
-
+/* =========================
+   ROOT CONTAINER (WORLD)
+========================= */
 #mercierContainer {
-    position: relative; /* make children absolute inside this */
-    height: 100dvh;
-    width: 100dvw;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    box-sizing: border-box;
-    border: 3px dotted purple; /* should now appear */
-    display:flex;
-    flex-direction:row;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
 }
 
-#background-image {
-    height:100%;
-    width:100%;
-    position: fixed;
-    inset: 0;
-    background-image: url('./assets/cropTry1.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    /* Adjust these to tweak the crop */
-    --bg-x: 100%; /* horizontal: 100% = far right, 0% = far left */
-    --bg-y: 0%;   /* vertical: 0% = top, 100% = bottom */
-    background-position: var(--bg-x) var(--bg-y);
-
-    background-attachment: fixed;
-    z-index: 0;
-    pointer-events: none;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-}
-
+/* =========================
+   BACKGROUND LAYER
+========================= */
 #bg-test {
-    position: absolute; /* relative to mercierContainer now */
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* #bg-test img {
   position: absolute;
-  height: auto;
-  width: 100%;
-  top: 0;
-  left: 0;
-} */
-
-
-#findBox {
-    box-sizing: border-box;
-    border: 3px dotted turquoise;
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    width: 942px;
-    height: 661px;
-    z-index: 9000;
-    display:flex;
-
-
-    /* display: none; */
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
+
 #bg-test img {
-    position: absolute;
-    height: 139%;
-    width: 139%;
-    top: -38%;
-    left: -3%;
+  position: absolute;
+  width: 139%;
+  height: 139%;
+  top: -38%;
+  left: -3%;
+  object-fit: cover;
 }
 
-/* #bg-test img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-} */
-
-
-
-/* Container holding the background image */
-
-
-
-#findBox {
-    box-sizing: border-box;
-    border: 3px dotted turquoise;
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    width: 942px;
-    height: 661px;
-    z-index: 9000;
-    display: flex;
+/* =========================
+   SPACER
+========================= */
+#spacer {
+  width: 8%;
+  height: 100%;
 }
 
-/* MAIN PANEL */
-#main {
-    /* width: min(61vw, calc(61vh * 2.5625));
-    height: min(61vh, calc(61vw / 2.5625)); */
-
-    width:100%;
-    height:100%;
-    background: #700007;
-    border: 3px solid #fff;
-    border-radius: 25px 25px 25px 0px;
-    border-right: solid 3px #fff;
-    z-index: -1;
-    
-
-}
-
-
-/* INFO PANEL */
-#info {
-    position: absolute;
-    left: 42.68%;
-    bottom: 26.25%;
-    width: 67.07%;
-    height: 84.38%;
-    font-family: 'muli';
-    letter-spacing: 0%;
-    background-color: #600006;
-    overflow: hidden;
-    font-size: 4.38%;
-    color: #fff;
-    text-align: left;
-    line-height: 4.38%;
-    padding: 1.22%;
-    border-radius: 0% 3.05% 3.05% 0%;
-    z-index: 99;
-}
-
-
-/* CARDINAL IMAGE */
-/* #cardinal {
-    position: absolute;
-    bottom: -4.69%;
-    left: -12.74%;
-    width: 53.12%;
-    height: 90.77%;
-    background-image: url(https://i.postimg.cc/tJPhw9wd/429jvk.png);
-    background-repeat: no-repeat;
-    background-position: fixed;
-    background-size: contain;
-    z-index: 99;
-    box-sizing: border-box;
-    border:3px dotted red;
-} */
-
+/* =========================
+   CARDINAL IMAGE
+========================= */
 #cardinal {
-    position: relative;
-    /* bottom: 0%;
-    left: 0%; */
-    /* width: 53.12%; */
-    width:31.12%;
-    height: 100%;
-    display:flex;
-    flex-direction:row;
-    justify-content:center;
-    align-items:flex-end;
-    box-sizing: border-box;
-    border: 3px dotted red;
+  position: relative;
+  width: 31.12%;
+  height: 100%;
+  z-index: 2;
 }
 
-/* #cardinal img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    max-width: 100%;
-    max-height: 100%;
-} */
 #cardinal img {
-    position: absolute; /* pinned inside container */
-    bottom: 0;          /* sticks to bottom */
-    left: 0;            /* aligned left, adjust if needed */
-    width: 100%;        /* scales to container width */
-    height: auto;       /* maintains aspect ratio */
-    object-fit: contain;
-    max-height:741px;
-
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
+/* =========================
+   RIGHT SIDE CONTAINER
+========================= */
 #theRest {
-    box-sizing: border-box;
-    border:3px dotted green;
-    position:relative;
-    width:61%;
-    height:100%;
-    display:flex;
-    flex-direction:column;
+  position: relative;
+  width: 60.88%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
 }
 
 #theRestTop {
-    box-sizing: border-box;
-    border:3px dotted brown;
-    position:relative;
-    width:100%;
-    height:48%;
+  position: relative;
+  width: 100%;
+  height: 60%;
 }
 
 #theRestBot {
-    box-sizing: border-box;
-    border:3px dotted blue;
-    position:relative;
-    width:100%;
-    height:52%;
-    /* display:flex;
-    justify-content:center;
-    align-items:center; */
-
+  position: relative;
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex-direction:row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  box-sizing:border-box;
+  border:4px dotted white;
 }
 
-#spacer {
-    width:8%;
-    height:100%;
-    box-sizing: border-box;
-    border:6px dotted white;
-
+/* =========================
+   MAIN PANEL (REFERENCE BOX)
+========================= */
+#main {
+  position: relative;
+  /* width: min(47vw, calc(47vh * 2.5625));
+  height: min(47vh, calc(47vw / 2.5625)); */
+  width:100%;
+  height:100%;
+  background: #700007;
+  border: 3px solid #fff;
+  border-radius: 25px 25px 25px 0;
+  box-sizing: border-box;
+  z-index: 3;
+  border:3px dotted purple;
 }
 
-#menuLeft {
+#mainMenu {
     box-sizing: border-box;
-    border:3px dotted blue;
-    width:13%;
-    height:100%;
-    display:flex;
+    border: 3px dotted blue;
+    width: 28%;
+    height: 84%;
+    position: absolute;
+    left: 1%;
+    top: 10%;
+    display: flex;
     flex-direction: column;
-    position: relative;
-
-}
-
-#menuLtop {
-    box-sizing: border-box;
-    border:3px dotted pink;
-    position: relative;
-    width:100%;
-    height:30%;
-}
-
-#menuLbot {
-    box-sizing: border-box;
-    border:3px dotted blue;
-    position: relative;
-    width:100%;
-    height:70%;
-    display:flex;
-    flex-direction:column;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.menuThing {
-    width:100%;
-    height:20%;
-    position: relative;
-    box-sizing: border-box;
-    border:2px dotted orange;
-    display:flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
 }
 
-.menuCenter {
-width:80%;
-height:80%;
-background-color:#600006;
+.menuBlock {
+    box-sizing: border-box;
+    border:3px dotted pink;
+    width:100%;
+    height:20%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-/* SMALL IMAGES */
-#img_1 {
-    position: absolute;
-    left: 44.55%; /* 420px of 942px */
-    bottom: 75.64%; /* 500px of 661px */
-    width: 13.27%; /* 125px of 942px */
-    height: 18.9%; /* 125px of 661px */
-    background-image: url(https://files.catbox.moe/7s0t54.jpg);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: absolute;
-    background-color: white;
-    border: 0.15% solid #fff; /* 1px of 661px */
-    border-radius: 0.53%; /* 5px of 942px */
-    z-index: 5;
+/* =========================
+   INFO PANEL
+========================= */
+#info {
+  position: absolute;
+  left: 30.68%;
+  bottom: 6.25%;
+  width: 67.07%;
+  height: 84.38%;
+  background-color: #600006;
+  padding: 1.22%;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: muli;
+  font-size: 4.38%;
+  line-height: 4.38%;
+  color: #fff;
+  border-radius: 0 3.05% 3.05% 0;
+  z-index: 5;
 }
 
-#img_2 {
-    position: absolute;
-    left: 60.49%; /* 570px of 942px */
-    bottom: 75.64%;
-    width: 13.27%;
-    height: 18.9%;
-    background-image: url(https://files.catbox.moe/cfclg9.jpg);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: absolute;
-    background-color: white;
-    border: 0.15% solid #fff;
-    border-radius: 0.53%;
-    z-index: 5;
+/* =========================
+   DRAGON PANELS
+========================= */
+.dragon {
+  position: absolute;
+  left: 30.68%;
+  bottom: 6.25%;
+  width: 67.07%;
+  height: 84.38%;
+  background-color: #600006;
+  padding: 1.22%;
+  box-sizing: border-box;
+  font-family: muli;
+  font-size: 4.38%;
+  line-height: 4.38%;
+  color: #fff;
+  opacity: 0;
+  overflow: auto;
+  z-index: 4;
 }
 
-#img_3 {
-    position: absolute;
-    left: 76.34%; /* 720px of 942px */
-    bottom: 75.64%;
-    width: 13.27%;
-    height: 18.9%;
-    background-image: url(https://files.catbox.moe/9t5gtn.jpg);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: absolute;
-    background-color: white;
-    border: 0.15% solid #fff;
-    border-radius: 0.53%;
-    z-index: 5;
+.dragon:target {
+  bottom: 26.25%;
+  bottom: 6.25%;
+  opacity: 1;
+  z-index: 6;
 }
 
-/* HEADERS */
+/* =========================
+   TABS
+========================= */
+#thetabs {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  z-index: 10;
+}
+
+.menuInner {
+    border: 3px solid #fff;
+    border-radius: 25px 25px 25px 25px;
+    border-right: solid 3px #fff;
+    width:92%;
+    height:80%;
+    background-color: #600006;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    font-size:1.8rem;
+}
+
+a.tab:link,
+a.tab:visited,
+a.tab:active {
+  display: inline-block;
+  width: 55.9%;
+  height: 89%;
+  background-color: #a1000b;
+  border: 0.54% solid #fff;
+  border-radius: 9.03%;
+  text-decoration: none;
+  transition: all 0.4s ease-in;
+}
+
+a.tab:hover {
+  background-color: #800008;
+}
+
+/* =========================
+   HEADERS
+========================= */
 #header {
-    position: absolute;
-    bottom: 62.28%; /* 425px of 661px */
-    left: 50.95%;  /* 480px of 942px */
-    font-family: "Anton", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 65px; /* 65px of 661px */
-    letter-spacing: 10px; /* 10px of 942px */
-    background: -webkit-linear-gradient(#bd4c54 35%, #a1000b 70%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    z-index: 1;
+  position: absolute;
+  left: 50.95%;
+  bottom: 62.28%;
+  font-family: Anton, sans-serif;
+  font-size: 9.84%;
+  letter-spacing: 1.06%;
+  background: linear-gradient(#bd4c54 35%, #a1000b 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: 2;
 }
 
 #header2 {
-    position: absolute;
-    bottom: 64.28%;
-    left: 52.02%; /* 490px of 942px */
-    font-family: "Anton", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 9.84%;
-    letter-spacing: 1.06%;
-    color: #000;
-    z-index: 0;
+  position: absolute;
+  left: 52.02%;
+  bottom: 64.28%;
+  font-family: Anton, sans-serif;
+  font-size: 9.84%;
+  letter-spacing: 1.06%;
+  color: #000;
+  z-index: 1;
 }
 
-#tabFind {
-    box-sizing: border-box;
-    border:3px dotted white;
-    width:100%;
-    height:7%;
-    position:absolute;
-    top:35%;
-    right:0%;
-    display:flex;
-    flex-direction: row;
-    align-items:center;
+/* =========================
+   SMALL IMAGES
+========================= */
+#img_1, #img_2, #img_3 {
+  position: absolute;
+  width: 13.27%;
+  height: 18.9%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0.15% solid #fff;
+  border-radius: 0.53%;
+  z-index: 2;
 }
 
-#tabFind1 {
-    box-sizing: border-box;
-    border:2px dotted gray;
-    width:40%;
-    height:100%;
-}
+#img_1 { left: 44.55%; bottom: 75.64%; background-image: url(https://files.catbox.moe/7s0t54.jpg); }
+#img_2 { left: 60.49%; bottom: 75.64%; background-image: url(https://files.catbox.moe/cfclg9.jpg); }
+#img_3 { left: 76.34%; bottom: 75.64%; background-image: url(https://files.catbox.moe/9t5gtn.jpg); }
 
-#tabFindSweetSpot {
-    width:60%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    box-sizing: border-box;
-    border:2px dotted red;
-}
-
-/* TABS */
-#thetabs {
-    background-color: transparent;
-    box-sizing: border-box;
-    border: 0.36% dotted pink; /* 2px of 554px ≈ 0.36% */
-    position: relative; /* now relative to parent #tabFindSweetSpot */
-    text-align: left;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-}
-
-a.tab:active, a.tab:link, a.tab:visited {
-    background-color: #a1000b;
-    border: 0.54% solid #fff; /* 3px of 554px ≈ 0.54% */
-    border-radius: 9.03%; /* 50px of 554px ≈ 9.03% */
-    display: inline-block;
-    /*height: 55.9%;  20px of 35.844px ≈ 55.9% */
-
-    height:89%;
-    width: 55.9%;  /* 20px of 35.844px ≈ 55.9% */
-    /* 30px of 554px ≈ 5.42% */
-    text-decoration: none;
-    -webkit-transition: all 0.4s ease-in;
-    -moz-transition: all 0.4s ease-in;
-    -ms-transition: all 0.4s ease-in;
-    -o-transition: all 0.4s ease-in;
-    transition: all 0.4s ease-in;
-    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
-}
-
-
-
-
-
-
-
-
-h1 {
-font-family: 'muli';
-font-size:15px;
-color: #fff;
-text-align: right;
-line-height:20px;
-border-bottom: 1px solid #b3323b; }
-
-
-
-
-
-#thetabs {
-background-color: transparent;
-
-box-sizing: border-box;
-border:2px dotted pink;
-/* chatGpt change the border to a percentage value */
-position: relative;
-text-align: left;
-display:flex;
-flex-direction: row;
-justify-content:center;
-align-items:center;
-gap: 5%;
-
-
-width:100%;
-height:100%;
-z-index: 9999; }
-
-
-
-.dragon {
-    position: absolute;
-    left: 31.68%;
-    bottom: -93.75%;
-    width: 67.07%;
-    height: 84.38%;
-    background-color: #600006;
-    border: none;
-    color: #fff;
-    font-family: 'muli';
-    letter-spacing: 0%;
-    font-size: 4.38%;
-    opacity: 0;
-    overflow: auto;
-    padding: 1.22%;
-    line-height: 4.38%;
-    text-align: left;
-    z-index: 95;
-    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
-}
-
-
-.dragon:target {
-    position: absolute;
-    left: 31.68%;
-    bottom: 26.25%;
-    width: 67.07%;
-    height: 84.38%;
-    background-color: #600006;
-    border: none;
-    opacity: 1;
-    overflow: auto;
-    padding: 1.22%;
-    z-index: 99;
-    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
-}
-
-
-
+/* =========================
+   MISC
+========================= */
 .circle {
-    border-radius: 18.29%;
-    -webkit-transition: all 0.8s ease-out;
-    -moz-transition: all 0.8s ease-out;
-    -o-transition: all 0.8s ease-out;
-    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
+  border-radius: 18.29%;
+  transition: all 0.8s ease-out;
 }
-
 
 .circle:hover {
-    border-radius: 0%;
-    -webkit-transition: all 0.8s ease-out;
-    -moz-transition: all 0.8s ease-out;
-    -o-transition: all 0.8s ease-out;
-    -webkit-transform: rotate(-360deg);
-    -moz-transform: rotate(-360deg);
-    -ms-transform: rotate(-360deg);
-    -o-transform: rotate(-360deg);
-    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
+  border-radius: 0;
+  transform: rotate(-360deg);
+}
+
+h1 {
+  font-family: muli;
+  font-size: 15px;
+  color: #fff;
+  text-align: right;
+  border-bottom: 1px solid #b3323b;
 }
