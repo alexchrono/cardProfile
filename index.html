@@ -89,31 +89,31 @@
 <div id="mainMenu">
 
     <div class="menuBlock">
-        <div class="menuInner">
+        <div id="statsButton" class="menuInner active" onclick="statsPush()">
             Stats
         </div>
     </div>
 
      <div class="menuBlock">
-        <div class="menuInner">
+        <div id="personalityButton" class="menuInner inactive">
             Personality
         </div>
     </div>
 
      <div class="menuBlock">
-        <div class="menuInner">
+        <div id="historyButton" class="menuInner inactive">
             History
         </div>
     </div>
 
      <div class="menuBlock">
-        <div class="menuInner">
+        <div id="encountersButton" class="menuInner inactive">
             Encounters
         </div>
     </div>
 
      <div class="menuBlock">
-        <div class="menuInner">
+        <div id="oocButton" class="menuInner inactive">
             OOC
         </div>
     </div>
@@ -311,7 +311,7 @@ Ember operates on a 'hard magic' system, everything he does he has been able to 
 </div>
 
 <script src="pwa-link-handler.js" type="text/javascript"></script>
-
+<script src="./redux.js"></script>
 
 </body>
 
