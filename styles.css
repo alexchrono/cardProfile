@@ -179,37 +179,36 @@ html, body {
 
 /* MAIN PANEL */
 #main {
-    position: absolute;
-    bottom: 9.83%; /* 65px of 661px */
-    left: 3.18%;   /* 30px of 942px */
-    width: 95.55%; /* 900px of 942px */
-    height: 48.47%; /* 320px of 661px */
+    width: min(61vw, calc(61vh * 2.5625));
+    height: min(61vh, calc(61vw / 2.5625));
     background: #700007;
-    border: 0.45% solid #fff; /* 3px of 661px */
-    border-radius: 3.78% 3.78% 3.78% 0%; /* 25px 25px 25px 0 of 661px */
-    border-right: 0.45% solid #fff; /* 3px */
+    border: 3px solid #fff;
+    border-radius: 25px 25px 25px 0px;
+    border-right: solid 3px #fff;
     z-index: -1;
 }
+
 
 /* INFO PANEL */
 #info {
     position: absolute;
-    left: 37.13%; /* 350px of 942px */
-    bottom: 12.69%; /* 84px of 661px */
-    height: 40.87%; /* 270px of 661px */
-    width: 58.34%;  /* 550px of 942px */
+    left: 42.68%;
+    bottom: 26.25%;
+    width: 67.07%;
+    height: 84.38%;
     font-family: 'muli';
-    letter-spacing: 0px;
+    letter-spacing: 0%;
     background-color: #600006;
     overflow: hidden;
-    font-size: 2.12%; /* 14px of 661px */
+    font-size: 4.38%;
     color: #fff;
     text-align: left;
-    line-height: 2.12%; /* 14px */
-    padding: 1.51%; /* 10px of 661px */
-    border-radius: 0% 3.78% 3.78% 0%; /* 0px 25px 25px 0 */
+    line-height: 4.38%;
+    padding: 1.22%;
+    border-radius: 0% 3.05% 3.05% 0%;
     z-index: 99;
 }
+
 
 /* CARDINAL IMAGE */
 /* #cardinal {
@@ -528,53 +527,61 @@ z-index: 9999; }
 
 
 .dragon {
-background-color: #600006;
-border: none;
-color: #fff;
-font-family: 'muli';
-letter-spacing:0px;
-font-size: 14px;
-height: 270px;
-left: 350px;
-opacity: 0;
-overflow: auto;
-padding: 10px;
-position: fixed;
-line-height: 14px;
-text-align: left;
-width: 550px;
-bottom: -300px;
-z-index: 95;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important; }
+    position: absolute;
+    left: 31.68%;
+    bottom: -93.75%;
+    width: 67.07%;
+    height: 84.38%;
+    background-color: #600006;
+    border: none;
+    color: #fff;
+    font-family: 'muli';
+    letter-spacing: 0%;
+    font-size: 4.38%;
+    opacity: 0;
+    overflow: auto;
+    padding: 1.22%;
+    line-height: 4.38%;
+    text-align: left;
+    z-index: 95;
+    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
+}
+
 
 .dragon:target {
-background-color: #600006;
-border: none;
-height: 270px;
-left: 350px;
-opacity: 1;
-overflow: auto;
-padding: 10px;
-position: fixed;
-bottom: 84px;
-width: 550px;
-z-index: 99;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important; }
+    position: absolute;
+    left: 31.68%;
+    bottom: 26.25%;
+    width: 67.07%;
+    height: 84.38%;
+    background-color: #600006;
+    border: none;
+    opacity: 1;
+    overflow: auto;
+    padding: 1.22%;
+    z-index: 99;
+    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
+}
+
+
 
 .circle {
-border-radius:150px;
--webkit-transition: all 0.8s ease-out;
--moz-transition: all 0.8s ease-out;
--o-transition: all 0.8s ease-out;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;}
+    border-radius: 18.29%;
+    -webkit-transition: all 0.8s ease-out;
+    -moz-transition: all 0.8s ease-out;
+    -o-transition: all 0.8s ease-out;
+    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
+}
+
 
 .circle:hover {
-border-radius:0px;
--webkit-transition: all 0.8s ease-out;
--moz-transition: all 0.8s ease-out;
--o-transition: all 0.8s ease-out;
--webkit-transform: rotate(-360deg);
--moz-transform: rotate(-360deg);
--ms-transform: rotate(-360deg);
--o-transform: rotate(-360deg);
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;}
+    border-radius: 0%;
+    -webkit-transition: all 0.8s ease-out;
+    -moz-transition: all 0.8s ease-out;
+    -o-transition: all 0.8s ease-out;
+    -webkit-transform: rotate(-360deg);
+    -moz-transform: rotate(-360deg);
+    -ms-transform: rotate(-360deg);
+    -o-transform: rotate(-360deg);
+    cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
+}
