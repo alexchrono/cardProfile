@@ -180,6 +180,7 @@ function handleButtonClick(event) {
 
     }
 
+    
     // SHOW current tab
     const currTab = document.getElementById(clickedId + "Tab");
     if (currTab) {
