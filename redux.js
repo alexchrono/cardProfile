@@ -9,6 +9,8 @@ let clickedButton;
 let clickedId;
 let previousButton;
 let previousClickedId;
+let prevTab;
+let currTab;
 
 // Grab all buttons by ID in mainFunction after DOM is ready
 
@@ -83,11 +85,31 @@ function handleButtonClick(event) {
 
     // ===== Update tab visibility efficiently =====
     if (previousClickedId) {
-        const prevTab = document.getElementById(previousClickedId + "Tab");
+        if (previousClickedId==="stats"){
+            prevTab = document.getElementById("info");
+            if (prevTab) prevTab.style.visibility = "hidden";
+        }
+        else {
+            console.log('')
+            prevTab = document.getElementById(previousClickedId + "Tab");
         if (prevTab) prevTab.style.visibility = "hidden";
+        }
+
     }
-    const currTab = document.getElementById(clickedId + "Tab");
+
+    if (clickedId==="stats"){
+        currTab = document.getElementById("info");
+            if (currTab) currTab.style.visibility = "hidden";
+
+    } else {
+        console.log(`WE ARE GOING TO GRAB',${clickedId}Tab`)
+        console.log('we are gong to make that visible')
+    currTab = document.getElementById(clickedId + "Tab");
+    console.log('did we grab it?',currTab)
     if (currTab) currTab.style.visibility = "visible";
+
+    }
+
 
     console.log(`Activated: ${clickedId}`);
 }
