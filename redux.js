@@ -10,6 +10,7 @@ let buttonList
 
 
 
+
 function handleButtonClick(event) {
     const clickedButton = event.currentTarget;           // The button clicked
     const clickedId = clickedButton.id.replace("Button", ""); // statsButton -> stats
