@@ -1,62 +1,97 @@
-let buttonSelected = "stats";
-let statsButton
-let personalityButton
-let historyButton
-let encountersButton
-let oocButton
-let buttonList
+// let buttonSelected = "stats";
+let statsButton;
+let personalityButton;
+let historyButton;
+let encountersButton;
+let oocButton;
+let buttonList;
+let clickedButton;
+let clickedId;
+let previousButton;
+let previousClickedId;
 
-// Grab all buttons by ID
-
-
-
+// Grab all buttons by ID in mainFunction after DOM is ready
 
 function handleButtonClick(event) {
-    const clickedButton = event.currentTarget;           // The button clicked
-    const clickedId = clickedButton.id.replace("Button", ""); // statsButton -> stats
+    // ONLY FROM THE SECOND CLICK WILL WE HAVE PREVIOUS BUTTON AND PREVIOUS CLICKED
+    if (clickedButton && clickedId){
+    previousButton = clickedButton;
+    previousClickedId = clickedId;
+    }
 
-    if (buttonSelected === clickedId) {
+    // WE WILL ALWAYS UPDATE WHAT WE FREAKING CLICKED
+    clickedButton = event.currentTarget;
+    clickedId = clickedButton.id.replace("Button", ""); // e.g., statsButton -> stats
+
+
+
+
+
+
+
+    // If the same button is clicked again, do nothing.  AT FIRST IT IS STATS. AFTER WE MUST CHANGE
+
+    if (previousClickedId === clickedId) {
         console.log(`${clickedId} button was clicked but already selected`);
         return;
     }
 
-    buttonSelected = clickedId;
-
-    switch (clickedId) {
-    case "stats":
-        doStatsFunction();
-        break;
-    case "personality":
-        doPersonalityFunction();
-        break;
-    case "history":
-        doHistoryFunction();
-        break;
-    case "encounters":
-        doEncountersFunction();
-        break;
-    case "ooc":
-        doOOCFunction();
-        break;
-    default:
-        console.warn("Unknown button clicked:", clickedId);
-}
 
 
+    // ===== Switch for button-specific actions =====
+    // switch (clickedId) {
+    //     case "stats":
+    //         doStatsFunction();
+    //         break;
+    //     case "personality":
+    //         doPersonalityFunction();
+    //         break;
+    //     case "history":
+    //         doHistoryFunction();
+    //         break;
+    //     case "encounters":
+    //         doEncountersFunction();
+    //         break;
+    //     case "ooc":
+    //         doOOCFunction();
+    //         break;
+    //     default:
+    //         console.warn("Unknown button clicked:", clickedId);
+    // }
 
-    // Update classes for all buttons
-    buttonList.forEach(btn => {
-        if (btn === clickedButton) {
-            btn.classList.add("active");
-            btn.classList.remove("inactive");
-        } else {
-            btn.classList.remove("active");
-            btn.classList.add("inactive");
-        }
-    });
+    // ===== Update button classes efficiently =====
+
+
+    //CHAT GPT NARUTO THIS IS THE PART YOU NEED TO DOUBLE CHECK
+    if (!previousButton) {
+        statsButton.classList.remove("active");
+        statsButton.classList.add("inactive");
+
+        previousButton = statsButton;
+        previousClickedId = "stats";
+        // previousButton.style.visibility="hidden"
+
+
+    }
+    else {
+        previousButton.classList.remove("active");
+        previousButton.classList.add("inactive");
+    }
+    clickedButton.classList.remove("inactive");
+    clickedButton.classList.add("active");
+
+
+    // ===== Update tab visibility efficiently =====
+    if (previousClickedId) {
+        const prevTab = document.getElementById(previousClickedId + "Tab");
+        if (prevTab) prevTab.style.visibility = "hidden";
+    }
+    const currTab = document.getElementById(clickedId + "Tab");
+    if (currTab) currTab.style.visibility = "visible";
 
     console.log(`Activated: ${clickedId}`);
 }
+
 
 function mainFunction() {
     console.log('🚀 mainFunction() started');
