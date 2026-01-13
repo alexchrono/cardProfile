@@ -1,262 +1,23 @@
-<body style="height:100vh">
-<style type="text/css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-body {
-background-color: #800008;
-background-image: url('https://i.imgur.com/NliM1km.png');
-background-size: 100% 100%;
-background-attatchment: fixed;
-background-position: cover;
-background-repeat: repeat;
-overflow-x:hidden;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important; }
 
-b, strong { margin-right:5px; font-family:muli; font-size:10px; text-transform:uppercase; letter-spacing:1px; color: #b3323b; }
-i, strong { color: #c57676; }
 
-a.tab:active, a.tab:link, a.tab:visited {
-background-color: #a1000b;
-border: solid 1px #fff;
-border-radius: 50%;
-display: inline-block;
-height: 20px;
-text-decoration: none;
-width: 20px;
-margin-left: 30px;
--webkit-transition: all 0.4s ease-in;
--moz-transition: all 0.4s ease-in;
--ms-transition: all 0.4s ease-in;
--o-transition: all 0.4s ease-in;
-transition: all 0.4s ease-in;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;}
 
-a.tab:hover {
-background-color: #800008;
-border: solid 1px #fff;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;}
 
-a:active, a:link, a:visited {
-color: #be6565;
-text-decoration: none;
--webkit-transition: all 0.4s ease-in;
--moz-transition: all 0.4s ease-in;
--ms-transition: all 0.4s ease-in;
--o-transition: all 0.4s ease-in;
-transition: all 0.4s ease-in;
-cursor: url('http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png'), progress;}
 
-a:hover {
-color:#c57676;
--moz-transition-duration:0.5s;
--webkit-transition-duration:0.5s;
--o-transition-duration:0.5s;
-transition-duration:0.5s;
-cursor: url('http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png'), progress;}
-
-#background-image {
-position: fixed;
-bottom: 0px;
-left: 0px;
-width: 1900px;
-height: 1100px;
-background-image: url('https://i.ibb.co/4g46zxHD/maybe-can-find-bigger-upscayl-4x-upscayl-standard-4x.png');
-background-repeat: no-repeat;
-background-position: fixed;
-background-size: cover;
-z-index: -5; }
-
-#main {
-position: fixed;
-bottom: 65px;
-left: 30px;
-width: 900px;
-height: 320px;
-background: #700007;
-border: 3px solid #fff;
-border-radius: 25px 25px 25px 0px;
-border-right: solid 3px #fff;
-z-index: -1; }
-
-#cardinal {
-position: fixed;
-bottom: -31px;
-left: -120px;
-width: 500px;
-height: 600px;
-background-image: url('https://i.postimg.cc/tJPhw9wd/429jvk.png');
-background-repeat: no-repeat;
-background-position: fixed;
-background-size: contain;
-z-index: 99; }
-
-h1 {
-font-family: 'muli';
-font-size:15px;
-color: #fff;
-text-align: right;
-line-height:20px;
-border-bottom: 1px solid #b3323b; }
-
-#img_1 {
-position:fixed;
-left: 420px;
-bottom: 500px;
-width: 125px;
-height: 125px;
-background-image: url('https://files.catbox.moe/7s0t54.jpg');
-background-size:100% 100%;
-background-repeat:no-repeat;
-background-position:center;
-background-attachment:absolute;
-background-color:white;
-border: solid 1px #fff;
-border-radius: 5%;
-z-index: 5; }
-
-#img_2 {
-position:fixed;
-left: 570px;
-bottom: 500px;
-width: 125px;
-height: 125px;
-background-image: url('https://files.catbox.moe/cfclg9.jpg');
-background-size:100% 100%;
-background-repeat:no-repeat;
-background-position:center;
-background-attachment:absolute;
-background-color:white;
-border: solid 1px #fff;
-border-radius: 5%;
-z-index: 5; }
-
-#img_3 {
-position:fixed;
-left: 720px;
-bottom: 500px;
-width: 125px;
-height: 125px;
-background-image: url('https://files.catbox.moe/9t5gtn.jpg');
-background-size:100% 100%;
-background-repeat:no-repeat;
-background-position:center;
-background-attachment:absolute;
-background-color:white;
-border: solid 1px #fff;
-border-radius: 5%;
-z-index: 5; }
-
-#header {
-position: fixed;
-bottom: 425px;
-left: 480px;
-font-family: "Anton", sans-serif;
-font-weight: 400;
-font-style: normal;
-font-size: 65px;
-letter-spacing: 10px;
-background: -webkit-linear-gradient(#bd4c54 35%,
-#a1000b 70%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-z-index:1; }
-
-#header2 {
-position: fixed;
-bottom: 425px;
-left: 490px;
-font-family: "Anton", sans-serif;
-font-weight: 400;
-font-style: normal;
-font-size: 65px;
-letter-spacing: 10px;
-color: #000;
-z-index: 0; }
-
-#thetabs {
-background-color: transparent;
-height: 25px;
-left: 480px;
-position: fixed;
-text-align: left;
-bottom: 405px;
-width: 1000px;
-z-index: 9999; }
-
-#info {
-position: fixed;
-left: 350px;
-bottom: 84px;
-height: 270px;
-width: 550px;
-font-family: 'muli';
-letter-spacing:0px;
-background-color: #600006;
-overflow: hidden;
-font-size: 14px;
-color: #fff;
-text-align: left;
-line-height: 14px;
-padding: 10px;
-border-radius: 0px 25px 25px 0px;
-z-index: 99; }
-
-.dragon {
-background-color: #600006;
-border: none;
-color: #fff;
-font-family: 'muli';
-letter-spacing:0px;
-font-size: 14px;
-height: 270px;
-left: 350px;
-opacity: 0;
-overflow: auto;
-padding: 10px;
-position: fixed;
-line-height: 14px;
-text-align: left;
-width: 550px;
-bottom: -300px;
-z-index: 95;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important; }
-
-.dragon:target {
-background-color: #600006;
-border: none;
-height: 270px;
-left: 350px;
-opacity: 1;
-overflow: auto;
-padding: 10px;
-position: fixed;
-bottom: 84px;
-width: 550px;
-z-index: 99;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important; }
-
-.circle {
-border-radius:150px;
--webkit-transition: all 0.8s ease-out;
--moz-transition: all 0.8s ease-out;
--o-transition: all 0.8s ease-out;
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;}
-
-.circle:hover {
-border-radius:0px;
--webkit-transition: all 0.8s ease-out;
--moz-transition: all 0.8s ease-out;
--o-transition: all 0.8s ease-out;
--webkit-transform: rotate(-360deg);
--moz-transform: rotate(-360deg);
--ms-transform: rotate(-360deg);
--o-transform: rotate(-360deg);
-cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;}
-
-</style>
-
-<div id="background-image"></div>
+<div id="bg-test">
+  <img src="https://i.ibb.co/4g46zxHD/maybe-can-find-bigger-upscayl-4x-upscayl-standard-4x.png" alt="background">
+</div>
+<!-- <div id="background-image"></div> -->
 <div id="main"></div>
 <div id="cardinal"></div>
 <div id="img_1"></div>
@@ -328,3 +89,7 @@ Ember operates on a 'hard magic' system, everything he does he has been able to 
 
 </div><script src="pwa-link-handler.js" type="text/javascript"></script>
 </body>
+
+
+
+</html>
