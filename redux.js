@@ -136,6 +136,8 @@ function handleButtonClick(event) {
     clickedButton = event.currentTarget;
     clickedId = clickedButton.id.replace("Button", "");
 
+
+
     // Block double-click on same button
     if (previousClickedId === clickedId) {
         return;
@@ -147,6 +149,11 @@ function handleButtonClick(event) {
     if (previousButton) {
         previousButton.classList.remove("active");
         previousButton.classList.add("inactive");
+    }
+    else {
+        statsButton.classList.remove("active");
+        statsButton.classList.add("inactive");
+
     }
 
     clickedButton.classList.remove("inactive");
@@ -164,6 +171,14 @@ function handleButtonClick(event) {
             prevTab.style.visibility = "hidden";
         }
     }
+    else {
+        const prevTab = document.getElementById("statsTab");
+        if (prevTab) {
+            prevTab.style.opacity = "0";
+            prevTab.style.visibility = "hidden";
+        }
+
+    }
 
     // SHOW current tab
     const currTab = document.getElementById(clickedId + "Tab");
@@ -178,6 +193,14 @@ function handleButtonClick(event) {
 
 
 function mainFunction() {
+
+
+            document.getElementById("statsTab").style.visibility = "visible";
+            document.getElementById("statsTab").style.opacity = "1";
+
+
+
+
     console.log('🚀 mainFunction() started');
 
     const mercierContainerDiv = document.getElementById('mercierContainer');
