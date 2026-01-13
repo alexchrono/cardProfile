@@ -11,29 +11,51 @@ let buttonList
 
 
 function handleButtonClick(event) {
-        const clickedButton = event.currentTarget;           // The button clicked
-        const clickedId = clickedButton.id.replace("Button", ""); // statsButton -> stats
+    const clickedButton = event.currentTarget;           // The button clicked
+    const clickedId = clickedButton.id.replace("Button", ""); // statsButton -> stats
 
-        if (buttonSelected === clickedId) {
-            console.log(`${clickedId} button was clicked but already selected`);
-            return;
-        }
-
-        buttonSelected = clickedId;
-
-        // Update classes for all buttons
-        buttonList.forEach(btn => {
-            if (btn === clickedButton) {
-                btn.classList.add("active");
-                btn.classList.remove("inactive");
-            } else {
-                btn.classList.remove("active");
-                btn.classList.add("inactive");
-            }
-        });
-
-        console.log(`Activated: ${clickedId}`);
+    if (buttonSelected === clickedId) {
+        console.log(`${clickedId} button was clicked but already selected`);
+        return;
     }
+
+    buttonSelected = clickedId;
+
+    switch (clickedId) {
+    case "stats":
+        doStatsFunction();
+        break;
+    case "personality":
+        doPersonalityFunction();
+        break;
+    case "history":
+        doHistoryFunction();
+        break;
+    case "encounters":
+        doEncountersFunction();
+        break;
+    case "ooc":
+        doOOCFunction();
+        break;
+    default:
+        console.warn("Unknown button clicked:", clickedId);
+}
+
+
+
+    // Update classes for all buttons
+    buttonList.forEach(btn => {
+        if (btn === clickedButton) {
+            btn.classList.add("active");
+            btn.classList.remove("inactive");
+        } else {
+            btn.classList.remove("active");
+            btn.classList.add("inactive");
+        }
+    });
+
+    console.log(`Activated: ${clickedId}`);
+}
 
 function mainFunction() {
     console.log('🚀 mainFunction() started');
