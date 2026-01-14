@@ -242,6 +242,27 @@ function mainFunction() {
                 } else {
                     console.error("Cannot initialize VANTA Fog — missing element or library!");
                 }
+
+                 if (bgTestCoverFront && window.VANTA && window.VANTA.FOG) {
+                    VANTA.FOG({
+                        el: "#bgTestCoverFront",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200,
+                        minWidth: 200,
+                        highlightColor: 0x9d9d9d,
+                        midtoneColor: 0x989898,
+                        lowlightColor: 0x000000,
+                        baseColor: 0x000000,
+                        blurFactor: 0.52,
+                        speed: 0.70,
+                        zoom: 0.90,
+                    });
+                    console.log("VANTA Fog initialized ✅");
+                } else {
+                    console.error("Cannot initialize VANTA Fog — missing element or library!");
+                }
             };
             document.body.appendChild(vantaScript);
         };
