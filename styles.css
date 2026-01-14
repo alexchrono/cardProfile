@@ -135,6 +135,15 @@ html, body {
   pointer-events: none;
 }
 
+/* #bg-test img {
+  position: absolute;
+  width: 139%;
+  height: 139%;
+  top: -38%;
+  left: -3%;
+  object-fit: cover;
+} */
+
 #bg-test img {
   position: absolute;
   width: 139%;
@@ -142,7 +151,9 @@ html, body {
   top: -38%;
   left: -3%;
   object-fit: cover;
+  filter: brightness(1.2); /* 120% brightness */
 }
+
 
 
 /* #bgTestCover {
