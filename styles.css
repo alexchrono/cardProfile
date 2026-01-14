@@ -145,7 +145,7 @@ html, body {
 }
 
 
-#bgTestCover {
+/* #bgTestCover {
   position: absolute;
   top:0;
   left:0;
@@ -155,9 +155,32 @@ html, body {
   z-index: 0;
   pointer-events: none;
   opacity:.3;
+} */
+
+#bgTestCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1; /* make full opacity so mask works correctly */
+
+  /* gradient mask to simulate varying opacity from left to right */
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,.3) 50%, rgba(0,0,0,.5) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to right, rgba(0,0,0,.3) 50%, rgba(0,0,0,.5) 100%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  background-color: transparent;
 }
 
-#bgTestCoverFront {
+
+/* #bgTestCoverFront {
   position: absolute;
   top:0;
   left:0;
@@ -166,7 +189,29 @@ html, body {
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  opacity:.7;
+  opacity:.6;
+} */
+
+
+#bgTestCoverFront {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+
+  /* Use a gradient mask to fade opacity horizontally */
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 39.12%, rgba(0,0,0,0) 40%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to right, rgba(0,0,0,.4) 39.12%, rgba(0,0,0,.2) 40%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  /* Optional: keep the canvas itself fully opaque */
+  /* background-color: transparent; */
 }
 
 /* =========================
