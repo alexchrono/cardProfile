@@ -47,6 +47,7 @@ function handleButtonClick(event) {
     clickedId = clickedButton.id.replace("Button", "");
 
 
+    
 
     // Block double-click on same button
     if (previousClickedId === clickedId) {
