@@ -168,14 +168,22 @@ function handleButtonClick(event) {
         const prevTab = document.getElementById(previousClickedId + "Tab");
         if (prevTab) {
             prevTab.style.opacity = "0";
+
+            setTimeout(() => {
             prevTab.style.visibility = "hidden";
+        }, 600); // must match CSS transition time
+
         }
     }
     else {
         const prevTab = document.getElementById("statsTab");
         if (prevTab) {
             prevTab.style.opacity = "0";
+
+
+            setTimeout(() => {
             prevTab.style.visibility = "hidden";
+        }, 600); // must match CSS transition time
         }
 
     }
@@ -185,7 +193,9 @@ function handleButtonClick(event) {
     const currTab = document.getElementById(clickedId + "Tab");
     if (currTab) {
         currTab.style.visibility = "visible";
+        requestAnimationFrame(() => {
         currTab.style.opacity = "1";
+    });
     }
 
     console.log(`Activated: ${clickedId}`);
@@ -197,6 +207,10 @@ function mainFunction() {
 
 
             document.getElementById("statsTab").style.visibility = "visible";
+
+    //         requestAnimationFrame(() => {
+    //     currTab.style.opacity = "1";
+    // });
             document.getElementById("statsTab").style.opacity = "1";
 
 
