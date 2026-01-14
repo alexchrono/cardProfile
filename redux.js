@@ -4,7 +4,6 @@ let personalityButton;
 let historyButton;
 let encountersButton;
 let oocButton;
-let galleryButton
 let buttonList;
 let clickedButton;
 let clickedId;
@@ -12,120 +11,30 @@ let previousButton;
 let previousClickedId;
 let prevTab;
 let currTab;
-
-// Grab all buttons by ID in mainFunction after DOM is ready
-
-// function handleButtonClick(event) {
-//     // ONLY FROM THE SECOND CLICK WILL WE HAVE PREVIOUS BUTTON AND PREVIOUS CLICKED
-//     if (clickedButton && clickedId){
-//     previousButton = clickedButton;
-//     previousClickedId = clickedId;
-//     }
-
-//     // WE WILL ALWAYS UPDATE WHAT WE FREAKING CLICKED
-//     clickedButton = event.currentTarget;
-//     clickedId = clickedButton.id.replace("Button", ""); // e.g., statsButton -> stats
+let galleryButton;
+let closeButton;
+let topGalleryDisplay;
 
 
+function openGallery() {
+    topGalleryDisplay.style.visibility = "visible";
+    requestAnimationFrame(() => {
+        topGalleryDisplay.style.opacity = "1";
+    });
+}
 
-
-
-
-
-//     // If the same button is clicked again, do nothing.  AT FIRST IT IS STATS. AFTER WE MUST CHANGE
-
-//     if (previousClickedId === clickedId) {
-//         console.log(`${clickedId} button was clicked but already selected`);
-//         return;
-//     }
-
-
-
-//     // ===== Switch for button-specific actions =====
-//     // switch (clickedId) {
-//     //     case "stats":
-//     //         doStatsFunction();
-//     //         break;
-//     //     case "personality":
-//     //         doPersonalityFunction();
-//     //         break;
-//     //     case "history":
-//     //         doHistoryFunction();
-//     //         break;
-//     //     case "encounters":
-//     //         doEncountersFunction();
-//     //         break;
-//     //     case "ooc":
-//     //         doOOCFunction();
-//     //         break;
-//     //     default:
-//     //         console.warn("Unknown button clicked:", clickedId);
-//     // }
-
-//     // ===== Update button classes efficiently =====
-
-
-//     //CHAT GPT NARUTO THIS IS THE PART YOU NEED TO DOUBLE CHECK
-//     if (!previousButton) {
-//         statsButton.classList.remove("active");
-//         statsButton.classList.add("inactive");
-
-//         previousButton = statsButton;
-//         previousClickedId = "stats";
-//         // previousButton.style.visibility="hidden"
-
-
-//     }
-//     else {
-//         previousButton.classList.remove("active");
-//         previousButton.classList.add("inactive");
-//     }
-//     clickedButton.classList.remove("inactive");
-//     clickedButton.classList.add("active");
-
-
-//     // ===== Update tab visibility efficiently =====
-//     if (previousClickedId) {
-//         if (previousClickedId==="stats"){
-//             prevTab = document.getElementById("info");
-//             if (prevTab) {
-//                 prevTab.style.opacity = "0";
-//                 prevTab.style.visibility = "hidden";
-
-//             }
-//         }
-//         else {
-//             console.log('')
-//             prevTab = document.getElementById(previousClickedId + "Tab");
-//         if (prevTab){
-//             prevTab.style.visibility = "visible";
-//                 prevTab.style.opacity = "1";
-
-
-//             }
-//         }
-
-//     }
-
-//     if (clickedId==="stats"){
-//         currTab = document.getElementById("info");
-//             if (currTab) currTab.style.visibility = "hidden";
-
-//     } else {
-//         console.log(`WE ARE GOING TO GRAB',${clickedId}Tab`)
-//         console.log('we are gong to make that visible')
-//     currTab = document.getElementById(clickedId + "Tab");
-//     console.log('did we grab it?',currTab)
-//     if (currTab) currTab.style.visibility = "visible";
-
-//     }
-
-
-//     console.log(`Activated: ${clickedId}`);
-// }
+function closeGallery() {
+    topGalleryDisplay.style.opacity = "0";
+    setTimeout(() => {
+        topGalleryDisplay.style.visibility = "hidden";
+    }, 1000); // match CSS transition
+}
 
 
 function handleButtonClick(event) {
+
+    if (event.currentTarget.id === "galleryButton") return;
+
 
     // Save previous ONLY if we already had one
     if (clickedButton && clickedId) {
@@ -283,4 +192,11 @@ function mainFunction() {
 document.addEventListener('DOMContentLoaded', () => {
     mainFunction();
     window.addEventListener('resize', () => switchMobileDesktop());
+    galleryButton = document.getElementById("galleryButton");
+closeButton = document.getElementById("closeButton");
+topGalleryDisplay = document.getElementById("topGalleryDisplay");
+
+galleryButton.addEventListener("click", openGallery);
+closeButton.addEventListener("click", closeGallery);
+
 });
