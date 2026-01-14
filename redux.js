@@ -180,7 +180,7 @@ function handleButtonClick(event) {
 
     }
 
-    
+
     // SHOW current tab
     const currTab = document.getElementById(clickedId + "Tab");
     if (currTab) {
@@ -242,8 +242,9 @@ function mainFunction() {
             mercierContainerDiv.style.height = '100%';
         } else {
             isMobile = false;
-            mercierContainerDiv.style.width = defaultWidth;
-            mercierContainerDiv.style.height = defaultHeight;
+            // mercierContainerDiv.style.width = defaultWidth;
+            // mercierContainerDiv.style.height = defaultHeight;
+            return
         }
     }
 
@@ -260,4 +261,11 @@ function mainFunction() {
 }
 
 // Initialize after DOM is ready
-document.addEventListener('DOMContentLoaded', mainFunction);
+// document.addEventListener('DOMContentLoaded', mainFunction);
+
+
+// ===== DOM READY =====
+document.addEventListener('DOMContentLoaded', () => {
+    mainFunction();
+    window.addEventListener('resize', () => switchMobileDesktop());
+});
