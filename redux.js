@@ -4,6 +4,7 @@ let personalityButton;
 let historyButton;
 let encountersButton;
 let oocButton;
+let galleryButton
 let buttonList;
 let clickedButton;
 let clickedId;
