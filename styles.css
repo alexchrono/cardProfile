@@ -53,6 +53,7 @@ html, body {
   justify-content:flex-end;
   align-items:flex-end;
   position:relative;
+  z-index: 1;
 }
 
 /* #leftSideMain img {
