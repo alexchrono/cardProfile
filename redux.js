@@ -462,14 +462,25 @@ function mainFunction() {
 
 // ===================== MOBILE / DESKTOP SWITCH =====================
 function switchMobileDesktop() {
-    const mercierContainerDiv = document.getElementById('mercierContainer');
-    if (!mercierContainerDiv) return;
-    if (window.innerHeight > window.innerWidth) {
-        mercierContainerDiv.style.width = '100%';
-        mercierContainerDiv.style.height = '100%';
+    let mainContainerDiv;
+
+    if (isMobile){
+            mainContainerDiv = document.getElementById('mobileMain');
+
+
     } else {
-        mercierContainerDiv.style.width = '';
-        mercierContainerDiv.style.height = '';
+            mainContainerDiv = document.getElementById('mercierContainer');
+
+
+    }
+
+    if (!mainContainerDiv) return;
+    if (window.innerHeight > window.innerWidth) {
+        mainContainerDiv.style.width = '100%';
+        mainContainerDiv.style.height = '100%';
+    } else {
+        mainContainerDiv.style.width = '';
+        mainContainerDiv.style.height = '';
     }
 }
 
