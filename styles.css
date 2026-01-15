@@ -718,6 +718,43 @@ mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 1
 }
 
 
+.menuBlockMobile {
+    box-sizing: border-box;
+    /* border:3px dotted pink; */
+    width:16.66%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* MENU INNER WAS THIS AND WELL CHANGE IT
+.menuInner {
+    border: 3px solid #737373;
+    border-radius: 25px 25px 25px 25px;
+    border-right: solid 3px #8c8c8c;
+    width: 92%;
+    height: 68%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+} */
+
+.menuInner {
+  box-sizing: border-box;
+  border-top:.5vh solid white;
+  border-right:.5vh solid white;
+  border-radius: 0px 0px 0px 0px;
+  height:100%;
+  width:100%;
+  font-size: .8rem;
+
+}
+
 
 
 
