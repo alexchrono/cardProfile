@@ -15,8 +15,11 @@ html, body {
 ========================= */
 #mercierContainer {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  /* width: 100vw;
+  height: 100vh; */
+  width:100%;
+  height:100%;
+  min-height:100%;
   overflow: hidden;
   box-sizing: border-box;
   display: flex;
@@ -25,19 +28,10 @@ html, body {
 
 
 
-
-
-
-
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
-#mercierContainer {
+/* #mercierContainer {
   min-height: 100%;
   width: 100%;
-}
+} */
 
 
 
@@ -611,22 +605,6 @@ html, body {
   z-index: 10;
 }
 
-.menuInner {
-    border: 3px solid #737373;
-
-    border-radius: 25px 25px 25px 25px;
-    border-right: solid 3px #8c8c8c;
-    width:92%;
-    height:68%;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    color:white;
-    font-size:1.8rem;
-    cursor: pointer;
-}
 
 .inactive {
 background-color: #600006;
@@ -737,6 +715,344 @@ h1 {
 
 
 
+
+
+/* =========================
+   MOBILE GALLERY DISPLAY
+========================= */
+#topGalleryDisplayMobile {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 200000;
+  box-sizing: border-box;
+  border: 5px dotted red;
+  background-color: black;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+#topGalleryTopMobile {
+  box-sizing: border-box;
+  border: 3px dotted yellow;
+  width: 100%;
+  height: 75%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#justTheProfPic2Mobile {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 3px dotted gold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#justTheProfPic2Mobile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#topGalleryBotMobile {
+  box-sizing: border-box;
+  border: 3px dotted green;
+  width: 100%;
+  height: 15%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#topGalleryBotBotMobile {
+  box-sizing: border-box;
+  border: 3px dotted blue;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.chevronHoldersMobile {
+  box-sizing: border-box;
+  border: 3px dotted white;
+  width: 10%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.chevronHoldersMobile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+#chevronCenterMobile {
+  box-sizing: border-box;
+  border: 3px dotted purple;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#chevronHolderMobile {
+  box-sizing: border-box;
+  border: 3px dotted blue;
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#closeButtonMobile {
+  border: 3px solid #737373;
+  border-radius: 25px;
+  border-right: solid 3px #8c8c8c;
+  width: 92%;
+  height: 68%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* =========================
+   MOBILE TABS
+========================= */
+#statsTabMobile,
+.dragonMobile {
+  position: absolute;
+  left: 30.68%;
+  bottom: 6.25%;
+  width: 67.07%;
+  height: 84.38%;
+  background-color: #600006;
+  padding: 1.22%;
+  box-sizing: border-box;
+  font-family: muli;
+  font-size: 14px;
+  line-height: 14px;
+  color: #fff;
+  opacity: 0;
+  overflow: auto;
+  z-index: 4;
+  visibility: hidden;
+  transition: opacity 1s ease;
+}
+
+.dragonMobile:target {
+  bottom: 26.25%;
+  bottom: 6.25%;
+  opacity: 1;
+  z-index: 6;
+}
+
+#personalityTabMobile,
+#historyTabMobile,
+#encountersTabMobile,
+#oocTabMobile {
+  visibility: hidden;
+}
+
+/* =========================
+   MOBILE MENU
+========================= */
+#mobileMain {
+  box-sizing: border-box;
+  border: 3px dotted red;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  display: none;
+}
+
+#topViewMobile {
+  box-sizing: border-box;
+  border: 3px dotted green;
+  width: 100%;
+  height: 88%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#topViewMobileInner {
+  width: 90%;
+  height: 90%;
+  background-color: rgba(28, 46, 131, 0.75);
+  border-radius: 25px 25px 25px 0;
+  z-index: 3;
+}
+
+#mainMenuMobile {
+  box-sizing: border-box;
+  border: 3px dotted blue;
+  width: 100%;
+  height: 12%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.menuBlockMobile {
+  box-sizing: border-box;
+  width: 16.66%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.menuInner {
+    border: 3px solid #737373;
+
+    border-radius: 25px 25px 25px 25px;
+    border-right: solid 3px #8c8c8c;
+    width:92%;
+    height:68%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    font-size:1.8rem;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* FOR CELLPHONES=================================================== */
 
 @media (orientation: portrait) {
@@ -829,8 +1145,25 @@ mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 1
     cursor: pointer;
 } */
 
-.menuInner {
+
+
+
+/* .menuInner {
   box-sizing: border-box;
+  border-top: 0.5vh solid white;
+  border-right: 0.5vh solid white;
+  border-radius: 0px;
+  height: 100%;
+  width: 100%;
+  font-size: 0.8rem;
+} */
+
+
+.menuInnerMobile {
+
+
+
+    box-sizing: border-box;
   border-top:.5vh solid white;
   border-right:.5vh solid white;
   border-radius: 0px 0px 0px 0px;
@@ -838,7 +1171,17 @@ mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 1
   width:100%;
   font-size: .8rem;
 
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    cursor: pointer;
 }
+
+
+
 
 
 
