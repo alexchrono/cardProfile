@@ -453,17 +453,71 @@ html, body {
 
 }
 
-
 #statsTab,
 .dragon {
   transition: opacity 0.6s ease;
 }
 
 
+#statsTabMobile {
+  position: absolute;
+  left: 30.68%;
+  bottom: 6.25%;
+  width: 67.07%;
+  height: 84.38%;
+  background-color: #600006;
+  padding: 1.22%;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: muli;
+  /* font-size: 4.38%;
+  line-height: 4.38%; */
+  font-size: 14px;
+  line-height: 14px;
+  color: #fff;
+  border-radius: 0 3.05% 3.05% 0;
+  z-index: 5;
+  visibility: visible;
+
+}
+
+
+
+
+
+
+#statsTabMobile,
+.dragonMobile {
+  transition: opacity 0.6s ease;
+}
+
 /* =========================
    DRAGON PANELS
 ========================= */
 .dragon {
+  position: absolute;
+  left: 30.68%;
+  bottom: 6.25%;
+  width: 67.07%;
+  height: 84.38%;
+  background-color: #600006;
+  padding: 1.22%;
+  box-sizing: border-box;
+  font-family: muli;
+  /* font-size: 4.38%;
+  line-height: 4.38%; */
+  font-size: 14px;
+  line-height: 14px;
+  color: #fff;
+  opacity: 0;
+  overflow: auto;
+  z-index: 4;
+  visibility: hidden;
+  transition: opacity 1s ease;
+}
+
+
+.dragonMobile {
   position: absolute;
   left: 30.68%;
   bottom: 6.25%;
@@ -494,6 +548,14 @@ html, body {
 }
 
 
+.dragonMobile:target {
+  bottom: 26.25%;
+  bottom: 6.25%;
+  opacity: 1;
+  z-index: 6;
+}
+
+
 
 #personalityTab {
     visibility: hidden;
@@ -510,6 +572,29 @@ html, body {
 #oocTab {
     visibility: hidden;
 }
+
+
+
+
+
+
+
+#personalityTabMobile {
+    visibility: hidden;
+}
+
+#historyTabMobile {
+    visibility: hidden;
+}
+
+#encountersTabMobile {
+    visibility: hidden;
+}
+
+#oocTabMobile {
+    visibility: hidden;
+}
+
 
 
 /* =========================
