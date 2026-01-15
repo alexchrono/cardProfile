@@ -105,13 +105,11 @@ function handleButtonClick(event) {
         btnId === "galleryButton" ||
         btnId === "galleryButtonMobile";
 
-    // DESKTOP: gallery opens ONLY, no tab state
     if (!isMobile && isGalleryButton) {
         openGallery();
         return;
     }
 
-    // MOBILE: gallery participates in state
     if (isMobile && isGalleryButton) {
         previousButtonMobile = clickedButtonMobile;
         previousClickedIdMobile = clickedIdMobile;
@@ -131,7 +129,6 @@ function handleButtonClick(event) {
         return;
     }
 
-    // NORMAL TAB FLOW (desktop + mobile)
     if (clickedButton && clickedId) {
         previousButton = clickedButton;
         previousClickedId = clickedId;
@@ -145,9 +142,7 @@ function handleButtonClick(event) {
 
     if (previousClickedId === clickedId) return;
 
-
-// NARUTO WILL THIS WORK
-      if (previousButton) {
+    if (previousButton) {
         previousButton.classList.remove("active");
         previousButton.classList.add("inactive");
     } else {
@@ -155,14 +150,11 @@ function handleButtonClick(event) {
         statsButton.classList.add("inactive");
     }
 
-
     clickedButton.classList.remove("inactive");
     clickedButton.classList.add("active");
 
     let prevTab = previousClickedId
-        ? document.getElementById(
-            previousClickedId + (isMobile ? "TabMobile" : "Tab")
-        )
+        ? document.getElementById(previousClickedId + (isMobile ? "TabMobile" : "Tab"))
         : document.getElementById(isMobile ? "statsTabMobile" : "statsTab");
 
     if (prevTab) {
@@ -186,16 +178,83 @@ function handleButtonClick(event) {
     console.log(`Activated: ${clickedId}`);
 }
 
-//============== OUR STARTUP ANIMATION =====================================
-
+// ===================== STARTUP INTRO HOOK =====================
 async function runMobileStartupIntro() {
-    
+    console.log("🚀 Mobile startup intro placeholder");
+
+    // let bottomTextDisplay = document.getElementById("just4Startup")
+
+    // bottomTextDisplay.style.visibility="visible"
+      let bottomButtonMenu = document.getElementById("mainMenuMobile");
+    bottomButtonMenu.style.height="0%"
+    bottomButtonMenu.style.visibility="hidden";
+
+    let expandForBeginning = document.getElementById("topViewMobile")
+    expandForBeginning.style.height="100%";
+
+    let topViewMobileInner = document.getElementById("topViewMobileInner");
+    topViewMobileInner.style.backgroundColor = "transparent";
+
+
+
+
 }
 
+
 // ===================== MAIN FUNCTION =====================
-function mainFunction() {
+async function mainFunction() {
     console.log("📌 mainFunction started");
 
+    // ===================== CAROUSEL LOGIC (UNCHANGED) =====================
+    let imageToGrab;
+    let leftChev;
+    let rightChev;
+
+    if (!isMobile) {
+        imageToGrab = document.getElementById('sexyKyra');
+        leftChev = document.getElementById('leftChev');
+        rightChev = document.getElementById('rightChev');
+    }
+
+    const activePics = allPics.filter(p => typeof p === "string" && p.trim() !== "");
+    let pics = {};
+    activePics.forEach((url, index) => pics[index] = url);
+
+    function allPicFunction(index) {
+        let rchevContainer;
+        let lchevContainer;
+
+        if (!isMobile) {
+            rchevContainer = document.getElementById('rchev');
+            lchevContainer = document.getElementById('lchev');
+        }
+
+        if (!activePics[index] || !imageToGrab) return;
+
+        imageToGrab.src = activePics[index];
+        uniCount = index;
+
+        let prevIndex = index - 1 >= 0 ? index - 1 : activePics.length - 1;
+        let nextIndex = index + 1 < activePics.length ? index + 1 : 0;
+
+        if (lchevContainer && leftChev) {
+            let newLeftChev = leftChev.cloneNode(true);
+            lchevContainer.replaceChild(newLeftChev, leftChev);
+            leftChev = newLeftChev;
+            leftChev.addEventListener('click', () => allPicFunction(prevIndex));
+        }
+
+        if (rchevContainer && rightChev) {
+            let newRightChev = rightChev.cloneNode(true);
+            rchevContainer.replaceChild(newRightChev, rightChev);
+            rightChev = newRightChev;
+            rightChev.addEventListener('click', () => allPicFunction(nextIndex));
+        }
+    }
+
+    if (activePics.length > 0) allPicFunction(0);
+
+    // ===================== TABS / BUTTONS =====================
     let statsTab;
     let mercierContainerDiv;
 
@@ -211,14 +270,7 @@ function mainFunction() {
         galleryButton = document.getElementById("galleryButtonMobile");
         topGalleryDisplayMobile = document.getElementById("topGalleryDisplayMobile");
 
-        buttonList = [
-            statsButton,
-            personalityButton,
-            historyButton,
-            encountersButton,
-            oocButton,
-            galleryButton
-        ];
+        buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton, galleryButton];
     } else {
         statsTab = document.getElementById("statsTab");
         mercierContainerDiv = document.getElementById("mercierContainer");
@@ -232,23 +284,11 @@ function mainFunction() {
         closeButton = document.getElementById("closeButton");
         topGalleryDisplay = document.getElementById("topGalleryDisplay");
 
-        buttonList = [
-            statsButton,
-            personalityButton,
-            historyButton,
-            encountersButton,
-            oocButton,
-            galleryButton
-        ];
+        buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton, galleryButton];
     }
 
-    if (startedInMobile && isMobile){
-        // SEE THIS PART CHAT GPT? I NEED TO DO A BUNCH OF AWAITS HERE
-        // IM GOING TO ANIMATE LIKE A START UP INTRO WHERE I GRAB A LOT OF
-        // DOCUMENTS AND THEN LIKE SHOW ONE THING THEN HIDE IT THEN ANOTHER
-        // ETC SO WHAT DO I NEED TO DO HERE?  MAKE THE WHOLE MAIN FUNCTION ASYNC
-        // OR WHAT
-
+    if (startedInMobile && isMobile) {
+        await runMobileStartupIntro();
     }
 
     if (statsTab && !startedInMobile) {
@@ -258,11 +298,60 @@ function mainFunction() {
 
     if (!mercierContainerDiv) return;
 
-    buttonList.forEach(btn => {
-        if (btn) btn.addEventListener("click", handleButtonClick);
-    });
-
+    buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClick));
     if (closeButton) closeButton.addEventListener("click", closeGallery);
+
+    // ===================== VANTA / THREE (EXACTLY AS YOU WROTE IT) =====================
+    bgTestCover = document.getElementById("bgTestCover");
+    bgTestCoverFront = document.getElementById("bgTestCoverFront");
+    setTimeout(() => {
+        threeScript = document.createElement('script');
+        threeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
+        threeScript.onload = () => {
+            vantaScript = document.createElement('script');
+            vantaScript.src = "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js";
+            vantaScript.onload = () => {
+                if (bgTestCover && window.VANTA && window.VANTA.FOG) {
+                    vantaBack = VANTA.FOG({
+                        el: "#bgTestCover",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200,
+                        minWidth: 200,
+                        highlightColor: 0x9d9d9d,
+                        midtoneColor: 0x989898,
+                        lowlightColor: 0x000000,
+                        baseColor: 0x000000,
+                        blurFactor: 0.52,
+                        speed: 0.70,
+                        zoom: 0.90,
+                    });
+                    console.log("VANTA Back Fog initialized ✅");
+                } else console.error("Cannot initialize BACK VANTA Fog!");
+                if (bgTestCoverFront && window.VANTA && window.VANTA.FOG) {
+                    vantaFront = VANTA.FOG({
+                        el: "#bgTestCoverFront",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200,
+                        minWidth: 200,
+                        highlightColor: 0x9d9d9d,
+                        midtoneColor: 0x989898,
+                        lowlightColor: 0x000000,
+                        baseColor: 0x000000,
+                        blurFactor: 0.52,
+                        speed: 0.70,
+                        zoom: 0.90,
+                    });
+                    console.log("VANTA Front Fog initialized ✅");
+                } else console.error("Cannot initialize FRONT VANTA Fog!");
+            };
+            document.body.appendChild(vantaScript);
+        };
+        document.body.appendChild(threeScript);
+    }, 500);
 }
 
 // ===================== MOBILE / DESKTOP SWITCH =====================
@@ -277,12 +366,10 @@ async function switchMobileDesktop() {
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', () => {
     updateIsMobile();
-
     if (isMobile) {
         startedInMobile = true;
         console.log("📱 STARTED IN MOBILE MODE");
     }
-
     mainFunction();
     window.addEventListener('resize', switchMobileDesktop);
 });
