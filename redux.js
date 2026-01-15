@@ -143,10 +143,16 @@ function handleButtonClick(event) {
 
     if (previousClickedId === clickedId) return;
 
-    if (previousButton) {
+
+// NARUTO WILL THIS WORK
+      if (previousButton) {
         previousButton.classList.remove("active");
         previousButton.classList.add("inactive");
+    } else {
+        statsButton.classList.remove("active");
+        statsButton.classList.add("inactive");
     }
+
 
     clickedButton.classList.remove("inactive");
     clickedButton.classList.add("active");
@@ -194,7 +200,7 @@ function mainFunction() {
         historyButton = document.getElementById("historyButtonMobile");
         encountersButton = document.getElementById("encountersButtonMobile");
         oocButton = document.getElementById("oocButtonMobile");
-        galleryButtonMobile = document.getElementById("galleryButtonMobile");
+        galleryButton = document.getElementById("galleryButtonMobile");
         topGalleryDisplayMobile = document.getElementById("topGalleryDisplayMobile");
 
         buttonList = [
@@ -203,7 +209,7 @@ function mainFunction() {
             historyButton,
             encountersButton,
             oocButton,
-            galleryButtonMobile
+            galleryButton
         ];
     } else {
         statsTab = document.getElementById("statsTab");
