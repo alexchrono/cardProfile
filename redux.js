@@ -4,6 +4,7 @@ let personalityButton;
 let historyButton;
 let encountersButton;
 let oocButton;
+let isMobile= false;
 
 
 
@@ -160,11 +161,35 @@ function handleButtonClick(event) {
 function mainFunction() {
     console.log("📌 mainFunction started");
 
+
+
+    // ===============FIRST WE CHECK IF MOBILE OR DESKTOP==========
+
+    isMobile= (window.innerHeight > window.innerWidth)
+
     // ===================== CAROUSEL LOGIC =====================
-    const imageToGrab = document.getElementById('sexyKyra');
+
+
+    let imageToGrab;
+    let leftChev;
+    let rightChev;
+
+    if (isMobile){
+
+        console.log('come back to')
+        // NARUTO NARUTO NEED THESE FOR MOBILE
+
+
+    }
+    else {
+    imageToGrab = document.getElementById('sexyKyra');
     // const slider = document.getElementById('carouselSlider');
-    let leftChev = document.getElementById('leftChev');
-    let rightChev = document.getElementById('rightChev');
+    leftChev = document.getElementById('leftChev');
+    rightChev = document.getElementById('rightChev');
+
+    }
+
+
 
 
 
@@ -201,6 +226,24 @@ function mainFunction() {
     // }
 
     function allPicFunction(index) {
+
+        let rchevContainer;
+        let lchevContainer;
+
+        if (isMobile){
+            console.log('come back to later')
+            // NARUTO NARUTO need these for mobile
+        }else {
+        rchevContainer = document.getElementById('rchev');
+        lchevContainer = document.getElementById('lchev');
+
+        }
+
+
+
+
+
+
         if (!activePics[index]) {
             console.warn(`⚠ Index ${index} has no image, skipping`);
             return;
@@ -230,7 +273,6 @@ function mainFunction() {
         console.log(`⏪ prevIndex: ${prevIndex}, ⏩ nextIndex: ${nextIndex}`);
 
         // LEFT chevron
-        const lchevContainer = document.getElementById('lchev');
         if (lchevContainer && leftChev) {
             let newLeftChev = leftChev.cloneNode(true);
             lchevContainer.replaceChild(newLeftChev, leftChev);
@@ -241,8 +283,7 @@ function mainFunction() {
             });
         }
 
-        // RIGHT chevron
-        const rchevContainer = document.getElementById('rchev');
+
         if (rchevContainer && rightChev) {
             let newRightChev = rightChev.cloneNode(true);
             rchevContainer.replaceChild(newRightChev, rightChev);
