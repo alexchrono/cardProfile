@@ -136,6 +136,18 @@ function handleButtonClick(event) {
         event.currentTarget.id === "galleryButtonMobile"
     ) return;
 
+    // MOBILE SPECIAL: auto-close gallery if open
+if (isMobile) {
+    if (topGalleryDisplayMobile && topGalleryDisplayMobile.style.visibility === "visible") {
+        topGalleryDisplayMobile.style.opacity = "0";
+        setTimeout(() => {
+            topGalleryDisplayMobile.style.visibility = "hidden";
+        }, 500); // fade out
+        console.log("📱 Mobile: auto-closed gallery before switching tab");
+    }
+}
+
+
 
     if (clickedButton && clickedId) {
         previousButton = clickedButton;
@@ -416,7 +428,7 @@ function mainFunction() {
         encountersButton = document.getElementById("encountersButtonMobile");
         oocButton = document.getElementById("oocButtonMobile");
         galleryButtonMobile = document.getElementById("galleryButtonMobile");
-        closeButtonMobile = document.getElementById("closeButtonMobile");
+        // closeButtonMobile = document.getElementById("closeButtonMobile");
         topGalleryDisplayMobile = document.getElementById("topGalleryDisplayMobile");
 
     } else {
@@ -502,11 +514,12 @@ function mainFunction() {
         console.warn("⚠ galleryButton not found in DOM");
     }
 
-    if (closeButton) {
+    if (closeButton && !isMobile) {
         closeButton.addEventListener("click", closeGallery);
         console.log("❌ Close gallery button bound successfully");
     } else {
-        console.warn("⚠ closeButton not found in DOM");
+        // console.warn("⚠ closeButton not found in DOM");
+        console.log('yay')
     }
 
     // ===================== VANTA / THREE =====================
