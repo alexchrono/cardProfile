@@ -35,63 +35,86 @@ const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 
 // ===================== GALLERY FUNCTIONS =====================
 function openGallery() {
-    if (!topGalleryDisplay) return console.warn("⚠ topGalleryDisplay not found");
+
+
+    console.log('WE CLICKED OPEN GALLERY')
     topGalleryDisplay.style.visibility = "visible";
     requestAnimationFrame(() => {
         topGalleryDisplay.style.opacity = "1";
     });
 }
 
+
 function closeGallery() {
-    if (!topGalleryDisplay) return console.warn("⚠ topGalleryDisplay not found");
     topGalleryDisplay.style.opacity = "0";
     setTimeout(() => {
         topGalleryDisplay.style.visibility = "hidden";
     }, 1000);
 }
 
+
 // ===================== TAB BUTTON HANDLER =====================
 function handleButtonClick(event) {
     if (event.currentTarget.id === "galleryButton") return;
+
 
     if (clickedButton && clickedId) {
         previousButton = clickedButton;
         previousClickedId = clickedId;
     }
 
+
     clickedButton = event.currentTarget;
     clickedId = clickedButton.id.replace("Button", "");
 
+
     if (previousClickedId === clickedId) return;
+
 
     if (previousButton) {
         previousButton.classList.remove("active");
         previousButton.classList.add("inactive");
-    } else if (statsButton) {
+    } else {
         statsButton.classList.remove("active");
         statsButton.classList.add("inactive");
     }
 
+
     clickedButton.classList.remove("inactive");
     clickedButton.classList.add("active");
 
-    // hide previous tab
-    let prevTabId = previousClickedId ? previousClickedId + "Tab" : "statsTab";
-    const prevTab = document.getElementById(prevTabId);
-    if (prevTab) {
-        prevTab.style.opacity = "0";
-        setTimeout(() => { prevTab.style.visibility = "hidden"; }, 600);
+
+    if (previousClickedId) {
+        const prevTab = document.getElementById(previousClickedId + "Tab");
+        if (prevTab) {
+            prevTab.style.opacity = "0";
+            setTimeout(() => {
+                prevTab.style.visibility = "hidden";
+            }, 600);
+        }
+    } else {
+        const prevTab = document.getElementById("statsTab");
+        if (prevTab) {
+            prevTab.style.opacity = "0";
+            setTimeout(() => {
+                prevTab.style.visibility = "hidden";
+            }, 600);
+        }
     }
 
-    // show current tab
+
     const currTab = document.getElementById(clickedId + "Tab");
     if (currTab) {
         currTab.style.visibility = "visible";
-        requestAnimationFrame(() => { currTab.style.opacity = "1"; });
+        requestAnimationFrame(() => {
+            currTab.style.opacity = "1";
+        });
     }
+
 
     console.log(`Activated: ${clickedId}`);
 }
+
 
 // ===================== MAIN FUNCTION =====================
 function mainFunction() {
@@ -99,9 +122,17 @@ function mainFunction() {
 
     // ===================== CAROUSEL LOGIC =====================
     const imageToGrab = document.getElementById('sexyKyra');
-    const slider = document.getElementById('carouselSlider');
+    // const slider = document.getElementById('carouselSlider');
     let leftChev = document.getElementById('leftChev');
     let rightChev = document.getElementById('rightChev');
+
+
+
+
+
+
+
+
 
     // Filter only active pics
     const activePics = allPics.filter(p => typeof p === "string" && p.trim() !== "");
@@ -112,22 +143,22 @@ function mainFunction() {
     activePics.forEach((url, index) => pics[index] = url);
 
     // fallback topNumberEl
-    if (!topNumberEl) {
-        console.warn("⚠ topNumberEl not found, creating fallback display element.");
-        topNumberEl = document.createElement('div');
-        topNumberEl.id = "topNumberElFallback";
-        topNumberEl.style.position = "absolute";
-        topNumberEl.style.bottom = "10px";
-        topNumberEl.style.right = "10px";
-        topNumberEl.style.background = "rgba(0,0,0,0.5)";
-        topNumberEl.style.color = "#fff";
-        topNumberEl.style.padding = "5px 10px";
-        topNumberEl.style.borderRadius = "5px";
-        topNumberEl.style.fontFamily = "sans-serif";
-        topNumberEl.style.fontSize = "14px";
-        document.body.appendChild(topNumberEl);
-        console.log("✅ Fallback topNumberEl added to DOM");
-    }
+    // if (!topNumberEl) {
+    //     console.warn("⚠ topNumberEl not found, creating fallback display element.");
+    //     topNumberEl = document.createElement('div');
+    //     topNumberEl.id = "topNumberElFallback";
+    //     topNumberEl.style.position = "absolute";
+    //     topNumberEl.style.bottom = "10px";
+    //     topNumberEl.style.right = "10px";
+    //     topNumberEl.style.background = "rgba(0,0,0,0.5)";
+    //     topNumberEl.style.color = "#fff";
+    //     topNumberEl.style.padding = "5px 10px";
+    //     topNumberEl.style.borderRadius = "5px";
+    //     topNumberEl.style.fontFamily = "sans-serif";
+    //     topNumberEl.style.fontSize = "14px";
+    //     document.body.appendChild(topNumberEl);
+    //     console.log("✅ Fallback topNumberEl added to DOM");
+    // }
 
     function allPicFunction(index) {
         if (!activePics[index]) {
@@ -143,15 +174,15 @@ function mainFunction() {
         imageToGrab.src = activePics[index];
         uniCount = index;
 
-        if (slider) {
-            slider.value = index;
-            console.log("🎚 Slider updated to:", slider.value);
-        }
+        // if (slider) {
+        //     slider.value = index;
+        //     console.log("🎚 Slider updated to:", slider.value);
+        // }
 
-        if (topNumberEl) {
-            topNumberEl.innerText = `${index + 1} / ${activePics.length}`;
-            console.log("🔢 topNumberEl updated to:", topNumberEl.innerText);
-        }
+        // if (topNumberEl) {
+        //     topNumberEl.innerText = `${index + 1} / ${activePics.length}`;
+        //     console.log("🔢 topNumberEl updated to:", topNumberEl.innerText);
+        // }
 
         // Previous / Next index
         let prevIndex = index - 1 >= 0 ? index - 1 : activePics.length - 1;
@@ -184,14 +215,14 @@ function mainFunction() {
     }
 
     // Slider input
-    if (slider) {
-        slider.max = activePics.length - 1;
-        slider.addEventListener('input', () => {
-            const currentIndex = parseInt(slider.value, 10);
-            console.log("🎚 Slider input, index:", currentIndex);
-            allPicFunction(currentIndex);
-        });
-    }
+    // if (slider) {
+    //     slider.max = activePics.length - 1;
+    //     slider.addEventListener('input', () => {
+    //         const currentIndex = parseInt(slider.value, 10);
+    //         console.log("🎚 Slider input, index:", currentIndex);
+    //         allPicFunction(currentIndex);
+    //     });
+    // }
 
     // Initialize first image
     if (activePics.length > 0) {
@@ -231,6 +262,8 @@ function mainFunction() {
     galleryButton = document.getElementById("galleryButton");
     closeButton = document.getElementById("closeButton");
     topGalleryDisplay = document.getElementById("topGalleryDisplay");
+
+    console.log('ARE WE GETTING TOPGALLERY DISPLAY',topGalleryDisplay)
 
     if (galleryButton) {
         galleryButton.addEventListener("click", openGallery);
