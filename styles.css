@@ -636,13 +636,32 @@ h1 {
 }
 
 
+#mobileMain {
+  box-sizing: border-box;
+  border:3px dotted red;
+  width:100%;
+  height:100%;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  position:relative;
 
+  display:none;
+
+}
 
 
 
 /* FOR CELLPHONES=================================================== */
 
 @media (orientation: portrait) {
+
+  #mobileMain {
+
+
+    /* NORMALLY: display: none; */
+    display:flex;
+  }
 
 
 #leftSideMain {
@@ -662,6 +681,43 @@ h1 {
  /* IT WAS THIS  mask-image: linear-gradient(to right, rgba(0, 0, 0, .3) 50%, rgba(0, 0, 0, .5) 100%); */
 mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 100%);
 }
+
+#topViewMobile {
+    box-sizing: border-box;
+    border: 3px dotted green;
+    width: 100%;
+    height: 88%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#topViewMobileInner {
+    width:90%;
+    height:90%;
+    background-color: rgba(28, 46, 131, 0.75);
+    border-radius: 25px 25px 25px 0;
+    z-index: 3;
+}
+
+
+
+#mainMenuMobile {
+    box-sizing: border-box;
+    border: 3px dotted blue;
+    width: 100%;
+    height: 12%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 
 
