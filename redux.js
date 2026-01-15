@@ -18,6 +18,21 @@ let bgTestCoverFront;
 let vantaBack;
 let vantaFront;
 
+let pic1 = 'https://i.ibb.co/Q3jjbsCY/first-Up-G.webp';
+let pic2 = 'https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg';
+let pic3 = 'https://i.ibb.co/sd7h9qZK/third-Up-G.jpg';
+let pic4; //YOU CAN ADD THESE LATER IF YOU WANT.
+let pic5;
+let pic6;
+let pic7;
+let pic8;
+let pic9;
+let pic10;
+
+
+const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
+
+
 function openGallery() {
     topGalleryDisplay.style.visibility = "visible";
     requestAnimationFrame(() => {
@@ -86,6 +101,36 @@ function handleButtonClick(event) {
 }
 
 function mainFunction() {
+
+    //======================THIS IS OUR CAROUSEL LOGIC
+
+    // const imageIdsMaybe = ['firstPic', 'secondPic', 'thirdPic', 'fourthPic', 'fifthPic'];
+
+
+    const activePics = allPics.filter(pic =>
+    typeof pic === "string" && pic.trim() !== ""
+);
+
+console.log("Active carousel images:", activePics);
+    //CHAT GPT THIS IS WHERE I NEED YOU.  I LEAVE A PLACE FOR 10 PICS BUT ONLY ONE IS FILLED OUT.
+    //i NEED SOME KIND OF LOOP/PROGRAM  HERE THAT WILL LOOP THROUGH ALL THE PICS....AND ONLY IF THEY ARE
+    //SET EQUAL TO SOMETHING WILL IT ADD IT TO ANOTHER ARRAY.  SO AFTER OUR LOOP
+    //WE WHOULD HAVE A NEW ARRAY OF [pic1,pic2,pic3]
+    //but i want it flexible.  if the user adds more pics, the array could later on be [pic1,pic2,pic3,pic4,pic5]
+
+
+    const imageToGrab = document.getElementById('sexyKyra');
+    const slider = document.getElementById('carouselSlider');
+    let leftChev = document.getElementById('leftChev');
+    let rightChev = document.getElementById('rightChev');
+
+
+
+
+    
+
+
+
     document.getElementById("statsTab").style.visibility = "visible";
     document.getElementById("statsTab").style.opacity = "1";
 
