@@ -454,9 +454,9 @@ html, body {
 
 
 #statsTabMobile {
-  position: absolute;
+  /* position: absolute;
   left: 30.68%;
-  bottom: 6.25%;
+  bottom: 6.25%; */
   width: 67.07%;
   height: 84.38%;
   background-color: #600006;
@@ -512,9 +512,10 @@ html, body {
 
 
 .dragonMobile {
-  position: absolute;
-  left: 30.68%;
-  bottom: 6.25%;
+
+  position: static;   /* 🔥 THIS FIXES IT */
+  left: auto;
+  bottom: auto;
   width: 67.07%;
   height: 84.38%;
   background-color: #600006;
@@ -846,10 +847,10 @@ h1 {
 #statsTabMobile,
 .dragonMobile {
   position: absolute;
-  left: 30.68%;
-  bottom: 6.25%;
-  width: 67.07%;
-  height: 84.38%;
+  /* left: 30.68%;
+  bottom: 6.25%; */
+  width: 90%;
+  height: 90%;
   background-color: #600006;
   padding: 1.22%;
   box-sizing: border-box;
@@ -911,6 +912,11 @@ h1 {
   background-color: rgba(28, 46, 131, 0.75);
   border-radius: 25px 25px 25px 0;
   z-index: 3;
+  position:relative;
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
 }
 
 #mainMenuMobile {
@@ -1096,13 +1102,13 @@ mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 1
 
 }
 
-#topViewMobileInner {
+/* #topViewMobileInner {
     width:90%;
     height:90%;
     background-color: rgba(28, 46, 131, 0.75);
     border-radius: 25px 25px 25px 0;
     z-index: 3;
-}
+} */
 
 
 
