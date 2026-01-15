@@ -89,20 +89,40 @@ function updateIsMobile() {
 // ===================== GALLERY FUNCTIONS =====================
 function openGallery() {
 
+    if (isMobile){
+        console.log('WE CLICKED OPEN GALLERY')
+    topGalleryDisplayMobile.style.visibility = "visible";
+    requestAnimationFrame(() => {
+        topGalleryDisplayMobile.style.opacity = "1";
+    });
 
-    console.log('WE CLICKED OPEN GALLERY')
+    } else {
+console.log('WE CLICKED OPEN GALLERY')
     topGalleryDisplay.style.visibility = "visible";
     requestAnimationFrame(() => {
         topGalleryDisplay.style.opacity = "1";
     });
+    }
+
 }
 
 
 function closeGallery() {
-    topGalleryDisplay.style.opacity = "0";
+
+    if (isMobile){
+           topGalleryDisplayMobile.style.opacity = "0";
+    setTimeout(() => {
+        topGalleryDisplayMobile.style.visibility = "hidden";
+    }, 1000);
+
+    } else {
+           topGalleryDisplay.style.opacity = "0";
     setTimeout(() => {
         topGalleryDisplay.style.visibility = "hidden";
     }, 1000);
+
+    }
+
 }
 
 function wait(ms) {
@@ -395,9 +415,9 @@ function mainFunction() {
         historyButton = document.getElementById("historyButtonMobile");
         encountersButton = document.getElementById("encountersButtonMobile");
         oocButton = document.getElementById("oocButtonMobile");
-        galleryButton = document.getElementById("galleryButtonMobile");
-        closeButton = document.getElementById("closeButtonMobile");
-        topGalleryDisplay = document.getElementById("topGalleryDisplayMobile");
+        galleryButtonMobile = document.getElementById("galleryButtonMobile");
+        closeButtonMobile = document.getElementById("closeButtonMobile");
+        topGalleryDisplayMobile = document.getElementById("topGalleryDisplayMobile");
 
     } else {
         statsTab = document.getElementById("statsTab");
