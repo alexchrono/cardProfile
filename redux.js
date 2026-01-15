@@ -74,6 +74,13 @@ let pic10;
 
 const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 
+
+
+
+function isMobileViewFind() {
+    return window.innerHeight > window.innerWidth;
+}
+
 // ===================== GALLERY FUNCTIONS =====================
 function openGallery() {
 
@@ -536,6 +543,9 @@ function mainFunction() {
 
 // ===================== MOBILE / DESKTOP SWITCH =====================
 function switchMobileDesktop() {
+
+    isMobile = isMobileViewFind();
+
     let mainContainerDiv;
 
     if (isMobile) {
@@ -560,6 +570,7 @@ function switchMobileDesktop() {
 
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', () => {
+    isMobile = isMobileViewFind();
     mainFunction();
     window.addEventListener('resize', switchMobileDesktop);
 
