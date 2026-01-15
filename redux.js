@@ -1,3 +1,4 @@
+// ===================== GLOBAL VARIABLES =====================
 let statsButton;
 let personalityButton;
 let historyButton;
@@ -22,7 +23,7 @@ let topNumberEl;
 let pic1 = 'https://i.ibb.co/Q3jjbsCY/first-Up-G.webp';
 let pic2 = 'https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg';
 let pic3 = 'https://i.ibb.co/sd7h9qZK/third-Up-G.jpg';
-let pic4; //YOU CAN ADD THESE LATER IF YOU WANT.
+let pic4; // YOU CAN ADD THESE LATER IF YOU WANT.
 let pic5;
 let pic6;
 let pic7;
@@ -30,11 +31,11 @@ let pic8;
 let pic9;
 let pic10;
 
-
 const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 
-
+// ===================== GALLERY FUNCTIONS =====================
 function openGallery() {
+    if (!topGalleryDisplay) return console.warn("⚠ topGalleryDisplay not found");
     topGalleryDisplay.style.visibility = "visible";
     requestAnimationFrame(() => {
         topGalleryDisplay.style.opacity = "1";
@@ -42,12 +43,14 @@ function openGallery() {
 }
 
 function closeGallery() {
+    if (!topGalleryDisplay) return console.warn("⚠ topGalleryDisplay not found");
     topGalleryDisplay.style.opacity = "0";
     setTimeout(() => {
         topGalleryDisplay.style.visibility = "hidden";
     }, 1000);
 }
 
+// ===================== TAB BUTTON HANDLER =====================
 function handleButtonClick(event) {
     if (event.currentTarget.id === "galleryButton") return;
 
@@ -64,7 +67,7 @@ function handleButtonClick(event) {
     if (previousButton) {
         previousButton.classList.remove("active");
         previousButton.classList.add("inactive");
-    } else {
+    } else if (statsButton) {
         statsButton.classList.remove("active");
         statsButton.classList.add("inactive");
     }
@@ -72,125 +75,139 @@ function handleButtonClick(event) {
     clickedButton.classList.remove("inactive");
     clickedButton.classList.add("active");
 
-    if (previousClickedId) {
-        const prevTab = document.getElementById(previousClickedId + "Tab");
-        if (prevTab) {
-            prevTab.style.opacity = "0";
-            setTimeout(() => {
-                prevTab.style.visibility = "hidden";
-            }, 600);
-        }
-    } else {
-        const prevTab = document.getElementById("statsTab");
-        if (prevTab) {
-            prevTab.style.opacity = "0";
-            setTimeout(() => {
-                prevTab.style.visibility = "hidden";
-            }, 600);
-        }
+    // hide previous tab
+    let prevTabId = previousClickedId ? previousClickedId + "Tab" : "statsTab";
+    const prevTab = document.getElementById(prevTabId);
+    if (prevTab) {
+        prevTab.style.opacity = "0";
+        setTimeout(() => { prevTab.style.visibility = "hidden"; }, 600);
     }
 
+    // show current tab
     const currTab = document.getElementById(clickedId + "Tab");
     if (currTab) {
         currTab.style.visibility = "visible";
-        requestAnimationFrame(() => {
-            currTab.style.opacity = "1";
-        });
+        requestAnimationFrame(() => { currTab.style.opacity = "1"; });
     }
 
     console.log(`Activated: ${clickedId}`);
 }
 
+// ===================== MAIN FUNCTION =====================
 function mainFunction() {
+    console.log("📌 mainFunction started");
 
- //======================THIS IS OUR CAROUSEL LOGIC
+    // ===================== CAROUSEL LOGIC =====================
+    const imageToGrab = document.getElementById('sexyKyra');
+    const slider = document.getElementById('carouselSlider');
+    let leftChev = document.getElementById('leftChev');
+    let rightChev = document.getElementById('rightChev');
 
-// const imageIdsMaybe = ['firstPic', 'secondPic', 'thirdPic', 'fourthPic', 'fifthPic'];
+    // Filter only active pics
+    const activePics = allPics.filter(p => typeof p === "string" && p.trim() !== "");
+    console.log("🖼 Active pics detected:", activePics);
 
-const imageToGrab = document.getElementById('sexyKyra');
-const slider = document.getElementById('carouselSlider');
-let leftChev = document.getElementById('leftChev');
-let rightChev = document.getElementById('rightChev');
+    // map index -> pic
+    let pics = {};
+    activePics.forEach((url, index) => pics[index] = url);
 
-
-// ===== CAROUSEL =====
-
-// collect all possible pics
-const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
-
-// only keep defined / non-empty ones
-const activePics = allPics.filter(p =>
-    typeof p === "string" && p.trim() !== ""
-);
-
-// map index -> pic
-let pics = {};
-activePics.forEach((url, index) => {
-    pics[index] = url;
-});
-
-let topNumber = activePics.length;
-
-function allPicFunction(index) {
-    if (!activePics[index]) return;
-
-    if (imageToGrab) {
-        imageToGrab.src = activePics[index]
+    // fallback topNumberEl
+    if (!topNumberEl) {
+        console.warn("⚠ topNumberEl not found, creating fallback display element.");
+        topNumberEl = document.createElement('div');
+        topNumberEl.id = "topNumberElFallback";
+        topNumberEl.style.position = "absolute";
+        topNumberEl.style.bottom = "10px";
+        topNumberEl.style.right = "10px";
+        topNumberEl.style.background = "rgba(0,0,0,0.5)";
+        topNumberEl.style.color = "#fff";
+        topNumberEl.style.padding = "5px 10px";
+        topNumberEl.style.borderRadius = "5px";
+        topNumberEl.style.fontFamily = "sans-serif";
+        topNumberEl.style.fontSize = "14px";
+        document.body.appendChild(topNumberEl);
+        console.log("✅ Fallback topNumberEl added to DOM");
     }
-    else {return}
 
-    uniCount = index;
+    function allPicFunction(index) {
+        if (!activePics[index]) {
+            console.warn(`⚠ Index ${index} has no image, skipping`);
+            return;
+        }
+        if (!imageToGrab) {
+            console.error("❌ imageToGrab element not found");
+            return;
+        }
 
-    if (slider) slider.value = index;
-    if (topNumberEl) topNumberEl.innerText = (index + 1);
+        console.log(`📸 Updating image to index ${index}: ${activePics[index]}`);
+        imageToGrab.src = activePics[index];
+        uniCount = index;
 
-    let prevIndex = index - 1 >= 0 ? index - 1 : activePics.length - 1;
-    let nextIndex = index + 1 < activePics.length ? index + 1 : 0;
+        if (slider) {
+            slider.value = index;
+            console.log("🎚 Slider updated to:", slider.value);
+        }
 
-    let prevUrl = pics[prevIndex];
-    let nextUrl = pics[nextIndex];
+        if (topNumberEl) {
+            topNumberEl.innerText = `${index + 1} / ${activePics.length}`;
+            console.log("🔢 topNumberEl updated to:", topNumberEl.innerText);
+        }
 
-    const lchevContainer = document.getElementById('lchev');
-    if (lchevContainer && leftChev) {
-        let newLeftChev = leftChev.cloneNode(true);
-        lchevContainer.replaceChild(newLeftChev, leftChev);
-        leftChev = newLeftChev;
-        leftChev.addEventListener('click', () => {
-            allPicFunction(prevIndex);
+        // Previous / Next index
+        let prevIndex = index - 1 >= 0 ? index - 1 : activePics.length - 1;
+        let nextIndex = index + 1 < activePics.length ? index + 1 : 0;
+        console.log(`⏪ prevIndex: ${prevIndex}, ⏩ nextIndex: ${nextIndex}`);
+
+        // LEFT chevron
+        const lchevContainer = document.getElementById('lchev');
+        if (lchevContainer && leftChev) {
+            let newLeftChev = leftChev.cloneNode(true);
+            lchevContainer.replaceChild(newLeftChev, leftChev);
+            leftChev = newLeftChev;
+            leftChev.addEventListener('click', () => {
+                console.log("⬅ Left chevron clicked");
+                allPicFunction(prevIndex);
+            });
+        }
+
+        // RIGHT chevron
+        const rchevContainer = document.getElementById('rchev');
+        if (rchevContainer && rightChev) {
+            let newRightChev = rightChev.cloneNode(true);
+            rchevContainer.replaceChild(newRightChev, rightChev);
+            rightChev = newRightChev;
+            rightChev.addEventListener('click', () => {
+                console.log("➡ Right chevron clicked");
+                allPicFunction(nextIndex);
+            });
+        }
+    }
+
+    // Slider input
+    if (slider) {
+        slider.max = activePics.length - 1;
+        slider.addEventListener('input', () => {
+            const currentIndex = parseInt(slider.value, 10);
+            console.log("🎚 Slider input, index:", currentIndex);
+            allPicFunction(currentIndex);
         });
     }
 
-    const rchevContainer = document.getElementById('rchev');
-    if (rchevContainer && rightChev) {
-        let newRightChev = rightChev.cloneNode(true);
-        rchevContainer.replaceChild(newRightChev, rightChev);
-        rightChev = newRightChev;
-        rightChev.addEventListener('click', () => {
-            allPicFunction(nextIndex);
-        });
+    // Initialize first image
+    if (activePics.length > 0) {
+        console.log("🌟 Initializing carousel with first image");
+        allPicFunction(0);
+    } else {
+        console.warn("⚠ No active images found, carousel will not initialize");
     }
-}
+    console.log("✅ Carousel initialized with", activePics.length, "images");
 
-// Slider input
-if (slider) {
-    slider.max = activePics.length - 1;
-    slider.addEventListener('input', () => {
-        const currentIndex = parseInt(slider.value, 10);
-        allPicFunction(currentIndex);
-    });
-}
-
-// Initialize first image
-if (activePics.length > 0) {
-    allPicFunction(0);
-}
-
-console.log("✅ Carousel initialized with", activePics.length, "images");
-
-
-
-    document.getElementById("statsTab").style.visibility = "visible";
-    document.getElementById("statsTab").style.opacity = "1";
+    // ===================== TABS & BUTTONS =====================
+    const statsTab = document.getElementById("statsTab");
+    if (statsTab) {
+        statsTab.style.visibility = "visible";
+        statsTab.style.opacity = "1";
+    }
 
     const mercierContainerDiv = document.getElementById('mercierContainer');
     if (!mercierContainerDiv) return;
@@ -202,7 +219,6 @@ console.log("✅ Carousel initialized with", activePics.length, "images");
     oocButton = document.getElementById("oocButton");
 
     buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton];
-
     const missingButtons = buttonList.filter(btn => !btn);
     if (missingButtons.length > 0) {
         console.error("Some buttons were not found in the DOM:", missingButtons);
@@ -211,6 +227,26 @@ console.log("✅ Carousel initialized with", activePics.length, "images");
 
     buttonList.forEach(btn => btn.addEventListener("click", handleButtonClick));
 
+    // ===================== GALLERY BUTTONS =====================
+    galleryButton = document.getElementById("galleryButton");
+    closeButton = document.getElementById("closeButton");
+    topGalleryDisplay = document.getElementById("topGalleryDisplay");
+
+    if (galleryButton) {
+        galleryButton.addEventListener("click", openGallery);
+        console.log("🎨 Gallery button bound successfully");
+    } else {
+        console.warn("⚠ galleryButton not found in DOM");
+    }
+
+    if (closeButton) {
+        closeButton.addEventListener("click", closeGallery);
+        console.log("❌ Close gallery button bound successfully");
+    } else {
+        console.warn("⚠ closeButton not found in DOM");
+    }
+
+    // ===================== VANTA / THREE =====================
     bgTestCover = document.getElementById("bgTestCover");
     bgTestCoverFront = document.getElementById("bgTestCoverFront");
 
@@ -238,9 +274,7 @@ console.log("✅ Carousel initialized with", activePics.length, "images");
                         zoom: 0.90,
                     });
                     console.log("VANTA Back Fog initialized ✅");
-                } else {
-                    console.error("Cannot initialize BACK VANTA Fog!");
-                }
+                } else console.error("Cannot initialize BACK VANTA Fog!");
 
                 if (bgTestCoverFront && window.VANTA && window.VANTA.FOG) {
                     vantaFront = VANTA.FOG({
@@ -259,9 +293,7 @@ console.log("✅ Carousel initialized with", activePics.length, "images");
                         zoom: 0.90,
                     });
                     console.log("VANTA Front Fog initialized ✅");
-                } else {
-                    console.error("Cannot initialize FRONT VANTA Fog!");
-                }
+                } else console.error("Cannot initialize FRONT VANTA Fog!");
             };
             document.body.appendChild(vantaScript);
         };
@@ -269,6 +301,7 @@ console.log("✅ Carousel initialized with", activePics.length, "images");
     }, 500);
 }
 
+// ===================== MOBILE / DESKTOP SWITCH =====================
 function switchMobileDesktop() {
     const mercierContainerDiv = document.getElementById('mercierContainer');
     if (!mercierContainerDiv) return;
@@ -281,12 +314,14 @@ function switchMobileDesktop() {
     }
 }
 
+// ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', () => {
     mainFunction();
     window.addEventListener('resize', switchMobileDesktop);
-    galleryButton = document.getElementById("galleryButton");
-    closeButton = document.getElementById("closeButton");
-    topGalleryDisplay = document.getElementById("topGalleryDisplay");
-    galleryButton.addEventListener("click", openGallery);
-    closeButton.addEventListener("click", closeGallery);
+
+    // Ensure gallery buttons are globally bound
+
+
+    if (galleryButton) galleryButton.addEventListener("click", openGallery);
+    if (closeButton) closeButton.addEventListener("click", closeGallery);
 });
