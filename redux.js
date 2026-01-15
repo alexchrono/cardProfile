@@ -96,7 +96,10 @@ function closeGallery() {
 
 // ===================== TAB BUTTON HANDLER =====================
 function handleButtonClick(event) {
-    if (event.currentTarget.id === "galleryButton") return;
+    if (
+        event.currentTarget.id === "galleryButton" ||
+        event.currentTarget.id === "galleryButtonMobile"
+    ) return;
 
 
     if (clickedButton && clickedId) {
@@ -106,7 +109,16 @@ function handleButtonClick(event) {
 
 
     clickedButton = event.currentTarget;
-    clickedId = clickedButton.id.replace("Button", "");
+
+    if (isMobile){
+            clickedId = clickedButton.id.replace("ButtonMobile", "");
+
+
+    } else {
+            clickedId = clickedButton.id.replace("Button", "");
+
+
+    }
 
 
     if (previousClickedId === clickedId) return;
@@ -126,7 +138,16 @@ function handleButtonClick(event) {
 
 
     if (previousClickedId) {
-        const prevTab = document.getElementById(previousClickedId + "Tab");
+        let prevTab;
+
+        if (isMobile) {
+            prevTab = document.getElementById(previousClickedId + "TabMobile");
+
+        } else {
+            prevTab = document.getElementById(previousClickedId + "Tab");
+
+        }
+
         if (prevTab) {
             prevTab.style.opacity = "0";
             setTimeout(() => {
@@ -134,7 +155,16 @@ function handleButtonClick(event) {
             }, 600);
         }
     } else {
-        const prevTab = document.getElementById("statsTab");
+        let prevTab;
+
+        if (isMobile) {
+            prevTab = document.getElementById("statsTabMobile")
+
+        } else {
+            prevTab = document.getElementById("statsTab");
+
+
+        }
         if (prevTab) {
             prevTab.style.opacity = "0";
             setTimeout(() => {
@@ -143,8 +173,19 @@ function handleButtonClick(event) {
         }
     }
 
+    let currTab;
 
-    const currTab = document.getElementById(clickedId + "Tab");
+    if (isMobile) {
+        currTab = document.getElementById(clickedId + "TabMobile");
+
+
+
+    } else {
+        currTab = document.getElementById(clickedId + "Tab");
+
+
+    }
+
     if (currTab) {
         currTab.style.visibility = "visible";
         requestAnimationFrame(() => {
@@ -335,28 +376,51 @@ function mainFunction() {
 
 
 
-                statsTab = document.getElementById("statsTabMobile");
+        statsTab = document.getElementById("statsTabMobile");
 
-                 // NARUTO NARUTO FIND CONTAINING DIV LATER IF THIS LINE NEEDED
+        // NARUTO NARUTO FIND CONTAINING DIV LATER IF THIS LINE NEEDED
         mercierContainerDiv = document.getElementById('mercierContainer');
-            statsButton = document.getElementById("statsButtonMobile");
-    personalityButton = document.getElementById("personalityButtonMobile");
-    historyButton = document.getElementById("historyButtonMobile");
-    encountersButton = document.getElementById("encountersButtonMobile");
-    oocButton = document.getElementById("oocButtonMobile");
+        statsButton = document.getElementById("statsButtonMobile");
+        personalityButton = document.getElementById("personalityButtonMobile");
+        historyButton = document.getElementById("historyButtonMobile");
+        encountersButton = document.getElementById("encountersButtonMobile");
+        oocButton = document.getElementById("oocButtonMobile");
+        galleryButton = document.getElementById("galleryButtonMobile");
+        closeButton = document.getElementById("closeButtonMobile");
+        topGalleryDisplay = document.getElementById("topGalleryDisplayMobile");
 
     } else {
         statsTab = document.getElementById("statsTab");
         mercierContainerDiv = document.getElementById('mercierContainer');
-            statsButton = document.getElementById("statsButton");
-    personalityButton = document.getElementById("personalityButton");
-    historyButton = document.getElementById("historyButton");
-    encountersButton = document.getElementById("encountersButton");
-    oocButton = document.getElementById("oocButton");
+        statsButton = document.getElementById("statsButton");
+        personalityButton = document.getElementById("personalityButton");
+        historyButton = document.getElementById("historyButton");
+        encountersButton = document.getElementById("encountersButton");
+        oocButton = document.getElementById("oocButton");
+        galleryButton = document.getElementById("galleryButton");
+        closeButton = document.getElementById("closeButton");
+        topGalleryDisplay = document.getElementById("topGalleryDisplay");
 
     }
 
-        buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton];
+    buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton];
+
+
+
+    // Ensure gallery buttons are globally bound
+
+
+    if (galleryButton) galleryButton.addEventListener("click", openGallery);
+    if (closeButton) closeButton.addEventListener("click", closeGallery);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -385,9 +449,19 @@ function mainFunction() {
     buttonList.forEach(btn => btn.addEventListener("click", handleButtonClick));
 
     // ===================== GALLERY BUTTONS =====================
-    galleryButton = document.getElementById("galleryButton");
+
+    if (isMobile){
+        galleryButton = document.getElementById("galleryButtonMobile");
+    closeButton = document.getElementById("closeButtonMobile");
+    topGalleryDisplay = document.getElementById("topGalleryDisplayMobile");
+
+    } else {
+        galleryButton = document.getElementById("galleryButton");
     closeButton = document.getElementById("closeButton");
     topGalleryDisplay = document.getElementById("topGalleryDisplay");
+
+    }
+
 
     console.log('ARE WE GETTING TOPGALLERY DISPLAY', topGalleryDisplay)
 
@@ -464,12 +538,12 @@ function mainFunction() {
 function switchMobileDesktop() {
     let mainContainerDiv;
 
-    if (isMobile){
-            mainContainerDiv = document.getElementById('mobileMain');
+    if (isMobile) {
+        mainContainerDiv = document.getElementById('mobileMain');
 
 
     } else {
-            mainContainerDiv = document.getElementById('mercierContainer');
+        mainContainerDiv = document.getElementById('mercierContainer');
 
 
     }
@@ -489,11 +563,5 @@ document.addEventListener('DOMContentLoaded', () => {
     mainFunction();
     window.addEventListener('resize', switchMobileDesktop);
 
-    // Ensure gallery buttons are globally bound
-    galleryButton = document.getElementById("galleryButton");
-    closeButton = document.getElementById("closeButton");
-    topGalleryDisplay = document.getElementById("topGalleryDisplay");
 
-    if (galleryButton) galleryButton.addEventListener("click", openGallery);
-    if (closeButton) closeButton.addEventListener("click", closeGallery);
 });
