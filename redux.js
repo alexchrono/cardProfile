@@ -53,6 +53,8 @@ let pic8;
 let pic9;
 let pic10;
 
+let startedInMobile = false;
+
 const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 
 // ===================== MOBILE DETECTION =====================
@@ -184,6 +186,12 @@ function handleButtonClick(event) {
     console.log(`Activated: ${clickedId}`);
 }
 
+//============== OUR STARTUP ANIMATION =====================================
+
+async function runMobileStartupIntro() {
+    
+}
+
 // ===================== MAIN FUNCTION =====================
 function mainFunction() {
     console.log("📌 mainFunction started");
@@ -234,7 +242,16 @@ function mainFunction() {
         ];
     }
 
-    if (statsTab) {
+    if (startedInMobile && isMobile){
+        // SEE THIS PART CHAT GPT? I NEED TO DO A BUNCH OF AWAITS HERE
+        // IM GOING TO ANIMATE LIKE A START UP INTRO WHERE I GRAB A LOT OF
+        // DOCUMENTS AND THEN LIKE SHOW ONE THING THEN HIDE IT THEN ANOTHER
+        // ETC SO WHAT DO I NEED TO DO HERE?  MAKE THE WHOLE MAIN FUNCTION ASYNC
+        // OR WHAT
+
+    }
+
+    if (statsTab && !startedInMobile) {
         statsTab.style.visibility = "visible";
         statsTab.style.opacity = "1";
     }
@@ -260,6 +277,12 @@ async function switchMobileDesktop() {
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', () => {
     updateIsMobile();
+
+    if (isMobile) {
+        startedInMobile = true;
+        console.log("📱 STARTED IN MOBILE MODE");
+    }
+
     mainFunction();
     window.addEventListener('resize', switchMobileDesktop);
 });
