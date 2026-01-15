@@ -105,6 +105,9 @@ function closeGallery() {
     }, 1000);
 }
 
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 // ===================== TAB BUTTON HANDLER =====================
 function handleButtonClick(event) {
@@ -542,9 +545,74 @@ function mainFunction() {
 }
 
 // ===================== MOBILE / DESKTOP SWITCH =====================
-function switchMobileDesktop() {
+async function switchMobileDesktop() {
 
-    isMobile = isMobileViewFind();
+    // isMobile = isMobileViewFind();
+    let wasMobile = isMobile;
+    updateIsMobile()
+
+    await wait(10);
+
+    if (wasMobile === isMobile) return;
+
+
+    if ((wasMobile === false) && (isMobile === true)){
+
+        if (!clickedButton){
+            //CHATGPT I WANT TO PUSH THE STATS BUTTON HERE BUT I THINK I NEED TO LIKE
+            //FIND IT LIKE I DO IN THE MAIN FUNCTION DO YOU DIG
+            //THE FUNCTION ITSELF SHOULD PUSH IT FOR MOBILE
+            handleButtonClick()
+        }
+        console.log('we just switched from desktop to mobile')
+
+        console.log('=============desktop, where we were clicking, looks like....')
+        console.log('clickedButton is', clickedButton);
+console.log('clickedId is', clickedId);
+console.log('previousButton is', previousButton);
+console.log('previousClickedId is', previousClickedId);
+console.log('=============================')
+console.log('=============MOBILE,where we switched to, looks like....')
+console.log('clickedButtonMobile is', clickedButtonMobile);
+console.log('clickedIdMobile is', clickedIdMobile);
+console.log('previousButtonMobile is', previousButtonMobile);
+console.log('previousClickedIdMobile is', previousClickedIdMobile);
+
+    } else if ((wasMobile === true) && (isMobile === false)) {
+        console.log('we just switched from Mobile to Desktop')
+
+              if (!clickedButtonMobile){
+            //CHATGPT I WANT TO PUSH THE STATS BUTTON HERE BUT I THINK I NEED TO LIKE
+            //FIND IT LIKE I DO IN THE MAIN FUNCTION DO YOU DIG
+            //THE FUNCTION ITSELF SHOULD PUSH IT FOR Desktop
+            handleButtonClick()
+        }
+        console.log('=============Mobile, where we were clicking, looks like....')
+        console.log('clickedButtonMobile is', clickedButtonMobile);
+console.log('clickedIdMobile is', clickedIdMobile);
+console.log('previousButtonMobile is', previousButtonMobile);
+console.log('previousClickedIdMobile is', previousClickedIdMobile);
+console.log('=============================')
+console.log('=============DESKTOP,where we switched to, looks like....')
+console.log('clickedButton is', clickedButton);
+console.log('clickedId is', clickedId);
+console.log('previousButton is', previousButton);
+console.log('previousClickedId is', previousClickedId);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     let mainContainerDiv;
 
@@ -573,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateIsMobile();
     mainFunction();
     window.addEventListener('resize', () => {
-        updateIsMobile();
+        // updateIsMobile();
         switchMobileDesktop();
         // mainFunction()
     });
