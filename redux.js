@@ -4,7 +4,7 @@ let personalityButton;
 let historyButton;
 let encountersButton;
 let oocButton;
-let isMobile= false;
+let isMobile = false;
 
 
 
@@ -165,7 +165,7 @@ function mainFunction() {
 
     // ===============FIRST WE CHECK IF MOBILE OR DESKTOP==========
 
-    isMobile= (window.innerHeight > window.innerWidth)
+    isMobile = (window.innerHeight > window.innerWidth)
 
     // ===================== CAROUSEL LOGIC =====================
 
@@ -174,7 +174,7 @@ function mainFunction() {
     let leftChev;
     let rightChev;
 
-    if (isMobile){
+    if (isMobile) {
 
         console.log('come back to')
         // NARUTO NARUTO NEED THESE FOR MOBILE
@@ -182,10 +182,10 @@ function mainFunction() {
 
     }
     else {
-    imageToGrab = document.getElementById('sexyKyra');
-    // const slider = document.getElementById('carouselSlider');
-    leftChev = document.getElementById('leftChev');
-    rightChev = document.getElementById('rightChev');
+        imageToGrab = document.getElementById('sexyKyra');
+        // const slider = document.getElementById('carouselSlider');
+        leftChev = document.getElementById('leftChev');
+        rightChev = document.getElementById('rightChev');
 
     }
 
@@ -230,12 +230,12 @@ function mainFunction() {
         let rchevContainer;
         let lchevContainer;
 
-        if (isMobile){
+        if (isMobile) {
             console.log('come back to later')
             // NARUTO NARUTO need these for mobile
-        }else {
-        rchevContainer = document.getElementById('rchev');
-        lchevContainer = document.getElementById('lchev');
+        } else {
+            rchevContainer = document.getElementById('rchev');
+            lchevContainer = document.getElementById('lchev');
 
         }
 
@@ -315,22 +315,67 @@ function mainFunction() {
     console.log("✅ Carousel initialized with", activePics.length, "images");
 
     // ===================== TABS & BUTTONS =====================
-    const statsTab = document.getElementById("statsTab");
-    if (statsTab) {
-        statsTab.style.visibility = "visible";
-        statsTab.style.opacity = "1";
-    }
 
-    const mercierContainerDiv = document.getElementById('mercierContainer');
-    if (!mercierContainerDiv) return;
 
-    statsButton = document.getElementById("statsButton");
+
+    let statsTab;
+
+    let mercierContainerDiv;
+
+
+
+
+
+
+
+    if (isMobile) {
+
+
+
+
+
+
+                statsTab = document.getElementById("statsTabMobile");
+
+                 // NARUTO NARUTO FIND CONTAINING DIV LATER IF THIS LINE NEEDED
+        mercierContainerDiv = document.getElementById('mercierContainer');
+            statsButton = document.getElementById("statsButtonMobile");
+    personalityButton = document.getElementById("personalityButtonMobile");
+    historyButton = document.getElementById("historyButtonMobile");
+    encountersButton = document.getElementById("encountersButtonMobile");
+    oocButton = document.getElementById("oocButtonMobile");
+
+    } else {
+        statsTab = document.getElementById("statsTab");
+        mercierContainerDiv = document.getElementById('mercierContainer');
+            statsButton = document.getElementById("statsButton");
     personalityButton = document.getElementById("personalityButton");
     historyButton = document.getElementById("historyButton");
     encountersButton = document.getElementById("encountersButton");
     oocButton = document.getElementById("oocButton");
 
-    buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton];
+    }
+
+        buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton];
+
+
+
+
+
+
+
+
+
+
+
+    if (statsTab) {
+        statsTab.style.visibility = "visible";
+        statsTab.style.opacity = "1";
+    }
+
+    if (!mercierContainerDiv) return;
+
+
     const missingButtons = buttonList.filter(btn => !btn);
     if (missingButtons.length > 0) {
         console.error("Some buttons were not found in the DOM:", missingButtons);
@@ -344,7 +389,7 @@ function mainFunction() {
     closeButton = document.getElementById("closeButton");
     topGalleryDisplay = document.getElementById("topGalleryDisplay");
 
-    console.log('ARE WE GETTING TOPGALLERY DISPLAY',topGalleryDisplay)
+    console.log('ARE WE GETTING TOPGALLERY DISPLAY', topGalleryDisplay)
 
     if (galleryButton) {
         galleryButton.addEventListener("click", openGallery);
