@@ -17,6 +17,7 @@ let bgTestCover;
 let bgTestCoverFront;
 let vantaBack;
 let vantaFront;
+let topNumberEl;
 
 let pic1 = 'https://i.ibb.co/Q3jjbsCY/first-Up-G.webp';
 let pic2 = 'https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg';
@@ -102,32 +103,89 @@ function handleButtonClick(event) {
 
 function mainFunction() {
 
-    //======================THIS IS OUR CAROUSEL LOGIC
+ //======================THIS IS OUR CAROUSEL LOGIC
 
-    // const imageIdsMaybe = ['firstPic', 'secondPic', 'thirdPic', 'fourthPic', 'fifthPic'];
+// const imageIdsMaybe = ['firstPic', 'secondPic', 'thirdPic', 'fourthPic', 'fifthPic'];
+
+const imageToGrab = document.getElementById('sexyKyra');
+const slider = document.getElementById('carouselSlider');
+let leftChev = document.getElementById('leftChev');
+let rightChev = document.getElementById('rightChev');
 
 
-    const activePics = allPics.filter(pic =>
-    typeof pic === "string" && pic.trim() !== ""
+// ===== CAROUSEL =====
+
+// collect all possible pics
+const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
+
+// only keep defined / non-empty ones
+const activePics = allPics.filter(p =>
+    typeof p === "string" && p.trim() !== ""
 );
 
-console.log("Active carousel images:", activePics);
-    //CHAT GPT THIS IS WHERE I NEED YOU.  I LEAVE A PLACE FOR 10 PICS BUT ONLY ONE IS FILLED OUT.
-    //i NEED SOME KIND OF LOOP/PROGRAM  HERE THAT WILL LOOP THROUGH ALL THE PICS....AND ONLY IF THEY ARE
-    //SET EQUAL TO SOMETHING WILL IT ADD IT TO ANOTHER ARRAY.  SO AFTER OUR LOOP
-    //WE WHOULD HAVE A NEW ARRAY OF [pic1,pic2,pic3]
-    //but i want it flexible.  if the user adds more pics, the array could later on be [pic1,pic2,pic3,pic4,pic5]
+// map index -> pic
+let pics = {};
+activePics.forEach((url, index) => {
+    pics[index] = url;
+});
 
+let topNumber = activePics.length;
 
-    const imageToGrab = document.getElementById('sexyKyra');
-    const slider = document.getElementById('carouselSlider');
-    let leftChev = document.getElementById('leftChev');
-    let rightChev = document.getElementById('rightChev');
+function allPicFunction(index) {
+    if (!activePics[index]) return;
 
+    if (imageToGrab) {
+        imageToGrab.src = activePics[index]
+    }
+    else {return}
 
+    uniCount = index;
 
+    if (slider) slider.value = index;
+    if (topNumberEl) topNumberEl.innerText = (index + 1);
 
-    
+    let prevIndex = index - 1 >= 0 ? index - 1 : activePics.length - 1;
+    let nextIndex = index + 1 < activePics.length ? index + 1 : 0;
+
+    let prevUrl = pics[prevIndex];
+    let nextUrl = pics[nextIndex];
+
+    const lchevContainer = document.getElementById('lchev');
+    if (lchevContainer && leftChev) {
+        let newLeftChev = leftChev.cloneNode(true);
+        lchevContainer.replaceChild(newLeftChev, leftChev);
+        leftChev = newLeftChev;
+        leftChev.addEventListener('click', () => {
+            allPicFunction(prevIndex);
+        });
+    }
+
+    const rchevContainer = document.getElementById('rchev');
+    if (rchevContainer && rightChev) {
+        let newRightChev = rightChev.cloneNode(true);
+        rchevContainer.replaceChild(newRightChev, rightChev);
+        rightChev = newRightChev;
+        rightChev.addEventListener('click', () => {
+            allPicFunction(nextIndex);
+        });
+    }
+}
+
+// Slider input
+if (slider) {
+    slider.max = activePics.length - 1;
+    slider.addEventListener('input', () => {
+        const currentIndex = parseInt(slider.value, 10);
+        allPicFunction(currentIndex);
+    });
+}
+
+// Initialize first image
+if (activePics.length > 0) {
+    allPicFunction(0);
+}
+
+console.log("✅ Carousel initialized with", activePics.length, "images");
 
 
 
