@@ -77,9 +77,14 @@ const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 
 
 
-function isMobileViewFind() {
-    return window.innerHeight > window.innerWidth;
+// function isMobileViewFind() {
+//     return window.innerHeight > window.innerWidth;
+// }
+
+function updateIsMobile() {
+    isMobile = window.innerHeight > window.innerWidth;
 }
+
 
 // ===================== GALLERY FUNCTIONS =====================
 function openGallery() {
@@ -209,11 +214,6 @@ function handleButtonClick(event) {
 function mainFunction() {
     console.log("📌 mainFunction started");
 
-
-
-    // ===============FIRST WE CHECK IF MOBILE OR DESKTOP==========
-
-    isMobile = (window.innerHeight > window.innerWidth)
 
     // ===================== CAROUSEL LOGIC =====================
 
@@ -570,9 +570,11 @@ function switchMobileDesktop() {
 
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', () => {
-    isMobile = isMobileViewFind();
+    updateIsMobile();
     mainFunction();
-    window.addEventListener('resize', switchMobileDesktop);
-
-
+    window.addEventListener('resize', () => {
+        updateIsMobile();
+        switchMobileDesktop();
+        // mainFunction()
+    });
 });
