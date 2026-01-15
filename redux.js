@@ -320,7 +320,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', switchMobileDesktop);
 
     // Ensure gallery buttons are globally bound
-
+    galleryButton = document.getElementById("galleryButton");
+    closeButton = document.getElementById("closeButton");
+    topGalleryDisplay = document.getElementById("topGalleryDisplay");
 
     if (galleryButton) galleryButton.addEventListener("click", openGallery);
     if (closeButton) closeButton.addEventListener("click", closeGallery);
