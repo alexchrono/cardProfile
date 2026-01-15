@@ -4,14 +4,54 @@ let personalityButton;
 let historyButton;
 let encountersButton;
 let oocButton;
+
+
+
+
+let statsButtonMobile;
+let personalityButtonMobile;
+let historyButtonMobile;
+let encountersButtonMobile;
+let oocButtonMobile;
+
+
+
+
+
+
 let buttonList;
+let buttonListMobile;
 let clickedButton;
 let clickedId;
+
+let clickedButtonMobile;
+let clickedIdMobile;
+
+
 let previousButton;
 let previousClickedId;
+
+
+let previousButtonMobile;
+let previousClickedIdMobile;
+
+
 let galleryButton;
 let closeButton;
+
+
+let galleryButtonMobile;
+let closeButtonMobile;
+
+
+
+
 let topGalleryDisplay;
+
+let topGalleryDisplayMobile;
+
+
+
 let threeScript;
 let vantaScript;
 let bgTestCover;
