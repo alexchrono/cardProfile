@@ -131,10 +131,21 @@ function wait(ms) {
 
 // ===================== TAB BUTTON HANDLER =====================
 function handleButtonClick(event) {
-    if (
-        event.currentTarget.id === "galleryButton" ||
-        event.currentTarget.id === "galleryButtonMobile"
-    ) return;
+
+
+    // if (
+    //     event.currentTarget.id === "galleryButton" ||
+    //     event.currentTarget.id === "galleryButtonMobile"
+    // ) return;
+
+
+
+    // MOBILE: allow gallery button to light up
+const isGalleryButton = event.currentTarget.id === "galleryButton" || event.currentTarget.id === "galleryButtonMobile";
+
+// DESKTOP: ignore gallery button clicks completely
+if (!isMobile && isGalleryButton) return;
+
 
     // MOBILE SPECIAL: auto-close gallery if open
 if (isMobile) {
@@ -166,6 +177,16 @@ if (isMobile) {
 
 
     }
+
+
+    // MOBILE: toggle gallery button active class
+if (isMobile && isGalleryButton) {
+
+    console.log('WE ARE HITTING OUR IS MOBILE AND IS GALLERY BUTTON CONDITON AND IN HERE CLICKED BUTTON IS',clickedButton)
+    clickedButton.classList.remove("inactive");
+    clickedButton.classList.add("active");
+}
+
 
 
     if (previousClickedId === clickedId) return;
