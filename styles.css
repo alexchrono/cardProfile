@@ -119,6 +119,26 @@ html, body {
   align-items: center;
 }
 
+#justTheProfPic2 {
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  border:3px dotted gold;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+}
+
+#justTheProfPic2 img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+
+
 #topGalleryBotBot{
   box-sizing: border-box;
   border:3px dotted blue;
@@ -150,7 +170,17 @@ html, body {
   flex-direction:row;
   justify-content: center;
   align-items: center;
+
 }
+
+
+    .chevronHolders img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor:pointer;
+    }
+
 
 
 #chevronCenter {
