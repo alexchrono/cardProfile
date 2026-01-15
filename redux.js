@@ -546,60 +546,67 @@ function mainFunction() {
 
 // ===================== MOBILE / DESKTOP SWITCH =====================
 async function switchMobileDesktop() {
-
-    // isMobile = isMobileViewFind();
-    let wasMobile = isMobile;
-    updateIsMobile()
-
+    const wasMobile = isMobile;
+    updateIsMobile();
     await wait(10);
 
     if (wasMobile === isMobile) return;
 
+    // if (!clickedButton || !clickedButtonMobile) {
+    //     // Decide which button to click based on the new mode
+    //     let statsBtnId = isMobile ? "statsButtonMobile" : "statsButton";
+    //     let statsBtn = document.getElementById(statsBtnId);
 
-    if ((wasMobile === false) && (isMobile === true)){
+    //     if (statsBtn) {
+    //         // Simulate a click programmatically
+    //         statsBtn.click();
+    //         console.log(`💥 Auto-activated default stats button for ${isMobile ? "mobile" : "desktop"}`);
+    //     }
+    // }
+
+
+
+    if ((wasMobile === false) && (isMobile === true)) {
+        console.log('we just switched from desktop to mobile');
 
         if (!clickedButton){
-            //CHATGPT I WANT TO PUSH THE STATS BUTTON HERE BUT I THINK I NEED TO LIKE
-            //FIND IT LIKE I DO IN THE MAIN FUNCTION DO YOU DIG
-            //THE FUNCTION ITSELF SHOULD PUSH IT FOR MOBILE
-            handleButtonClick()
+            mainFunction()
+            await wait(10);
         }
-        console.log('we just switched from desktop to mobile')
 
         console.log('=============desktop, where we were clicking, looks like....')
         console.log('clickedButton is', clickedButton);
-console.log('clickedId is', clickedId);
-console.log('previousButton is', previousButton);
-console.log('previousClickedId is', previousClickedId);
-console.log('=============================')
-console.log('=============MOBILE,where we switched to, looks like....')
-console.log('clickedButtonMobile is', clickedButtonMobile);
-console.log('clickedIdMobile is', clickedIdMobile);
-console.log('previousButtonMobile is', previousButtonMobile);
-console.log('previousClickedIdMobile is', previousClickedIdMobile);
-
+        console.log('clickedId is', clickedId);
+        console.log('previousButton is', previousButton);
+        console.log('previousClickedId is', previousClickedId);
+        console.log('=============================')
+        console.log('=============MOBILE, where we switched to, looks like....')
+        console.log('clickedButtonMobile is', clickedButtonMobile);
+        console.log('clickedIdMobile is', clickedIdMobile);
+        console.log('previousButtonMobile is', previousButtonMobile);
+        console.log('previousClickedIdMobile is', previousClickedIdMobile);
     } else if ((wasMobile === true) && (isMobile === false)) {
-        console.log('we just switched from Mobile to Desktop')
+        console.log('we just switched from Mobile to Desktop');
 
-              if (!clickedButtonMobile){
-            //CHATGPT I WANT TO PUSH THE STATS BUTTON HERE BUT I THINK I NEED TO LIKE
-            //FIND IT LIKE I DO IN THE MAIN FUNCTION DO YOU DIG
-            //THE FUNCTION ITSELF SHOULD PUSH IT FOR Desktop
-            handleButtonClick()
+           if (!clickedButtonMobile){
+            mainFunction()
+            await wait(10);
         }
+
         console.log('=============Mobile, where we were clicking, looks like....')
         console.log('clickedButtonMobile is', clickedButtonMobile);
-console.log('clickedIdMobile is', clickedIdMobile);
-console.log('previousButtonMobile is', previousButtonMobile);
-console.log('previousClickedIdMobile is', previousClickedIdMobile);
-console.log('=============================')
-console.log('=============DESKTOP,where we switched to, looks like....')
-console.log('clickedButton is', clickedButton);
-console.log('clickedId is', clickedId);
-console.log('previousButton is', previousButton);
-console.log('previousClickedId is', previousClickedId);
-
+        console.log('clickedIdMobile is', clickedIdMobile);
+        console.log('previousButtonMobile is', previousButtonMobile);
+        console.log('previousClickedIdMobile is', previousClickedIdMobile);
+        console.log('=============================')
+        console.log('=============DESKTOP, where we switched to, looks like....')
+        console.log('clickedButton is', clickedButton);
+        console.log('clickedId is', clickedId);
+        console.log('previousButton is', previousButton);
+        console.log('previousClickedId is', previousClickedId);
     }
+
+
 
 
 
