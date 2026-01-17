@@ -801,7 +801,14 @@ html, body {
   /* width: 67.07%; */
   width: 91%;
   height: 84.38%;
-  background-color: #600006;
+  /* background-color: #600006; */
+  background: linear-gradient(
+    to right,
+    rgba(96, 0, 6, 0.3),  /* left dim */
+    rgba(96, 0, 6, 1) 20%, /* main color starts */
+    rgba(96, 0, 6, 1) 80%, /* main color ends */
+    rgba(96, 0, 6, 0.3)   /* right dim */
+);
   padding: 1.22%;
   box-sizing: border-box;
   font-family: muli;
