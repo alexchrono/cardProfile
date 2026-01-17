@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
+
 
 html, body {
   margin: 0;
@@ -10,6 +12,48 @@ html, body {
   /* background-color: #800008; */
   cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
 }
+
+
+.inknut-antiqua-semibold {
+  font-family: "Inknut Antiqua", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.theNames {
+  font-family: "Inknut Antiqua", serif;
+  font-weight: 600;
+  font-style: italic;
+  /* font-style: normal; */
+  font-size:2rem;
+  text-align:center;
+
+}
+
+
+
+
+.theNames {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 1.6rem;
+    text-align: center;
+    -webkit-text-stroke: 1px black;
+    text-stroke: 1px black;
+    /* text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6), 4px 4px 8px rgba(0, 0, 0, 0.5); */
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    transform: skewX(-10deg);
+    background: linear-gradient(90deg, #ffdddd, #880000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 4px #ffaaaa, 2px 2px 0 black;
+    /* color: white; */
+}
+
+
+
 
 /* =========================
    ROOT CONTAINER (WORLD)
