@@ -392,6 +392,7 @@ async function mainFunction() {
         classNameForPreviews = 'picturePreview';
     }
 
+    
     const activePics = allPics.filter(p => typeof p === "string" && p.trim() !== "");
 
 
