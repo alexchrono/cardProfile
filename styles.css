@@ -1573,6 +1573,36 @@ h1 {
 }
 
 
+#oocScrollFind p {
+  position: relative;
+  padding-left: 2.2em;
+}
+
+#oocScrollFind p::before {
+    content: "";
+    position: absolute;
+    left: .3rem;
+    top: 0;
+    width: 1.2em;
+    height: 1.2em;
+    background: url(/assets/ourDumbIconCropped.png) no-repeat center / contain;
+}
+
+
+
+#oocScrollFind p::before {
+  /* background: linear-gradient(
+    145deg,
+    #3b82f6,
+    #1e40af,
+    #60a5fa
+  ); */
+  background:#4fa3c3;
+
+  mask: url("/assets/ourDumbIconCropped.png") no-repeat center / contain;
+  -webkit-mask: url("/assets/ourDumbIconCropped.png") no-repeat center / contain;
+}
+
 /* .info-table {
   float: left;
   box-sizing: border-box;
