@@ -843,13 +843,17 @@ html, body {
   /* left: 30.68%;
   bottom: 6.25%; */
   /* width: 67.07%; */
-  width: 91%;
+  /* width: 91%; */
+  width: 94%;
   height: 84.38%;
+  box-sizing: border-box;
+  border:3px dotted blue;
   /* background-color: #600006; */
   background: linear-gradient(
     to right,
-    rgba(96, 0, 6, 0.3),  /* left dim */
-    rgba(96, 0, 6, 1) 20%, /* main color starts */
+    rgba(96, 0, 6, 0.1) 0%,
+    rgba(96, 0, 6, 1) 10%,  /* left dim */
+    rgba(96, 0, 6, 1) 30%, /* main color starts */
     rgba(96, 0, 6, 1) 80%, /* main color ends */
     rgba(96, 0, 6, 0.3)   /* right dim */
 );
@@ -1540,7 +1544,7 @@ h1 {
 }
 
 
-.info-table {
+/* .info-table {
   float: left;
   box-sizing: border-box;
   border:3px dotted gray;
@@ -1548,6 +1552,17 @@ h1 {
   height: 99.34%;
   padding-right: 1.49%;
   margin-right: 1.49%;
+} */
+
+
+.info-table {
+    float: left;
+    box-sizing: border-box;
+    border: 3px dotted gray;
+    width: 94.96%;
+    height: 99.34%;
+    /* padding-right: 1.49%; */
+    /* margin-right: 1.49%; */
 }
 
 .info-table table {
