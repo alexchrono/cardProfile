@@ -621,7 +621,7 @@ html, body {
   justify-content: flex-end;
   align-items: flex-end;
   box-sizing:border-box;
-  border:4px dotted white;
+  /* border:4px dotted white; */
 }
 
 /* =========================
@@ -641,12 +641,12 @@ html, body {
   border-radius: 25px 25px 25px 0;
   box-sizing: border-box;
   z-index: 3;
-  border:3px dotted purple;
+  /* border:3px dotted purple; */
 }
 
 #mainMenu {
     box-sizing: border-box;
-    border: 3px dotted blue;
+    /* border: 3px dotted blue; */
     width: 28%;
     height: 84%;
     position: absolute;
