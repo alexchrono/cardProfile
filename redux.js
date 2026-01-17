@@ -457,6 +457,10 @@ activePics.forEach((src, index) => {
             rchevContainer = document.getElementById('rchev');
             lchevContainer = document.getElementById('lchev');
         }
+        else {
+            rchevContainer = document.getElementById('rchevMobile');
+            lchevContainer = document.getElementById('lchevMobile');
+        }
 
         if (!activePics[index] || !imageToGrab) return;
 
