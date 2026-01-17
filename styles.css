@@ -738,7 +738,8 @@ html, body {
   position: absolute;
   left: 30.68%;
   bottom: 6.25%;
-  width: 67.07%;
+  /* width: 67.07%; */
+  width: 65.07%;
   height: 84.38%;
   background-color: #600006;
   padding: 1.22%;
@@ -762,7 +763,8 @@ html, body {
   position: static;   /* 🔥 THIS FIXES IT */
   left: auto;
   bottom: auto;
-  width: 67.07%;
+  /* width: 67.07%; */
+  width: 65.07%;
   height: 84.38%;
   background-color: #600006;
   padding: 1.22%;
