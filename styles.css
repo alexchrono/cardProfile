@@ -845,10 +845,12 @@ html, body {
   /* width: 67.07%; */
   /* width: 91%; */
   width: 94%;
+  /*NARUTO WAS 86 OR SOMETHING*/
   height: 84.38%;
   box-sizing: border-box;
   border:3px dotted blue;
   /* background-color: #600006; */
+  /*NARUTO WORK ON THIS FADE OR REMOVVE*/
   background: linear-gradient(
     to right,
     rgba(96, 0, 6, 0.1) 0%,
