@@ -175,7 +175,140 @@ function handleButtonClick(event) {
         });
     }
 
-    console.log(`Activated: ${clickedId}`);
+    console.log(`33333333333Activated and clicked id is: ${clickedId}`);
+
+
+let findOurScroll;
+let scrollHolder = document.getElementById('scrollHolder');
+
+if (clickedId) {
+  if (!isMobile) {
+    findOurScroll = `${clickedId}ScrollFind`;
+  } else {
+    findOurScroll = `${clickedId}ScrollFindMobile`;
+  }
+}
+
+let el;
+
+if (findOurScroll) {
+  el = document.getElementById(findOurScroll);
+}
+
+function toggleScrollbar() {
+  if (!el) return false;
+  return el.scrollHeight > el.clientHeight;
+}
+
+function initFakeScrollbar(el, scrollHolder) {
+    scrollHolder.style.visibility= "visible";
+    scrollHolder.style.opacity="1"
+  const track = scrollHolder.querySelector('.scroll-track');
+  const thumb = scrollHolder.querySelector('.scroll-thumb');
+
+  function syncThumb() {
+    const ratio = el.clientHeight / el.scrollHeight;
+    const thumbHeight = Math.max(ratio * track.clientHeight, 30);
+    thumb.style.height = thumbHeight + 'px';
+
+    const scrollRatio =
+      el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
+
+    thumb.style.top =
+      scrollRatio * (track.clientHeight - thumbHeight) + 'px';
+  }
+
+  el.addEventListener('scroll', syncThumb);
+  syncThumb();
+
+  let dragging = false;
+  let startY = 0;
+  let startScroll = 0;
+
+  thumb.onmousedown = e => {
+    dragging = true;
+    startY = e.clientY;
+    startScroll = el.scrollTop;
+    document.body.style.userSelect = 'none';
+  };
+
+  document.onmousemove = e => {
+    if (!dragging) return;
+
+    const delta =
+      (e.clientY - startY) *
+      (el.scrollHeight / track.clientHeight);
+
+    el.scrollTop = startScroll + delta;
+  };
+
+  document.onmouseup = () => {
+    dragging = false;
+    document.body.style.userSelect = '';
+  };
+}
+
+if (el) {
+  console.log('[FAKE SCROLLBAR] Element found:', el.id);
+
+  const ourCheck = toggleScrollbar();
+  console.log('[FAKE SCROLLBAR] Has overflow?', ourCheck);
+
+  if (ourCheck) {
+    const alreadyBound = scrollHolder.dataset.boundTo === el.id;
+
+    console.log(
+      '[FAKE SCROLLBAR] Currently bound to:',
+      scrollHolder.dataset.boundTo || 'nothing'
+    );
+    console.log('[FAKE SCROLLBAR] Target element:', el.id);
+    console.log('[FAKE SCROLLBAR] Already bound?', alreadyBound);
+
+    if (!alreadyBound) {
+      console.log('[FAKE SCROLLBAR] Initializing / rebinding scrollbar');
+      initFakeScrollbar(el, scrollHolder);
+      scrollHolder.dataset.boundTo = el.id;
+      console.log(
+        '[FAKE SCROLLBAR] Scrollbar now bound to:',
+        scrollHolder.dataset.boundTo
+      );
+    } else {
+      console.log('[FAKE SCROLLBAR] Scrollbar already correctly bound — skipping init');
+    }
+
+    console.log('[FAKE SCROLLBAR] Showing scrollbar');
+    scrollHolder.classList.add('visible');
+  } else {
+    console.log('[FAKE SCROLLBAR] No overflow detected — hiding scrollbar');
+    scrollHolder.classList.remove('visible');
+    delete scrollHolder.dataset.boundTo;
+    console.log('[FAKE SCROLLBAR] Cleared bound element');
+  }
+} else {
+  console.log('[FAKE SCROLLBAR] No element found — skipping scrollbar logic');
+}
+
+
+
+// window.addEventListener('resize', toggleScrollbar);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 // ===================== STARTUP INTRO HOOK =====================
