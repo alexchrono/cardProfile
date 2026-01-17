@@ -380,18 +380,76 @@ async function mainFunction() {
     let imageToGrab;
     let leftChev;
     let rightChev;
+    let previewContainer;
+    let classNameForPreviews;
+    let previewNodes;
 
     if (!isMobile) {
         imageToGrab = document.getElementById('sexyKyra');
         leftChev = document.getElementById('leftChev');
         rightChev = document.getElementById('rightChev');
+        previewContainer = document.getElementById('topGalleryBot');
+        classNameForPreviews = 'picturePreview';
     }
 
     const activePics = allPics.filter(p => typeof p === "string" && p.trim() !== "");
+
+
+
+
+
+
+
+previewContainer.innerHTML = '';
+previewNodes = [];
+
+activePics.forEach((src, index) => {
+  const preview = document.createElement('div');
+  preview.className = `${classNameForPreviews}`
+
+  const img = document.createElement('img');
+  img.src = src;
+
+  preview.appendChild(img);
+
+  preview.addEventListener('click', () => {
+    setActivePic(index);
+  });
+
+  previewContainer.appendChild(preview);
+  previewNodes.push(preview);
+});
+
+
+
+
+
+
+
+
+
+
+
     let pics = {};
     activePics.forEach((url, index) => pics[index] = url);
 
-    function allPicFunction(index) {
+
+    let currentPicIndex = 0;
+// let previewNodes = [];
+
+    function setActivePic(index) {
+  currentPicIndex = index;
+
+  // update main image
+  updateMainImage(index);
+
+  // update preview borders
+  previewNodes.forEach((node, i) => {
+    node.classList.toggle('activePreview', i === index);
+  });
+}
+
+    function updateMainImage(index) {
         let rchevContainer;
         let lchevContainer;
 
@@ -403,7 +461,7 @@ async function mainFunction() {
         if (!activePics[index] || !imageToGrab) return;
 
         imageToGrab.src = activePics[index];
-        uniCount = index;
+        // uniCount = index;
 
         let prevIndex = index - 1 >= 0 ? index - 1 : activePics.length - 1;
         let nextIndex = index + 1 < activePics.length ? index + 1 : 0;
@@ -412,18 +470,22 @@ async function mainFunction() {
             let newLeftChev = leftChev.cloneNode(true);
             lchevContainer.replaceChild(newLeftChev, leftChev);
             leftChev = newLeftChev;
-            leftChev.addEventListener('click', () => allPicFunction(prevIndex));
+            // leftChev.addEventListener('click', () => updateMainImage(prevIndex));
+            leftChev.addEventListener('click', () => setActivePic(prevIndex));
+
         }
 
         if (rchevContainer && rightChev) {
             let newRightChev = rightChev.cloneNode(true);
             rchevContainer.replaceChild(newRightChev, rightChev);
             rightChev = newRightChev;
-            rightChev.addEventListener('click', () => allPicFunction(nextIndex));
+            // rightChev.addEventListener('click', () => updateMainImage(nextIndex));
+            rightChev.addEventListener('click', () => setActivePic(nextIndex));
+
         }
     }
 
-    if (activePics.length > 0) allPicFunction(0);
+    if (activePics.length > 0) setActivePic(0);
 
     // ===================== TABS / BUTTONS =====================
     let statsTab;
