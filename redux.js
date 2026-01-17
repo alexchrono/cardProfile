@@ -178,10 +178,28 @@ function handleButtonClick(event) {
     console.log(`33333333333Activated and clicked id is: ${clickedId}`);
 
 
+
+
+
     // THIS IS WHERE WE WILL DO OUR SCROLLBAR CRAP
+
+
+    //CHAT GPT I THINK RIGHT HERE WE LIKE...JUST NEED TO CHECK IF SCROLLHOLDER IS OPEN
+    //AND IF IT HAS SOMETHING ATTACHED TO IT AND NO MATTER WHAT WE REMOVE IT HERE
+    //AND THEN LIKE ADD IT BELOW SO HOW WE DO THAT
 
 let findOurScroll;
 let scrollHolder = document.getElementById('scrollHolder');
+
+// SAFEGUARD: remove any previously bound scrollbar
+if (scrollHolder?.dataset?.boundTo) {
+  console.log('[FAKE SCROLLBAR] Cleaning up previous scrollbar bound to:', scrollHolder.dataset.boundTo);
+  scrollHolder.classList.remove('visible');
+scrollHolder.style.visibility= "hidden";
+scrollHolder.style.opacity="0"
+  delete scrollHolder.dataset.boundTo;
+}
+
 
 if (clickedId) {
   if (!isMobile) {
