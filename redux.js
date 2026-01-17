@@ -208,17 +208,35 @@ function initFakeScrollbar(el, scrollHolder) {
   const track = scrollHolder.querySelector('.scroll-track');
   const thumb = scrollHolder.querySelector('.scroll-thumb');
 
+//   function syncThumb() {
+//     const ratio = el.clientHeight / el.scrollHeight;
+//     const thumbHeight = Math.max(ratio * track.clientHeight, 30);
+//     thumb.style.height = thumbHeight + 'px';
+
+//     const scrollRatio =
+//       el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
+
+//     thumb.style.top =
+//       scrollRatio * (track.clientHeight - thumbHeight) + 'px';
+//   }
+
   function syncThumb() {
-    const ratio = el.clientHeight / el.scrollHeight;
-    const thumbHeight = Math.max(ratio * track.clientHeight, 30);
-    thumb.style.height = thumbHeight + 'px';
+  const ratio = el.clientHeight / el.scrollHeight;
+  const thumbHeight = Math.max(ratio * track.clientHeight, 30);
+  thumb.style.height = thumbHeight + 'px';
 
-    const scrollRatio =
-      el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
+  // buffer in px
+  const buffer = track.clientHeight * 0.01; // 1% of track height
 
-    thumb.style.top =
-      scrollRatio * (track.clientHeight - thumbHeight) + 'px';
-  }
+  const scrollRatio = el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
+
+  // constrain thumb movement inside buffer
+  const maxTop = track.clientHeight - thumbHeight - buffer;
+  const top = buffer + scrollRatio * (maxTop - buffer);
+
+  thumb.style.top = top + 'px';
+}
+
 
   el.addEventListener('scroll', syncThumb);
   syncThumb();
