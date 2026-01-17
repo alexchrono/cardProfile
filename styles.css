@@ -1565,7 +1565,17 @@ h1 {
 
 
 
-
+#scrollHolder {
+    box-sizing: border-box;
+    border: 3px dotted gray;
+    height: 80%;
+    width: 3.5%;
+    background-color: gray;
+    position: absolute;
+    left: 95%;
+    bottom: 9%;
+    z-index: 80000000;
+}
 
 
 
@@ -1642,6 +1652,8 @@ mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 1
     align-items: center;
 
 }
+
+
 
 /* #topViewMobileInner {
     width:90%;
