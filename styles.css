@@ -1390,16 +1390,35 @@ h1 {
 }
 
 
-.info-content p {
+/* .info-content p {
   margin: 2.7dvh 0;
+  line-height: 1.2;
+} */
+
+.info-content p {
+  margin: 2.3dvh 0 0 0;
   line-height: 1.2;
 }
 
 .info-content p.first {
 
-  margin: 1dvh 0;
+  margin: 1dvh 0 0 0;
   /* line-height: 1.4;
   font-weight: bold;   */
+}
+
+.info-content p.drama {
+   margin: 2.3dvh 0 0 0;
+   line-height: 1.2;
+   text-align:end;
+   font-style: italic;
+   /* font-style: oblique 0deg; */
+   font-size: 1.3rem;
+  padding-right: 8%;
+
+   color:gray;
+
+
 }
 
 
