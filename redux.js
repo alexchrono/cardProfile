@@ -178,6 +178,8 @@ function handleButtonClick(event) {
     console.log(`33333333333Activated and clicked id is: ${clickedId}`);
 
 
+    // THIS IS WHERE WE WILL DO OUR SCROLLBAR CRAP
+
 let findOurScroll;
 let scrollHolder = document.getElementById('scrollHolder');
 
