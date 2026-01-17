@@ -1261,6 +1261,7 @@ h1 {
   height: 88%;
   height: 100%;
   /* NOT SURE ABOVE THE TOP COME BACK NARUTOGARA */
+  /*ALSO SEE IF WE CAN MAKE IT SO THAT IF THE EXCESS ON A SCROLLDOWN IS MARGIN OR SOMETHING WE DONT SHOW THE SCROLL */
   position: relative;
   display: flex;
   flex-direction: row;
