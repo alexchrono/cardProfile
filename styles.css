@@ -277,6 +277,23 @@ html, body {
   /* object-fit:none; */
 }
 
+
+#theWave img {
+  height: 100%;
+  width: auto;
+  opacity: 0.5;
+
+  /* 🎛️ COLOR CONTROLS */
+  filter:
+    brightness(1)
+    contrast(1)
+    saturate(1)
+    hue-rotate(-35deg)
+    sepia(0);
+  /* Optional blending tricks */
+  mix-blend-mode: normal; /* try: multiply, screen, overlay */
+}
+
 /* Target the namespaced SVG inside #theWave */
 
 
@@ -306,6 +323,72 @@ html, body {
   /* object-fit:none; */
 }
 
+#theWaveLines svg {
+  height: 100%;
+  width: auto;
+
+
+  opacity: .6;
+
+/*
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0,0,0,0.5) 0%,
+    rgba(0,0,0,0.5) 30%,
+    rgba(0,0,0,0.2) 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    rgba(0,0,0,0.5) 0%,
+    rgba(0,0,0,0.5) 30%,
+    rgba(0,0,0,0.2) 100%
+  );
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%; */
+}
+
+#theWaveLines svg {
+  height: 100%;
+  width: auto;
+
+  opacity: .6; /* important */
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,.6) 39.12%,
+    rgba(0,0,0,.3) 46%,
+    rgba(0,0,0,.2) 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+     rgba(0,0,0,1) 0%,
+    rgba(0,0,0,.6) 39.12%,
+    rgba(0,0,0,.3) 46%,
+    rgba(0,0,0,.2) 100%
+  );
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+
+
+
+#theWaveLines svg path {
+  fill: none !important;                  /* kill the hardcoded fill */
+  stroke: rgba(227, 194, 176, 0.4);          /* your blue */
+  stroke-width: 1px;                      /* adjust thickness */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
 
 
