@@ -804,37 +804,12 @@ html, body {
 }
 
 
-#statsTabMobile {
-  /* position: absolute;
-  left: 30.68%;
-  bottom: 6.25%; */
-  width: 67.07%;
-  height: 84.38%;
-  background-color: #600006;
-  padding: 1.22%;
-  box-sizing: border-box;
-  overflow: hidden;
-  font-family: muli;
-  /* font-size: 4.38%;
-  line-height: 4.38%; */
-  font-size: 1rem;
-  line-height: 1rem;
-  color: #fff;
-  border-radius: 0 3.05% 3.05% 0;
-  z-index: 25;
-  visibility: visible;
-
-}
 
 
 
 
 
 
-#statsTabMobile,
-.dragonMobile {
-  transition: opacity 0.6s ease;
-}
 
 /* =========================
    DRAGON PANELS
@@ -904,30 +879,6 @@ html, body {
 
 
 
-.dragonMobile {
-
-  position: static;   /* 🔥 THIS FIXES IT */
-  left: auto;
-  bottom: auto;
-  /* width: 67.07%; */
-  width: 65.07%;
-  height: 84.38%;
-  background-color: #600006;
-  padding: 1.22%;
-  box-sizing: border-box;
-  font-family: muli;
-  /* font-size: 4.38%;
-  line-height: 4.38%; */
-  font-size: 1rem;
-  line-height: 1rem;
-  color: #fff;
-  opacity: 0;
-  overflow: auto;
-  z-index: 20;
-  visibility: hidden;
-  transition: opacity 1s ease;
-}
-
 
 .dragon:target {
   bottom: 26.25%;
@@ -936,13 +887,6 @@ html, body {
   z-index: 30;
 }
 
-
-.dragonMobile:target {
-  bottom: 26.25%;
-  bottom: 6.25%;
-  opacity: 1;
-  z-index: 30;
-}
 
 
 
@@ -966,23 +910,6 @@ html, body {
 
 
 
-
-
-#personalityTabMobile {
-    visibility: hidden;
-}
-
-#historyTabMobile {
-    visibility: hidden;
-}
-
-#encountersTabMobile {
-    visibility: hidden;
-}
-
-#oocTabMobile {
-    visibility: hidden;
-}
 
 
 
@@ -1093,7 +1020,7 @@ h1 {
   border-bottom: 1px solid #b3323b;
 }
 
-
+/* THIS IS THE ONE MOBILE ONE WE CACN KEEP */
 #mobileMain {
   box-sizing: border-box;
   border:3px dotted red;
@@ -1111,235 +1038,11 @@ h1 {
 
 
 
-
-/* =========================
-   MOBILE GALLERY DISPLAY
-========================= */
-#topGalleryDisplayMobile {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  z-index: 200000;
-  box-sizing: border-box;
-  border: 5px dotted red;
-  background-color: black;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 1s ease;
-}
-
-#topGalleryTopMobile {
-  box-sizing: border-box;
-  border: 3px dotted yellow;
-  width: 100%;
-  height: 90%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#justTheProfPic2Mobile {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  border: 3px dotted gold;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#justTheProfPic2Mobile img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-#topGalleryBotMobile {
-  box-sizing: border-box;
-  border: 3px dotted green;
-  width: 100%;
-  height: 15%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#topGalleryBotBotMobile {
-  box-sizing: border-box;
-  border: 3px dotted blue;
-  width: 100%;
-  height: 10%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.chevronHoldersMobile {
-  box-sizing: border-box;
-  border: 3px dotted white;
-  width: 10%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.chevronHoldersMobile img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  cursor: pointer;
-}
-
-#chevronCenterMobile {
-  box-sizing: border-box;
-  border: 3px dotted purple;
-  width: 80%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#chevronHolderMobile {
-  box-sizing: border-box;
-  border: 3px dotted blue;
-  width: 30%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#closeButtonMobile {
-  border: 3px solid #737373;
-  border-radius: 25px;
-  border-right: solid 3px #8c8c8c;
-  width: 92%;
-  height: 68%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  font-size: 1.8rem;
-  cursor: pointer;
-}
-
-/* =========================
-   MOBILE TABS
-========================= */
-#statsTabMobile,
-.dragonMobile {
-  position: absolute;
-  /* left: 30.68%;
-  bottom: 6.25%; */
-  width: 90%;
-  height: 90%;
-  background-color: #600006;
-  padding: 1.22%;
-  box-sizing: border-box;
-  font-family: muli;
-  font-size: 14px;
-  line-height: 14px;
-  color: #fff;
-  opacity: 0;
-  overflow: auto;
-  z-index: 20;
-  visibility: hidden;
-  transition: opacity 1s ease;
-}
-
-.dragonMobile:target {
-  bottom: 26.25%;
-  bottom: 6.25%;
-  opacity: 1;
-  z-index: 30;
-}
-
-#personalityTabMobile,
-#historyTabMobile,
-#encountersTabMobile,
-#oocTabMobile {
-  visibility: hidden;
-}
-
 /* =========================
    MOBILE MENU
 ========================= */
-#mobileMain {
-  box-sizing: border-box;
-  border: 3px dotted red;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  display: none;
-}
 
-#topViewMobile {
-  box-sizing: border-box;
-  border: 3px dotted green;
-  width: 100%;
-  height: 88%;
-  height: 100%;
-  /* NOT SURE ABOVE THE TOP COME BACK NARUTOGARA */
-  /*ALSO SEE IF WE CAN MAKE IT SO THAT IF THE EXCESS ON A SCROLLDOWN IS MARGIN OR SOMETHING WE DONT SHOW THE SCROLL */
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0vh;
-}
 
-#topViewMobileInner {
-  /* width: 90%;
-  height: 90%; */
-
-    width: 100%;
-  height: 100%;
-  background-color: rgba(28, 46, 131, 0.75);
-  /* border-radius: 25px 25px 25px 0; */
-  z-index: 5;
-  position:relative;
-  display:flex;
-  flex-direction:row;
-  justify-content:center;
-  align-items:center;
-}
-
-#mainMenuMobile {
-  box-sizing: border-box;
-  border: 3px dotted blue;
-  width: 100%;
-  height: 12%;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.menuBlockMobile {
-  box-sizing: border-box;
-  width: 16.66%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 
 .menuInner {
@@ -1826,6 +1529,382 @@ h1 {
 
 
 
+
+
+
+
+
+/*====================================== MOBILE VARIABLES BUT WE CAN PUT THEM IN THE MAIN SECTION */
+
+
+#leftSideMainMobile{
+box-sizing:border-box;
+border:3px dotted brown;
+width:39.12%;
+height:100%;
+display:flex;
+flex-direction:row;
+justify-content:flex-end;
+align-items:flex-end;
+position:relative;
+z-index:15;
+}
+
+#topGalleryDisplayMobile{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+z-index:200000;
+box-sizing:border-box;
+border:5px dotted red;
+background-color:black;
+visibility:hidden;
+opacity:0;
+transition:opacity 1s ease;
+}
+
+#topGalleryTopMobile{
+box-sizing:border-box;
+border:3px dotted yellow;
+width:100%;
+height:75%;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+}
+
+#justTheProfPic2Mobile{
+box-sizing:border-box;
+width:100%;
+height:100%;
+border:3px dotted gold;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+#topGalleryBotMobile{
+box-sizing:border-box;
+border:3px dotted green;
+width:100%;
+height:15%;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+gap:2%;
+}
+
+#topGalleryBotBotMobile{
+box-sizing:border-box;
+border:3px dotted blue;
+width:100%;
+height:10%;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+}
+
+.chevronHoldersMobile{
+box-sizing:border-box;
+border:3px dotted white;
+width:10%;
+height:100%;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+}
+
+.chevronsMobile{
+width:100%;
+height:100%;
+object-fit:contain;
+cursor:pointer;
+}
+
+#chevronCenterMobile{
+box-sizing:border-box;
+border:3px dotted purple;
+width:80%;
+height:100%;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+}
+
+#chevronHolderMobile{
+box-sizing:border-box;
+border:3px dotted blue;
+width:30%;
+height:100%;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+}
+
+#theRestMobile{
+position:relative;
+width:60.88%;
+height:100%;
+display:flex;
+flex-direction:column;
+z-index:20;
+background:linear-gradient(to right,rgba(0,0,0,0.3913)0%,rgba(0,0,0,0.0)20%);
+}
+
+#theRestTopMobile{
+position:relative;
+width:100%;
+height:60%;
+}
+
+#theRestBotMobile{
+position:relative;
+width:100%;
+height:40%;
+display:flex;
+flex-direction:row;
+justify-content:flex-end;
+align-items:flex-end;
+box-sizing:border-box;
+}
+
+#mainMobile{
+position:relative;
+width:98%;
+height:98%;
+background-color:rgba(28,46,131,0.21);
+border:3px solid rgba(146,95,95,.9);
+border-radius:3vh 3vh 3vh 3vh;
+box-sizing:border-box;
+z-index:15;
+margin-bottom:1.5%;
+margin-right:1%;
+display:flex;
+flex-direction:row;
+align-items:center;
+}
+
+#mainMenuWrapperMobile{
+width:30%;
+height:100%;
+box-sizing:border-box;
+border:3px dotted brown;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+}
+
+#mainMenuMobile{
+box-sizing:border-box;
+width:95%;
+margin-left:5%;
+margin-top:4%;
+height:84%;
+max-height:84.38%;
+position:relative;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.menuBlockMobile{
+box-sizing:border-box;
+width:100%;
+height:20%;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.menuInnerMobile{
+border:3px solid #737373;
+border-radius:2rem 2rem 2rem 2rem;
+border-right:solid 3px #8c8c8c;
+width:92%;
+height:68%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+font-size:1.2rem;
+cursor:pointer;
+}
+
+.activeMobile{
+background-color:#09202a;
+}
+
+.inactiveMobile{
+background-color:#600006;
+}
+
+#mainMenuRightSideMobile{
+box-sizing:border-box;
+border:3px dotted blue;
+width:70%;
+height:100%;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+position:relative;
+padding-right:2.3%;
+}
+
+#scrollHolderMobile{
+box-sizing:border-box;
+height:80%;
+width:3.5%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+position:absolute;
+left:95%;
+bottom:9%;
+z-index:800000;
+opacity:0;
+visibility:hidden;
+transition:opacity .35s ease,visibility .35s ease;
+}
+
+.scroll-trackMobile{
+position:relative;
+width:100%;
+height:100%;
+background-color:rgba(0,0,0,0.7);
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+border-radius:2rem;
+}
+
+.scroll-thumbMobile{
+position:absolute;
+top:0;
+width:76%;
+left:12%;
+min-height:30px;
+background:rgb(128 178 236 / 59%);
+border-radius:2rem;
+cursor:grab;
+transition:background-color .2s ease,opacity .2s ease;
+}
+
+.scroll-thumbMobile:active{
+cursor:grabbing;
+background:rgba(146,95,95,1);
+}
+
+.dragonMobile{
+position:absolute;
+width:91%;
+height:84.38%;
+background-color:#600006;
+padding:1.22%;
+box-sizing:border-box;
+font-family:muli;
+font-size:1rem;
+line-height:1rem;
+color:#fff;
+opacity:0;
+overflow:auto;
+z-index:20;
+visibility:hidden;
+transition:opacity 1s ease;
+overflow-y:hidden;
+}
+
+#statsTabMobile{
+position:absolute;
+width:91%;
+height:84.38%;
+background-color:#600006;
+padding:1.22%;
+box-sizing:border-box;
+font-family:muli;
+font-size:1rem;
+line-height:1rem;
+color:#fff;
+border-radius:3.05% 3.05% 0;
+z-index:25;
+visibility:visible;
+}
+
+.info-contentMobile{
+width:100%;
+height:100%;
+font-size:1rem;
+text-align:justify;
+box-sizing:border-box;
+border:3px dotted green;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+}
+
+.info-tableMobile{
+float:left;
+box-sizing:border-box;
+border:3px dotted gray;
+width:94.96%;
+height:99.34%;
+}
+
+.scrollableMobile{
+overflow-y:auto;
+overflow-x:hidden;
+position:relative;
+}
+
+.labelMobile{
+width:29.52%;
+opacity:0.8;
+}
+
+.theNamesMobile{
+font-family:"InknutAntiqua",serif;
+font-weight:600;
+font-style:italic;
+font-size:1.6rem;
+text-align:center;
+letter-spacing:.05em;
+line-height:1.1;
+transform:skewX(-10deg);
+background:linear-gradient(90deg,#ffdddd,#880000);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-shadow:0 0 4px #ffaaaa,2px 2px 0 black;
+}
+
+.firstMobile{
+margin:1dvh 0 0 0;
+line-height:1.2;
+}
+
+.dramaMobile{
+margin:2.3dvh 0 0 0;
+line-height:1.2;
+text-align:end;
+font-style:italic;
+font-size:1.3rem;
+padding-right:8%;
+color:gray;
+}
 
 
 
