@@ -1321,8 +1321,39 @@ h1 {
 
 
 
+/* // ======================== OUR NEW HISTORY SECTION */
+
+.picz-content-outer {
+     width: 90%;
+   margin-left:5%;
+   margin-right:5%;
+  height: 81.83%;
+  background: radial-gradient(circle, rgba(197, 60, 114, 0.3) 30%, transparent);
+  border: 0.025rem solid #B22222;
+  overflow-y:hidden;
+  position:relative;
+}
+
+.picz-content-inner {
+  width: 94.29%;
+  height: 88.88%;
+  padding: 5.56% 2% 5.56% 2%;
+  font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif;
+  font-size: 14px;
+  text-align: justify;
+  overflow: auto;
+}
 
 
+.picz-content-inner p {
+  margin: 2dvh 0;
+  line-height: 1.5;
+}
+
+.character-section p {
+  margin: 0.15rem 0;
+  line-height: 1.5;
+}
 
 
 
@@ -1357,6 +1388,20 @@ h1 {
   justify-content:center;
   align-items: center;
 }
+
+
+.info-content p {
+  margin: 2.7dvh 0;
+  line-height: 1.2;
+}
+
+.info-content p.first {
+
+  margin: 1dvh 0;
+  /* line-height: 1.4;
+  font-weight: bold;   */
+}
+
 
 .info-table {
   float: left;
