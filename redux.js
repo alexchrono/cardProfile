@@ -205,6 +205,7 @@ if (clickedId) {
   if (!isMobile) {
     findOurScroll = `${clickedId}ScrollFind`;
   } else {
+    console.log('I GUESS WE GOT IT YAY FINDOURSCROLL IS',findOurScroll)
     findOurScroll = `${clickedId}ScrollFindMobile`;
   }
 }
