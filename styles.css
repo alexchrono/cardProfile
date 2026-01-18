@@ -1947,7 +1947,10 @@ height:99.34%;
 overflow-y:auto;
 overflow-x:hidden;
 position:relative;
+scrollbar-width: none;
 }
+
+
 
 .labelMobile{
 width:29.52%;
