@@ -13,6 +13,7 @@ let encountersButtonMobile;
 let oocButtonMobile;
 
 let buttonList;
+let buttonListMobile;
 let clickedButton;
 let clickedId;
 
@@ -24,6 +25,16 @@ let previousClickedId;
 
 let previousButtonMobile;
 let previousClickedIdMobile;
+
+let mainTracker = {
+    // "clickedButton": false,
+    "clickedId": false,
+    // "clickedButtonMobile": false,
+    "clickedIdMobile": false,
+    "previousClickedId": false,
+    "previousClickedIdMobile": false
+
+}
 
 let galleryButton;
 let closeButton;
@@ -68,6 +79,8 @@ function wait(ms) {
 
 // ===================== GALLERY FUNCTIONS =====================
 function openGallery() {
+    console.log('not to open gallery yet');
+    return
     if (isMobile) {
         topGalleryDisplayMobile.style.visibility = "visible";
         requestAnimationFrame(() => {
@@ -82,6 +95,8 @@ function openGallery() {
 }
 
 function closeGallery() {
+    console.log('not to close gallery yet');
+    return
     if (isMobile) {
         topGalleryDisplayMobile.style.opacity = "0";
         setTimeout(() => {
@@ -97,6 +112,8 @@ function closeGallery() {
 //======== close gallery if open
 
 function closeGalleryMobileIfOpen() {
+    console.log('not to close galleryMobileIfOpen yet');
+    return
     if (!topGalleryDisplayMobile) return;
 
     const isVisible =
@@ -126,7 +143,119 @@ function closeGalleryMobileIfOpen() {
     }
 }
 
+function handleButtonClickNotStupid(event) {
+    const btn = event.currentTarget;
+    const btnId = btn.id;
 
+    
+    let oldButtonToGrab;
+    let oldTabToHide;
+    let newTabToFadeIn;
+
+    if (isMobile) {
+        if (!mainTracker?.previousClickedIdMobile) {
+            previousClickedIdMobile = "statsButtonMobile"
+        }
+
+        if (mainTracker?.previousClickedIdMobile && btnId === mainTracker?.previousClickedIdMobile) {
+            return
+        }
+
+        if (mainTracker?.previousClickedIdMobile && btnId !== mainTracker?.previousClickedIdMobile) {
+            oldButtonToGrab = document.getElementById(mainTracker?.previousClickedIdMobile)
+            oldTabToHide =  document.getElementById(mainTracker?.previousClickedIdMobile.replace("ButtonMobile", "TabMobile"))
+        }
+
+        newTabToFadeIn = document.getElementById(btnId.replace("ButtonMobile", "TabMobile"))
+        // : btnId.replace("Button", "tab");
+
+
+
+        // previousTocheck = isMobile
+        //     ? btnId.replace("ButtonMobile", "tabMobile")
+        //     : btnId.replace("Button", "tab");
+
+
+    }
+    else {
+        if (!mainTracker?.previousClickedId) {
+            previousClickedId = "statsButton"
+        }
+
+        if (mainTracker?.previousClickedId && btnId === mainTracker?.previousClickedId) {
+            return
+        }
+
+        if (mainTracker?.previousClickedId && btnId !== mainTracker?.previousClickedId) {
+            oldButtonToGrab = document.getElementById(mainTracker?.previousClickedId)
+            oldTabToHide =  document.getElementById(mainTracker?.previousClickedIdMobile.replace("Button", "Tab"))
+            newTabToFadeIn = document.getElementById(btnId.replace("Button", "Tab"))
+
+        }
+
+        // previousTocheck = isMobile
+        //     ? btnId.replace("ButtonMobile", "tabMobile")
+        //     : btnId.replace("Button", "tab");
+
+
+    }
+
+         if (oldButtonToGrab){
+            oldButtonToGrab.classList.remove("active");
+            oldButtonToGrab.classList.add("inactive");
+            }
+            if (btn){
+                btn.classList.remove("inactive");
+            btn.classList.add("active");
+
+            }
+
+
+
+            if (oldTabToHide){
+        oldTabToHide.style.opacity = "0";
+        setTimeout(() => {
+            oldTabToHide.style.visibility = "hidden";
+        }, 600);
+    }
+
+     if (newTabToFadeIn) {
+        newTabToFadeIn.style.visibility = "visible";
+        requestAnimationFrame(() => {
+            newTabToFadeIn.style.opacity = "1";
+        });
+    }
+
+
+
+        if (isMobile) {
+
+            mainTracker.previousClickedIdMobile = btnId
+        }
+        else {
+            mainTracker.previousClickedId = btnId
+        }
+
+
+
+
+
+    console.log('STARTING OUT REAL SIMPLE...btn or event.currentTarget is', btn)
+    console.log('btnId will be......', btn.id)
+
+
+    console.log('before we do anything mainTracker is....', mainTracker)
+    const derivedId = isMobile
+        ? btnId.replace("ButtonMobile", "tabMobile")
+        : btnId.replace("Button", "tab");
+
+    console.log('we can get our item by grabbing the following....', derivedId)
+
+
+
+
+
+}
 // ===================== TAB / BUTTON HANDLER =====================
 function handleButtonClick(event) {
     const btn = event.currentTarget;
@@ -163,8 +292,8 @@ function handleButtonClick(event) {
     console.log('🧠 derivedId:', derivedId);
 
     if (isMobile && !isGalleryButton) {
-    closeGalleryMobileIfOpen();
-}
+        closeGalleryMobileIfOpen();
+    }
 
     // ===================== MOBILE STATE UPDATE =====================
 
@@ -190,9 +319,9 @@ function handleButtonClick(event) {
             previousButtonMobile.classList.add("inactive");
         } else {
             let grabThisOne = document.getElementById("statsButtonMobile")
-            if (grabThisOne){
-                 grabThisOne.classList.remove("active");
-            grabThisOne.classList.add("inactive");
+            if (grabThisOne) {
+                grabThisOne.classList.remove("active");
+                grabThisOne.classList.add("inactive");
             }
             console.log('ℹ️ No previous mobile button to deactivate');
         }
@@ -380,7 +509,7 @@ async function runMobileStartupIntro() {
 
 
 
-      let bottomButtonMenu = document.getElementById("mainMenuMobile");
+    let bottomButtonMenu = document.getElementById("mainMenuMobile");
     // bottomButtonMenu.style.height="0%"
     // bottomButtonMenu.style.visibility="hidden";
 
@@ -431,25 +560,25 @@ async function mainFunction() {
 
 
 
-previewContainer.innerHTML = '';
-previewNodes = [];
+    previewContainer.innerHTML = '';
+    previewNodes = [];
 
-activePics.forEach((src, index) => {
-  const preview = document.createElement('div');
-  preview.className = `${classNameForPreviews}`
+    activePics.forEach((src, index) => {
+        const preview = document.createElement('div');
+        preview.className = `${classNameForPreviews}`
 
-  const img = document.createElement('img');
-  img.src = src;
+        const img = document.createElement('img');
+        img.src = src;
 
-  preview.appendChild(img);
+        preview.appendChild(img);
 
-  preview.addEventListener('click', () => {
-    setActivePic(index);
-  });
+        preview.addEventListener('click', () => {
+            setActivePic(index);
+        });
 
-  previewContainer.appendChild(preview);
-  previewNodes.push(preview);
-});
+        previewContainer.appendChild(preview);
+        previewNodes.push(preview);
+    });
 
 
 
@@ -466,19 +595,19 @@ activePics.forEach((src, index) => {
 
 
     let currentPicIndex = 0;
-// let previewNodes = [];
+    // let previewNodes = [];
 
     function setActivePic(index) {
-  currentPicIndex = index;
+        currentPicIndex = index;
 
-  // update main image
-  updateMainImage(index);
+        // update main image
+        updateMainImage(index);
 
-  // update preview borders
-  previewNodes.forEach((node, i) => {
-    node.classList.toggle('activePreview', i === index);
-  });
-}
+        // update preview borders
+        previewNodes.forEach((node, i) => {
+            node.classList.toggle('activePreview', i === index);
+        });
+    }
 
     function updateMainImage(index) {
         let rchevContainer;
@@ -566,7 +695,7 @@ activePics.forEach((src, index) => {
 
     if (!mercierContainerDiv) return;
 
-    buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClick));
+    buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClickNotStupid));
     if (closeButton) closeButton.addEventListener("click", closeGallery);
 
     // ===================== VANTA / THREE (EXACTLY AS YOU WROTE IT) =====================
