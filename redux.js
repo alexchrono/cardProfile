@@ -112,24 +112,96 @@ function handleButtonClick(event) {
         return;
     }
 
+    // if (isMobile && isGalleryButton) {
+    //     previousButtonMobile = clickedButtonMobile;
+    //     previousClickedIdMobile = clickedIdMobile;
+
+    //     clickedButtonMobile = btn;
+    //     clickedIdMobile = "gallery";
+
+    //     if (previousButtonMobile) {
+    //         previousButtonMobile.classList.remove("active");
+    //         previousButtonMobile.classList.add("inactive");
+    //     }
+
+    //     btn.classList.remove("inactive");
+    //     btn.classList.add("active");
+
+    //     openGallery();
+    //     return;
+    // }
+
+
     if (isMobile && isGalleryButton) {
-        previousButtonMobile = clickedButtonMobile;
-        previousClickedIdMobile = clickedIdMobile;
+    console.log('📱 [GALLERY CLICK] Mobile gallery button clicked');
+    console.log('➡️ btn:', btn);
+    console.log('➡️ btn.id:', btn.id);
 
-        clickedButtonMobile = btn;
-        clickedIdMobile = "gallery";
+    console.log('🧠 BEFORE UPDATE STATE:');
+    console.log('   previousButtonMobile:', previousButtonMobile);
+    console.log('   previousClickedIdMobile:', previousClickedIdMobile);
+    console.log('   clickedButtonMobile:', clickedButtonMobile);
+    console.log('   clickedIdMobile:', clickedIdMobile);
 
-        if (previousButtonMobile) {
-            previousButtonMobile.classList.remove("active");
-            previousButtonMobile.classList.add("inactive");
-        }
+    // save previous state
+    previousButtonMobile = clickedButtonMobile;
+    previousClickedIdMobile = clickedIdMobile;
 
-        btn.classList.remove("inactive");
-        btn.classList.add("active");
+    console.log('💾 SAVED PREVIOUS STATE:');
+    console.log('   previousButtonMobile NOW:', previousButtonMobile);
+    console.log('   previousClickedIdMobile NOW:', previousClickedIdMobile);
 
-        openGallery();
-        return;
+    // set new clicked state
+    clickedButtonMobile = btn;
+    clickedIdMobile = "gallery";
+
+    console.log('🎯 NEW CLICKED STATE SET:');
+    console.log('   clickedButtonMobile NOW:', clickedButtonMobile);
+    console.log('   clickedIdMobile NOW:', clickedIdMobile);
+
+    // try to deactivate previous button
+    if (previousButtonMobile) {
+        console.log('🧹 ATTEMPTING TO DEACTIVATE PREVIOUS BUTTON');
+        console.log('   previousButtonMobile.id:', previousButtonMobile.id);
+        console.log(
+            '   classes BEFORE:',
+            [...previousButtonMobile.classList]
+        );
+
+        previousButtonMobile.classList.remove("active");
+        previousButtonMobile.classList.add("inactive");
+
+        console.log(
+            '   classes AFTER:',
+            [...previousButtonMobile.classList]
+        );
+    } else {
+        console.warn(
+            '⚠️ previousButtonMobile is NULL/UNDEFINED — nothing to deactivate'
+        );
     }
+
+    console.log('✨ ACTIVATING GALLERY BUTTON');
+    console.log(
+        '   gallery button classes BEFORE:',
+        [...btn.classList]
+    );
+
+    btn.classList.remove("inactive");
+    btn.classList.add("active");
+
+    console.log(
+        '   gallery button classes AFTER:',
+        [...btn.classList]
+    );
+
+    console.log('🖼️ Calling openGallery()');
+    openGallery();
+
+    console.log('✅ EXITING MOBILE GALLERY HANDLER');
+    return;
+}
+
 
     /* ===================== BUTTON STATE ===================== */
 
