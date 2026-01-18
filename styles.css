@@ -1264,6 +1264,7 @@ h1 {
   animation: blinkBorder 1s infinite;
 }
 
+
 .picturePreviewMobile.activePreview {
   border: 3px solid red;
   animation: blinkBorder 1s infinite;
