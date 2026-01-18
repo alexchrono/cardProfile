@@ -158,6 +158,7 @@ function bindFakeScrollbar({
         scrollFindId: clickedId + (isMobile ? 'ScrollFindMobile' : 'ScrollFind')
     };
 
+    
     const scrollHolder = document.getElementById(SCROLL.holderId);
     const el = document.getElementById(SCROLL.scrollFindId);
 
