@@ -105,6 +105,8 @@ function handleButtonClick(event) {
         btnId === "galleryButton" ||
         btnId === "galleryButtonMobile";
 
+    /* ===================== GALLERY SHORT-CIRCUIT ===================== */
+
     if (!isMobile && isGalleryButton) {
         openGallery();
         return;
@@ -128,6 +130,8 @@ function handleButtonClick(event) {
         openGallery();
         return;
     }
+
+    /* ===================== BUTTON STATE ===================== */
 
     if (clickedButton && clickedId) {
         previousButton = clickedButton;
@@ -153,6 +157,8 @@ function handleButtonClick(event) {
     clickedButton.classList.remove("inactive");
     clickedButton.classList.add("active");
 
+    /* ===================== TAB TRANSITION ===================== */
+
     let prevTab = previousClickedId
         ? document.getElementById(previousClickedId + (isMobile ? "TabMobile" : "Tab"))
         : document.getElementById(isMobile ? "statsTabMobile" : "statsTab");
@@ -175,180 +181,118 @@ function handleButtonClick(event) {
         });
     }
 
-    console.log(`33333333333Activated and clicked id is: ${clickedId}`);
+    console.log('[TAB] Activated:', clickedId);
 
+    /* ============================================================
+       ===================== SCROLLBAR LOGIC =====================
+       ============================================================ */
 
+    /* ---------- PARAMS ---------- */
 
+    const SCROLL = {
+        holderId: isMobile ? 'scrollHolderMobile' : 'scrollHolder',
+        trackClass: isMobile ? '.scroll-trackMobile' : '.scroll-track',
+        thumbClass: isMobile ? '.scroll-thumbMobile' : '.scroll-thumb',
+        scrollFindId: clickedId + (isMobile ? 'ScrollFindMobile' : 'ScrollFind')
+    };
 
+    const scrollHolder = document.getElementById(SCROLL.holderId);
+    const el = document.getElementById(SCROLL.scrollFindId);
 
-    // THIS IS WHERE WE WILL DO OUR SCROLLBAR CRAP
+    /* ---------- SAFEGUARD CLEANUP ---------- */
 
+    if (scrollHolder?.dataset?.boundTo) {
+        console.log('[FAKE SCROLLBAR] Cleaning previous binding:', scrollHolder.dataset.boundTo);
 
-    //CHAT GPT I THINK RIGHT HERE WE LIKE...JUST NEED TO CHECK IF SCROLLHOLDER IS OPEN
-    //AND IF IT HAS SOMETHING ATTACHED TO IT AND NO MATTER WHAT WE REMOVE IT HERE
-    //AND THEN LIKE ADD IT BELOW SO HOW WE DO THAT
+        scrollHolder.classList.remove('visible');
+        scrollHolder.style.visibility = 'hidden';
+        scrollHolder.style.opacity = '0';
 
-let findOurScroll;
-let scrollHolder = document.getElementById('scrollHolder');
-
-// SAFEGUARD: remove any previously bound scrollbar
-if (scrollHolder?.dataset?.boundTo) {
-  console.log('[FAKE SCROLLBAR] Cleaning up previous scrollbar bound to:', scrollHolder.dataset.boundTo);
-  scrollHolder.classList.remove('visible');
-scrollHolder.style.visibility= "hidden";
-scrollHolder.style.opacity="0"
-  delete scrollHolder.dataset.boundTo;
-}
-
-
-if (clickedId) {
-  if (!isMobile) {
-    findOurScroll = `${clickedId}ScrollFind`;
-  } else {
-    console.log('I GUESS WE GOT IT YAY FINDOURSCROLL IS',findOurScroll)
-    findOurScroll = `${clickedId}ScrollFindMobile`;
-  }
-}
-
-let el;
-
-if (findOurScroll) {
-  el = document.getElementById(findOurScroll);
-}
-
-function toggleScrollbar() {
-  if (!el) return false;
-  return el.scrollHeight > el.clientHeight;
-}
-
-function initFakeScrollbar(el, scrollHolder) {
-    scrollHolder.style.visibility= "visible";
-    scrollHolder.style.opacity="1"
-  const track = scrollHolder.querySelector('.scroll-track');
-  const thumb = scrollHolder.querySelector('.scroll-thumb');
-
-//   function syncThumb() {
-//     const ratio = el.clientHeight / el.scrollHeight;
-//     const thumbHeight = Math.max(ratio * track.clientHeight, 30);
-//     thumb.style.height = thumbHeight + 'px';
-
-//     const scrollRatio =
-//       el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
-
-//     thumb.style.top =
-//       scrollRatio * (track.clientHeight - thumbHeight) + 'px';
-//   }
-
-  function syncThumb() {
-  const ratio = el.clientHeight / el.scrollHeight;
-  const thumbHeight = Math.max(ratio * track.clientHeight, 30);
-  thumb.style.height = thumbHeight + 'px';
-
-  // buffer in px
-  const buffer = track.clientHeight * 0.01; // 1% of track height
-
-  const scrollRatio = el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
-
-  // constrain thumb movement inside buffer
-  const maxTop = track.clientHeight - thumbHeight - buffer;
-  const top = buffer + scrollRatio * (maxTop - buffer);
-
-  thumb.style.top = top + 'px';
-}
-
-
-  el.addEventListener('scroll', syncThumb);
-  syncThumb();
-
-  let dragging = false;
-  let startY = 0;
-  let startScroll = 0;
-
-  thumb.onmousedown = e => {
-    dragging = true;
-    startY = e.clientY;
-    startScroll = el.scrollTop;
-    document.body.style.userSelect = 'none';
-  };
-
-  document.onmousemove = e => {
-    if (!dragging) return;
-
-    const delta =
-      (e.clientY - startY) *
-      (el.scrollHeight / track.clientHeight);
-
-    el.scrollTop = startScroll + delta;
-  };
-
-  document.onmouseup = () => {
-    dragging = false;
-    document.body.style.userSelect = '';
-  };
-}
-
-if (el) {
-  console.log('[FAKE SCROLLBAR] Element found:', el.id);
-
-  const ourCheck = toggleScrollbar();
-  console.log('[FAKE SCROLLBAR] Has overflow?', ourCheck);
-
-  if (ourCheck) {
-    const alreadyBound = scrollHolder.dataset.boundTo === el.id;
-
-    console.log(
-      '[FAKE SCROLLBAR] Currently bound to:',
-      scrollHolder.dataset.boundTo || 'nothing'
-    );
-    console.log('[FAKE SCROLLBAR] Target element:', el.id);
-    console.log('[FAKE SCROLLBAR] Already bound?', alreadyBound);
-
-    if (!alreadyBound) {
-      console.log('[FAKE SCROLLBAR] Initializing / rebinding scrollbar');
-      initFakeScrollbar(el, scrollHolder);
-      scrollHolder.dataset.boundTo = el.id;
-      console.log(
-        '[FAKE SCROLLBAR] Scrollbar now bound to:',
-        scrollHolder.dataset.boundTo
-      );
-    } else {
-      console.log('[FAKE SCROLLBAR] Scrollbar already correctly bound — skipping init');
+        delete scrollHolder.dataset.boundTo;
     }
 
-    console.log('[FAKE SCROLLBAR] Showing scrollbar');
+    if (!scrollHolder || !el) {
+        console.log('[FAKE SCROLLBAR] Missing elements — aborting');
+        return;
+    }
+
+    /* ---------- OVERFLOW CHECK ---------- */
+
+    if (el.scrollHeight <= el.clientHeight) {
+        console.log('[FAKE SCROLLBAR] No overflow — hiding');
+
+        scrollHolder.classList.remove('visible');
+        scrollHolder.style.visibility = 'hidden';
+        scrollHolder.style.opacity = '0';
+        return;
+    }
+
+    /* ---------- INIT ---------- */
+
+    console.log('[FAKE SCROLLBAR] Binding to:', el.id);
+
+    const track = scrollHolder.querySelector(SCROLL.trackClass);
+    const thumb = scrollHolder.querySelector(SCROLL.thumbClass);
+
+    if (!track || !thumb) {
+        console.warn('[FAKE SCROLLBAR] Track or thumb missing');
+        return;
+    }
+
+    scrollHolder.style.visibility = 'visible';
+    scrollHolder.style.opacity = '1';
     scrollHolder.classList.add('visible');
-  } else {
-    console.log('[FAKE SCROLLBAR] No overflow detected — hiding scrollbar');
-    scrollHolder.classList.remove('visible');
-    delete scrollHolder.dataset.boundTo;
-    console.log('[FAKE SCROLLBAR] Cleared bound element');
-  }
-} else {
-  console.log('[FAKE SCROLLBAR] No element found — skipping scrollbar logic');
+
+    function syncThumb() {
+        const ratio = el.clientHeight / el.scrollHeight;
+        const thumbHeight = Math.max(ratio * track.clientHeight, track.clientHeight * 0.08);
+        thumb.style.height = thumbHeight + 'px';
+
+        const buffer = track.clientHeight * 0.01;
+        const maxTop = track.clientHeight - thumbHeight - buffer;
+
+        const scrollRatio =
+            el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
+
+        thumb.style.top = buffer + scrollRatio * maxTop + 'px';
+    }
+
+    el.addEventListener('scroll', syncThumb);
+    syncThumb();
+
+    /* ---------- DRAG ---------- */
+
+    let dragging = false;
+    let startY = 0;
+    let startScroll = 0;
+
+    thumb.onmousedown = e => {
+        dragging = true;
+        startY = e.clientY;
+        startScroll = el.scrollTop;
+        document.body.style.userSelect = 'none';
+    };
+
+    document.onmousemove = e => {
+        if (!dragging) return;
+
+        const delta =
+            (e.clientY - startY) *
+            (el.scrollHeight / track.clientHeight);
+
+        el.scrollTop = startScroll + delta;
+    };
+
+    document.onmouseup = () => {
+        dragging = false;
+        document.body.style.userSelect = '';
+    };
+
+    scrollHolder.dataset.boundTo = el.id;
+
+    console.log('[FAKE SCROLLBAR] Bound successfully →', el.id);
 }
 
-
-
-// window.addEventListener('resize', toggleScrollbar);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
 
 // ===================== STARTUP INTRO HOOK =====================
 async function runMobileStartupIntro() {
