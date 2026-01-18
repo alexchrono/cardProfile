@@ -13,6 +13,7 @@ let encountersButtonMobile;
 let oocButtonMobile;
 
 let buttonList;
+let buttonListMobile;   
 let clickedButton;
 let clickedId;
 
@@ -132,243 +133,286 @@ function handleButtonClick(event) {
     const btn = event.currentTarget;
     const btnId = btn.id;
 
+    console.log("======================================");
+    console.log("🖱️ CLICK EVENT FIRED");
+    console.log("BTN:", btn);
+    console.log("BTN ID:", btnId);
+
     const isGalleryButton =
         btnId === "galleryButton" ||
         btnId === "galleryButtonMobile";
-
-    console.log('🖱️ BUTTON CLICKED:', btnId);
-    console.log('📱 isMobile:', isMobile);
-
-    // ================== HELPER FUNCTION ===================
-
-    function updateMobileState(btn, id) {
-        previousButtonMobile = clickedButtonMobile;
-        previousClickedIdMobile = clickedIdMobile;
-
-        clickedButtonMobile = btn;
-        clickedIdMobile = id;
-
-        console.log('📱 [MOBILE STATE UPDATED]');
-        console.log('   previousButtonMobile:', previousButtonMobile?.id);
-        console.log('   clickedButtonMobile:', clickedButtonMobile?.id);
-        console.log('   clickedIdMobile:', clickedIdMobile);
-    }
-
-    // ===================== ID DERIVATION =====================
 
     const derivedId = isMobile
         ? btnId.replace("ButtonMobile", "")
         : btnId.replace("Button", "");
 
-    console.log('🧠 derivedId:', derivedId);
+    console.log("📌 isMobile:", isMobile);
+    console.log("📌 isGalleryButton:", isGalleryButton);
+    console.log("📌 derivedId:", derivedId);
 
-    if (isMobile && !isGalleryButton) {
-    closeGalleryMobileIfOpen();
-}
+    console.log("📊 STATE BEFORE CLICK");
+    console.log("clickedButtonMobile:", clickedButtonMobile?.id);
+    console.log("clickedIdMobile:", clickedIdMobile);
+    console.log("previousButtonMobile:", previousButtonMobile?.id);
+    console.log("previousClickedIdMobile:", previousClickedIdMobile);
+    console.log("clickedButton (desktop):", clickedButton?.id);
+    console.log("clickedId (desktop):", clickedId);
+    console.log("previousClickedId (desktop):", previousClickedId);
 
-    // ===================== MOBILE STATE UPDATE =====================
-
+    /* =========================================================
+       ======================= MOBILE ==========================
+       ========================================================= */
     if (isMobile) {
-        updateMobileState(btn, derivedId);
-    }
+        console.log("📱 ENTER MOBILE FLOW");
 
-    // ===================== GALLERY SHORT-CIRCUIT =====================
+        /* ---------- GALLERY BUTTON ---------- */
+        if (isGalleryButton) {
+            console.log("🖼️ MOBILE GALLERY BUTTON CLICKED");
 
-    if (!isMobile && isGalleryButton) {
-        console.log('🖼️ [DESKTOP GALLERY CLICK]');
-        openGallery();
-        return;
-    }
+            // 🔒 ENSURE BASELINE TAB EXISTS (FIRST CLICK EVER)
+            if (!clickedButtonMobile && !clickedIdMobile) {
+                console.log("🧱 No mobile baseline — initializing to STATS");
 
-    if (isMobile && isGalleryButton) {
-        console.log('📱 [MOBILE GALLERY CLICK]');
+                clickedButtonMobile = statsButtonMobile;
+                clickedIdMobile = "stats";
 
-        if (previousButtonMobile && previousButtonMobile !== btn) {
-            console.log('🧹 Deactivating previous mobile button:', previousButtonMobile.id);
+                statsButtonMobile.classList.add("active");
+                statsButtonMobile.classList.remove("inactive");
+            }
+
+            if (clickedButtonMobile) {
+                console.log("🔎 clickedButtonMobile classes:", [...clickedButtonMobile.classList]);
+            }
+
+            if (
+                clickedButtonMobile &&
+                clickedButtonMobile !== galleryButtonMobile &&
+                clickedIdMobile !== "stats"
+            ) {
+                console.log("🧹 Deactivating previous mobile button:", clickedButtonMobile.id);
+
+                clickedButtonMobile.classList.remove("active");
+                clickedButtonMobile.classList.add("inactive");
+            }
+
+            console.log("🎨 galleryButtonMobile BEFORE:", [...galleryButtonMobile.classList]);
+
+            galleryButtonMobile.classList.remove("inactive");
+            galleryButtonMobile.classList.add("active");
+
+            console.log("🎨 galleryButtonMobile AFTER:", [...galleryButtonMobile.classList]);
+
+            clickedButtonMobile = galleryButtonMobile;
+            clickedIdMobile = "gallery";
+
+            console.log("📊 STATE AFTER GALLERY SET");
+            console.log("clickedButtonMobile:", clickedButtonMobile?.id);
+            console.log("clickedIdMobile:", clickedIdMobile);
+
+            console.log("🖼️ CALLING openGallery()");
+            openGallery();
+
+            console.log("✅ RETURNING FROM MOBILE GALLERY HANDLER");
+            return;
+        }
+
+        /* ---------- LEAVING GALLERY ---------- */
+        if (clickedIdMobile === "gallery") {
+            console.log("🚪 MOBILE: LEAVING GALLERY");
+
+            console.log("🖼️ CALLING closeGalleryMobileIfOpen()");
+            closeGalleryMobileIfOpen();
+
+            console.log("🎨 galleryButtonMobile BEFORE:", [...galleryButtonMobile.classList]);
+
+            galleryButtonMobile.classList.remove("active");
+            galleryButtonMobile.classList.add("inactive");
+
+            console.log("🎨 galleryButtonMobile AFTER:", [...galleryButtonMobile.classList]);
+
+            clickedButtonMobile = null;
+            clickedIdMobile = null;
+
+            console.log("📊 STATE AFTER LEAVING GALLERY");
+            console.log("clickedButtonMobile:", clickedButtonMobile);
+            console.log("clickedIdMobile:", clickedIdMobile);
+        }
+
+        /* ---------- NORMAL TAB ---------- */
+        console.log("📱 MOBILE NORMAL TAB CLICK:", derivedId);
+
+        previousButtonMobile = clickedButtonMobile;
+        previousClickedIdMobile = clickedIdMobile;
+
+        console.log("↩️ previousButtonMobile:", previousButtonMobile?.id);
+        console.log("↩️ previousClickedIdMobile:", previousClickedIdMobile);
+
+        if (previousButtonMobile) {
+            console.log("🧹 Deactivating previous mobile button:", previousButtonMobile.id);
+            console.log("🎨 BEFORE:", [...previousButtonMobile.classList]);
 
             previousButtonMobile.classList.remove("active");
             previousButtonMobile.classList.add("inactive");
-        } else {
-            let grabThisOne = document.getElementById("statsButtonMobile")
-            if (grabThisOne){
-                 grabThisOne.classList.remove("active");
-            grabThisOne.classList.add("inactive");
-            }
-            console.log('ℹ️ No previous mobile button to deactivate');
+
+            console.log("🎨 AFTER:", [...previousButtonMobile.classList]);
         }
 
-        console.log('✨ Activating gallery button');
+        clickedButtonMobile = btn;
+        clickedIdMobile = derivedId;
+
+        console.log("🎯 New clickedButtonMobile:", clickedButtonMobile.id);
+        console.log("🎯 New clickedIdMobile:", clickedIdMobile);
+
+        console.log("🎨 BTN BEFORE:", [...btn.classList]);
 
         btn.classList.remove("inactive");
         btn.classList.add("active");
 
-        console.log('🖼️ Calling openGallery()');
-        openGallery();
-
-        console.log('✅ EXITING MOBILE GALLERY HANDLER');
-        return;
+        console.log("🎨 BTN AFTER:", [...btn.classList]);
+        console.log("📱 EXIT MOBILE FLOW (NO RETURN)");
     }
 
-    /* ===================== BUTTON STATE (DESKTOP / SHARED) ===================== */
+    /* =========================================================
+       ======================= DESKTOP =========================
+       ========================================================= */
+    if (!isMobile) {
+        console.log("🖥️ ENTER DESKTOP FLOW");
 
-    if (clickedButton && clickedId) {
-        previousButton = clickedButton;
-        previousClickedId = clickedId;
+        if (isGalleryButton) {
+            console.log("🖼️ DESKTOP GALLERY CLICK");
+            console.log("🖼️ CALLING openGallery()");
+            openGallery();
+            console.log("✅ RETURN FROM DESKTOP GALLERY");
+            return;
+        }
+
+        if (clickedButton && clickedId) {
+            previousButton = clickedButton;
+            previousClickedId = clickedId;
+        }
+
+        console.log("↩️ previousClickedId:", previousClickedId);
+
+        clickedButton = btn;
+        clickedId = derivedId;
+
+        if (previousClickedId === clickedId) {
+            console.log("⏭️ SAME TAB CLICK — RETURNING");
+            return;
+        }
+
+        if (previousButton) {
+            console.log("🧹 Deactivating previous desktop button:", previousButton.id);
+            previousButton.classList.remove("active");
+            previousButton.classList.add("inactive");
+        } else {
+            console.log("📊 No previous desktop button — assuming stats");
+            statsButton.classList.remove("active");
+            statsButton.classList.add("inactive");
+        }
+
+        btn.classList.remove("inactive");
+        btn.classList.add("active");
     }
 
-    clickedButton = btn;
-    clickedId = derivedId;
+    /* =========================================================
+       ==================== TAB TRANSITION =====================
+       ========================================================= */
+    console.log("📄 TAB TRANSITION START");
 
-    console.log('🎯 clickedId:', clickedId);
-    console.log('↩️ previousClickedId:', previousClickedId);
+    const prevTabId = previousClickedId
+        ? previousClickedId + (isMobile ? "TabMobile" : "Tab")
+        : (isMobile ? "statsTabMobile" : "statsTab");
 
-    if (previousClickedId === clickedId) {
-        console.log('⏭️ Same button clicked — aborting');
-        return;
-    }
-
-    if (previousButton) {
-        previousButton.classList.remove("active");
-        previousButton.classList.add("inactive");
-    } else {
-        console.log('📊 No previous button — defaulting to stats');
-        statsButton.classList.remove("active");
-        statsButton.classList.add("inactive");
-    }
-
-    clickedButton.classList.remove("inactive");
-    clickedButton.classList.add("active");
-
-    /* ===================== TAB TRANSITION ===================== */
-
-    let prevTab = previousClickedId
-        ? document.getElementById(previousClickedId + (isMobile ? "TabMobile" : "Tab"))
-        : document.getElementById(isMobile ? "statsTabMobile" : "statsTab");
+    const prevTab = document.getElementById(prevTabId);
+    console.log("🔎 prevTabId:", prevTabId, "exists:", !!prevTab);
 
     if (prevTab) {
+        const cs = getComputedStyle(prevTab);
+        console.log("👀 prevTab visibility BEFORE:", cs.visibility, cs.opacity);
+
         prevTab.style.opacity = "0";
         setTimeout(() => {
             prevTab.style.visibility = "hidden";
+            console.log("🙈 prevTab HIDDEN:", prevTabId);
         }, 600);
     }
 
-    let currTab = document.getElementById(
-        clickedId + (isMobile ? "TabMobile" : "Tab")
-    );
+    const currTabId = derivedId + (isMobile ? "TabMobile" : "Tab");
+    const currTab = document.getElementById(currTabId);
+
+    console.log("🔎 currTabId:", currTabId, "exists:", !!currTab);
 
     if (currTab) {
+        const cs = getComputedStyle(currTab);
+        console.log("👀 currTab BEFORE:", cs.visibility, cs.opacity);
+
         currTab.style.visibility = "visible";
         requestAnimationFrame(() => {
             currTab.style.opacity = "1";
+            const cs2 = getComputedStyle(currTab);
+            console.log("👁️ currTab AFTER:", cs2.visibility, cs2.opacity);
         });
     }
 
-    console.log('[TAB] Activated:', clickedId);
-
-    /* ============================================================
-       ===================== SCROLLBAR LOGIC =====================
-       ============================================================ */
+    /* =========================================================
+       =================== SCROLLBAR ===========================
+       ========================================================= */
+    console.log("🧵 SCROLLBAR SETUP");
 
     const SCROLL = {
-        holderId: isMobile ? 'scrollHolderMobile' : 'scrollHolder',
-        trackClass: isMobile ? '.scroll-trackMobile' : '.scroll-track',
-        thumbClass: isMobile ? '.scroll-thumbMobile' : '.scroll-thumb',
-        scrollFindId: clickedId + (isMobile ? 'ScrollFindMobile' : 'ScrollFind')
+        holderId: isMobile ? "scrollHolderMobile" : "scrollHolder",
+        trackClass: isMobile ? ".scroll-trackMobile" : ".scroll-track",
+        thumbClass: isMobile ? ".scroll-thumbMobile" : ".scroll-thumb",
+        scrollFindId: derivedId + (isMobile ? "ScrollFindMobile" : "ScrollFind")
     };
+
+    console.log("🧵 SCROLL CONFIG:", SCROLL);
 
     const scrollHolder = document.getElementById(SCROLL.holderId);
     const el = document.getElementById(SCROLL.scrollFindId);
 
-    if (scrollHolder?.dataset?.boundTo) {
-        console.log('[FAKE SCROLLBAR] Cleaning previous binding:', scrollHolder.dataset.boundTo);
-
-        scrollHolder.classList.remove('visible');
-        scrollHolder.style.visibility = 'hidden';
-        scrollHolder.style.opacity = '0';
-
-        delete scrollHolder.dataset.boundTo;
-    }
+    console.log("🔎 scrollHolder exists:", !!scrollHolder);
+    console.log("🔎 scroll target exists:", !!el);
 
     if (!scrollHolder || !el) {
-        console.log('[FAKE SCROLLBAR] Missing elements — aborting');
+        console.log("🚫 SCROLL ABORT — missing elements");
         return;
     }
+
+    console.log("📏 scrollHeight:", el.scrollHeight, "clientHeight:", el.clientHeight);
 
     if (el.scrollHeight <= el.clientHeight) {
-        console.log('[FAKE SCROLLBAR] No overflow — hiding');
-
-        scrollHolder.classList.remove('visible');
-        scrollHolder.style.visibility = 'hidden';
-        scrollHolder.style.opacity = '0';
+        console.log("📏 NO OVERFLOW — hiding scrollbar");
         return;
     }
-
-    console.log('[FAKE SCROLLBAR] Binding to:', el.id);
 
     const track = scrollHolder.querySelector(SCROLL.trackClass);
     const thumb = scrollHolder.querySelector(SCROLL.thumbClass);
+    if (!track || !thumb) return;
 
-    if (!track || !thumb) {
-        console.warn('[FAKE SCROLLBAR] Track or thumb missing');
-        return;
-    }
-
-    scrollHolder.style.visibility = 'visible';
-    scrollHolder.style.opacity = '1';
-    scrollHolder.classList.add('visible');
+    scrollHolder.style.visibility = "visible";
+    scrollHolder.style.opacity = "1";
+    scrollHolder.classList.add("visible");
 
     function syncThumb() {
         const ratio = el.clientHeight / el.scrollHeight;
-        const thumbHeight = Math.max(
-            ratio * track.clientHeight,
-            track.clientHeight * 0.08
-        );
+        const thumbHeight = Math.max(ratio * track.clientHeight, track.clientHeight * 0.08);
+        thumb.style.height = thumbHeight + "px";
 
-        thumb.style.height = thumbHeight + 'px';
-
-        const buffer = track.clientHeight * 0.01;
-        const maxTop = track.clientHeight - thumbHeight - buffer;
-
-        const scrollRatio =
-            el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
-
-        thumb.style.top = buffer + scrollRatio * maxTop + 'px';
+        const maxTop = track.clientHeight - thumbHeight;
+        const scrollRatio = el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
+        thumb.style.top = scrollRatio * maxTop + "px";
     }
 
-    el.addEventListener('scroll', syncThumb);
+    el.addEventListener("scroll", syncThumb);
     syncThumb();
 
-    let dragging = false;
-    let startY = 0;
-    let startScroll = 0;
-
-    thumb.onmousedown = e => {
-        dragging = true;
-        startY = e.clientY;
-        startScroll = el.scrollTop;
-        document.body.style.userSelect = 'none';
-    };
-
-    document.onmousemove = e => {
-        if (!dragging) return;
-
-        const delta =
-            (e.clientY - startY) *
-            (el.scrollHeight / track.clientHeight);
-
-        el.scrollTop = startScroll + delta;
-    };
-
-    document.onmouseup = () => {
-        dragging = false;
-        document.body.style.userSelect = '';
-    };
-
     scrollHolder.dataset.boundTo = el.id;
+    console.log("🟢 SCROLLBAR BOUND TO:", el.id);
 
-    console.log('[FAKE SCROLLBAR] Bound successfully →', el.id);
+    console.log("======================================");
 }
-
 
 // ===================== STARTUP INTRO HOOK =====================
 async function runMobileStartupIntro() {
@@ -526,34 +570,28 @@ activePics.forEach((src, index) => {
     let statsTab;
     let mercierContainerDiv;
 
-    if (isMobile) {
-        statsTab = document.getElementById("statsTabMobile");
-        mercierContainerDiv = document.getElementById("mercierContainer");
+if (isMobile) {
+    statsButtonMobile = document.getElementById("statsButtonMobile");
+    personalityButtonMobile = document.getElementById("personalityButtonMobile");
+    historyButtonMobile = document.getElementById("historyButtonMobile");
+    encountersButtonMobile = document.getElementById("encountersButtonMobile");
+    oocButtonMobile = document.getElementById("oocButtonMobile");
+    galleryButtonMobile = document.getElementById("galleryButtonMobile");
+    topGalleryDisplayMobile = document.getElementById("topGalleryDisplayMobile");
 
-        statsButton = document.getElementById("statsButtonMobile");
-        personalityButton = document.getElementById("personalityButtonMobile");
-        historyButton = document.getElementById("historyButtonMobile");
-        encountersButton = document.getElementById("encountersButtonMobile");
-        oocButton = document.getElementById("oocButtonMobile");
-        galleryButton = document.getElementById("galleryButtonMobile");
-        topGalleryDisplayMobile = document.getElementById("topGalleryDisplayMobile");
+    buttonList = [statsButtonMobile, personalityButtonMobile, historyButtonMobile, encountersButtonMobile, oocButtonMobile, galleryButtonMobile];
+} else {
+    statsButton = document.getElementById("statsButton");
+    personalityButton = document.getElementById("personalityButton");
+    historyButton = document.getElementById("historyButton");
+    encountersButton = document.getElementById("encountersButton");
+    oocButton = document.getElementById("oocButton");
+    galleryButton = document.getElementById("galleryButton");
+    closeButton = document.getElementById("closeButton");
+    topGalleryDisplay = document.getElementById("topGalleryDisplay");
 
-        buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton, galleryButton];
-    } else {
-        statsTab = document.getElementById("statsTab");
-        mercierContainerDiv = document.getElementById("mercierContainer");
-
-        statsButton = document.getElementById("statsButton");
-        personalityButton = document.getElementById("personalityButton");
-        historyButton = document.getElementById("historyButton");
-        encountersButton = document.getElementById("encountersButton");
-        oocButton = document.getElementById("oocButton");
-        galleryButton = document.getElementById("galleryButton");
-        closeButton = document.getElementById("closeButton");
-        topGalleryDisplay = document.getElementById("topGalleryDisplay");
-
-        buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton, galleryButton];
-    }
+    buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton, galleryButton];
+}
 
     if (startedInMobile && isMobile) {
         await runMobileStartupIntro();
