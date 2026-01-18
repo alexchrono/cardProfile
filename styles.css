@@ -1026,7 +1026,7 @@ h1 {
   border:3px dotted red;
   width:100%;
   height:100%;
-  flex-direction:column;
+  flex-direction:row;
   justify-content:center;
   align-items:center;
   position:relative;
@@ -1540,7 +1540,7 @@ h1 {
 #leftSideMainMobile{
 box-sizing:border-box;
 border:3px dotted brown;
-width:39.12%;
+width:100%;
 height:100%;
 display:flex;
 flex-direction:row;
@@ -1548,6 +1548,17 @@ justify-content:flex-end;
 align-items:flex-end;
 position:relative;
 z-index:15;
+}
+
+#leftSideMainMobile img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  max-height:93dvh;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  filter: brightness(1.2);
 }
 
 #topGalleryDisplayMobile{
@@ -1906,6 +1917,38 @@ padding-right:8%;
 color:gray;
 }
 
+
+
+#just4StartupColumn4Chara {
+    box-sizing: border-box;
+    border: 4px dotted purple;
+    /* width: 100%; */
+    height: 100%;
+    width: 100%;
+    z-index: 5;
+
+    /* visibility: hidden; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+
+
+
+#just4StartupColumn4Chara img {
+  object-fit:contain;
+
+
+  height:100%;
+  max-height:58dvh;
+  width:auto;
+  margin-left:5%;
+}
 
 
 /* FOR CELLPHONES=================================================== */

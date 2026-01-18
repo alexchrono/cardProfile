@@ -360,11 +360,11 @@ async function runMobileStartupIntro() {
     bottomButtonMenu.style.height="0%"
     bottomButtonMenu.style.visibility="hidden";
 
-    let expandForBeginning = document.getElementById("topViewMobile")
-    expandForBeginning.style.height="100%";
+    // let expandForBeginning = document.getElementById("topViewMobile")
+    // expandForBeginning.style.height="100%";
 
-    let topViewMobileInner = document.getElementById("topViewMobileInner");
-    topViewMobileInner.style.backgroundColor = "transparent";
+    // let topViewMobileInner = document.getElementById("topViewMobileInner");
+    // topViewMobileInner.style.backgroundColor = "transparent";
 
 
 
@@ -390,9 +390,15 @@ async function mainFunction() {
         rightChev = document.getElementById('rightChev');
         previewContainer = document.getElementById('topGalleryBot');
         classNameForPreviews = 'picturePreview';
+    } else {
+        imageToGrab = document.getElementById('sexyKyraMobile');
+        leftChev = document.getElementById('leftChevMobile');
+        rightChev = document.getElementById('rightChevMobile');
+        previewContainer = document.getElementById('topGalleryBotMobile');
+        classNameForPreviews = 'picturePreviewMobile';
     }
 
-    
+
     const activePics = allPics.filter(p => typeof p === "string" && p.trim() !== "");
 
 
