@@ -1,241 +1,224 @@
-function handleButtonClick(event) {
-    const btn = event.currentTarget;
-    const btnId = btn.id;
+async function mainFunction() {
+    console.log("📌 mainFunction started");
 
-    const isGalleryButton =
-        btnId === "galleryButton" ||
-        btnId === "galleryButtonMobile";
+    // ===================== CAROUSEL LOGIC (UNCHANGED) =====================
+    let imageToGrab;
+    let leftChev;
+    let rightChev;
+    let previewContainer;
+    let classNameForPreviews;
+    let previewNodes;
 
-    console.log('🖱️ BUTTON CLICKED:', btnId);
-    console.log('📱 isMobile:', isMobile);
-
-    // ================== HELPER FUNCTION ===================
-
-    function updateMobileState(btn, id) {
-        previousButtonMobile = clickedButtonMobile;
-        previousClickedIdMobile = clickedIdMobile;
-
-        clickedButtonMobile = btn;
-        clickedIdMobile = id;
-
-        console.log('📱 [MOBILE STATE UPDATED]');
-        console.log('   previousButtonMobile:', previousButtonMobile?.id);
-        console.log('   clickedButtonMobile:', clickedButtonMobile?.id);
-        console.log('   clickedIdMobile:', clickedIdMobile);
-    }
-
-    // ===================== ID DERIVATION =====================
-
-    const derivedId = isMobile
-        ? btnId.replace("ButtonMobile", "")
-        : btnId.replace("Button", "");
-
-    console.log('🧠 derivedId:', derivedId);
-
-    if (isMobile && !isGalleryButton) {
-        closeGalleryMobileIfOpen();
-    }
-
-    // ===================== MOBILE STATE UPDATE =====================
-
-    if (isMobile) {
-        updateMobileState(btn, derivedId);
-    }
-
-    // ===================== GALLERY SHORT-CIRCUIT =====================
-
-    if (!isMobile && isGalleryButton) {
-        console.log('🖼️ [DESKTOP GALLERY CLICK]');
-        openGallery();
-        return;
-    }
-
-    if (isMobile && isGalleryButton) {
-        console.log('📱 [MOBILE GALLERY CLICK]');
-
-        if (previousButtonMobile && previousButtonMobile !== btn) {
-            console.log('🧹 Deactivating previous mobile button:', previousButtonMobile.id);
-
-            previousButtonMobile.classList.remove("active");
-            previousButtonMobile.classList.add("inactive");
-        } else {
-            let grabThisOne = document.getElementById("statsButtonMobile")
-            if (grabThisOne) {
-                grabThisOne.classList.remove("active");
-                grabThisOne.classList.add("inactive");
-            }
-            console.log('ℹ️ No previous mobile button to deactivate');
-        }
-
-        console.log('✨ Activating gallery button');
-
-        btn.classList.remove("inactive");
-        btn.classList.add("active");
-
-        console.log('🖼️ Calling openGallery()');
-        openGallery();
-
-        console.log('✅ EXITING MOBILE GALLERY HANDLER');
-        return;
-    }
-
-    /* ===================== BUTTON STATE (DESKTOP / SHARED) ===================== */
-
-    if (clickedButton && clickedId) {
-        previousButton = clickedButton;
-        previousClickedId = clickedId;
-    }
-
-    clickedButton = btn;
-    clickedId = derivedId;
-
-    console.log('🎯 clickedId:', clickedId);
-    console.log('↩️ previousClickedId:', previousClickedId);
-
-    if (previousClickedId === clickedId) {
-        console.log('⏭️ Same button clicked — aborting');
-        return;
-    }
-
-    if (previousButton) {
-        previousButton.classList.remove("active");
-        previousButton.classList.add("inactive");
+    if (!isMobile) {
+        imageToGrab = document.getElementById('sexyKyra');
+        leftChev = document.getElementById('leftChev');
+        rightChev = document.getElementById('rightChev');
+        previewContainer = document.getElementById('topGalleryBot');
+        classNameForPreviews = 'picturePreview';
     } else {
-        console.log('📊 No previous button — defaulting to stats');
-        statsButton.classList.remove("active");
-        statsButton.classList.add("inactive");
+        imageToGrab = document.getElementById('sexyKyraMobile');
+        leftChev = document.getElementById('leftChevMobile');
+        rightChev = document.getElementById('rightChevMobile');
+        previewContainer = document.getElementById('topGalleryBotMobile');
+        classNameForPreviews = 'picturePreviewMobile';
     }
 
-    clickedButton.classList.remove("inactive");
-    clickedButton.classList.add("active");
 
-    /* ===================== TAB TRANSITION ===================== */
+    const activePics = allPics.filter(p => typeof p === "string" && p.trim() !== "");
 
-    let prevTab = previousClickedId
-        ? document.getElementById(previousClickedId + (isMobile ? "TabMobile" : "Tab"))
-        : document.getElementById(isMobile ? "statsTabMobile" : "statsTab");
 
-    if (prevTab) {
-        prevTab.style.opacity = "0";
-        setTimeout(() => {
-            prevTab.style.visibility = "hidden";
-        }, 600);
-    }
 
-    let currTab = document.getElementById(
-        clickedId + (isMobile ? "TabMobile" : "Tab")
-    );
 
-    if (currTab) {
-        currTab.style.visibility = "visible";
-        requestAnimationFrame(() => {
-            currTab.style.opacity = "1";
+
+
+
+    previewContainer.innerHTML = '';
+    previewNodes = [];
+
+    activePics.forEach((src, index) => {
+        const preview = document.createElement('div');
+        preview.className = `${classNameForPreviews}`
+
+        const img = document.createElement('img');
+        img.src = src;
+
+        preview.appendChild(img);
+
+        preview.addEventListener('click', () => {
+            setActivePic(index);
+        });
+
+        previewContainer.appendChild(preview);
+        previewNodes.push(preview);
+    });
+
+
+
+
+
+
+
+
+
+
+
+    let pics = {};
+    activePics.forEach((url, index) => pics[index] = url);
+
+
+    let currentPicIndex = 0;
+    // let previewNodes = [];
+
+    function setActivePic(index) {
+        currentPicIndex = index;
+
+        // update main image
+        updateMainImage(index);
+
+        // update preview borders
+        previewNodes.forEach((node, i) => {
+            node.classList.toggle('activePreview', i === index);
         });
     }
 
-    console.log('[TAB] Activated:', clickedId);
+    function updateMainImage(index) {
+        let rchevContainer;
+        let lchevContainer;
 
-    /* ============================================================
-       ===================== SCROLLBAR LOGIC =====================
-       ============================================================ */
+        if (!isMobile) {
+            rchevContainer = document.getElementById('rchev');
+            lchevContainer = document.getElementById('lchev');
+        }
+        else {
+            rchevContainer = document.getElementById('rchevMobile');
+            lchevContainer = document.getElementById('lchevMobile');
+        }
 
-    const SCROLL = {
-        holderId: isMobile ? 'scrollHolderMobile' : 'scrollHolder',
-        trackClass: isMobile ? '.scroll-trackMobile' : '.scroll-track',
-        thumbClass: isMobile ? '.scroll-thumbMobile' : '.scroll-thumb',
-        scrollFindId: clickedId + (isMobile ? 'ScrollFindMobile' : 'ScrollFind')
-    };
+        if (!activePics[index] || !imageToGrab) return;
 
-    const scrollHolder = document.getElementById(SCROLL.holderId);
-    const el = document.getElementById(SCROLL.scrollFindId);
+        imageToGrab.src = activePics[index];
+        // uniCount = index;
 
-    if (scrollHolder?.dataset?.boundTo) {
-        console.log('[FAKE SCROLLBAR] Cleaning previous binding:', scrollHolder.dataset.boundTo);
+        let prevIndex = index - 1 >= 0 ? index - 1 : activePics.length - 1;
+        let nextIndex = index + 1 < activePics.length ? index + 1 : 0;
 
-        scrollHolder.classList.remove('visible');
-        scrollHolder.style.visibility = 'hidden';
-        scrollHolder.style.opacity = '0';
+        if (lchevContainer && leftChev) {
+            let newLeftChev = leftChev.cloneNode(true);
+            lchevContainer.replaceChild(newLeftChev, leftChev);
+            leftChev = newLeftChev;
+            // leftChev.addEventListener('click', () => updateMainImage(prevIndex));
+            leftChev.addEventListener('click', () => setActivePic(prevIndex));
 
-        delete scrollHolder.dataset.boundTo;
+        }
+
+        if (rchevContainer && rightChev) {
+            let newRightChev = rightChev.cloneNode(true);
+            rchevContainer.replaceChild(newRightChev, rightChev);
+            rightChev = newRightChev;
+            // rightChev.addEventListener('click', () => updateMainImage(nextIndex));
+            rightChev.addEventListener('click', () => setActivePic(nextIndex));
+
+        }
     }
 
-    if (!scrollHolder || !el) {
-        console.log('[FAKE SCROLLBAR] Missing elements — aborting');
-        return;
+    if (activePics.length > 0) setActivePic(0);
+
+    // ===================== TABS / BUTTONS =====================
+    let statsTab;
+    let mercierContainerDiv;
+
+    if (isMobile) {
+        statsTab = document.getElementById("statsTabMobile");
+        mercierContainerDiv = document.getElementById("mercierContainer");
+
+        statsButton = document.getElementById("statsButtonMobile");
+        personalityButton = document.getElementById("personalityButtonMobile");
+        historyButton = document.getElementById("historyButtonMobile");
+        encountersButton = document.getElementById("encountersButtonMobile");
+        oocButton = document.getElementById("oocButtonMobile");
+        galleryButton = document.getElementById("galleryButtonMobile");
+        topGalleryDisplayMobile = document.getElementById("topGalleryDisplayMobile");
+
+        buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton, galleryButton];
+    } else {
+        statsTab = document.getElementById("statsTab");
+        mercierContainerDiv = document.getElementById("mercierContainer");
+
+        statsButton = document.getElementById("statsButton");
+        personalityButton = document.getElementById("personalityButton");
+        historyButton = document.getElementById("historyButton");
+        encountersButton = document.getElementById("encountersButton");
+        oocButton = document.getElementById("oocButton");
+        galleryButton = document.getElementById("galleryButton");
+        closeButton = document.getElementById("closeButton");
+        topGalleryDisplay = document.getElementById("topGalleryDisplay");
+
+        buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton, galleryButton];
     }
 
-    if (el.scrollHeight <= el.clientHeight) {
-        console.log('[FAKE SCROLLBAR] No overflow — hiding');
-
-        scrollHolder.classList.remove('visible');
-        scrollHolder.style.visibility = 'hidden';
-        scrollHolder.style.opacity = '0';
-        return;
+    if (startedInMobile && isMobile) {
+        await runMobileStartupIntro();
     }
 
-    console.log('[FAKE SCROLLBAR] Binding to:', el.id);
-
-    const track = scrollHolder.querySelector(SCROLL.trackClass);
-    const thumb = scrollHolder.querySelector(SCROLL.thumbClass);
-
-    if (!track || !thumb) {
-        console.warn('[FAKE SCROLLBAR] Track or thumb missing');
-        return;
+    if (statsTab && !startedInMobile) {
+        statsTab.style.visibility = "visible";
+        statsTab.style.opacity = "1";
     }
 
-    scrollHolder.style.visibility = 'visible';
-    scrollHolder.style.opacity = '1';
-    scrollHolder.classList.add('visible');
+    if (!mercierContainerDiv) return;
 
-    function syncThumb() {
-        const ratio = el.clientHeight / el.scrollHeight;
-        const thumbHeight = Math.max(
-            ratio * track.clientHeight,
-            track.clientHeight * 0.08
-        );
+    buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClickNotStupid));
+    if (closeButton) closeButton.addEventListener("click", closeGallery);
 
-        thumb.style.height = thumbHeight + 'px';
-
-        const buffer = track.clientHeight * 0.01;
-        const maxTop = track.clientHeight - thumbHeight - buffer;
-
-        const scrollRatio =
-            el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
-
-        thumb.style.top = buffer + scrollRatio * maxTop + 'px';
-    }
-
-    el.addEventListener('scroll', syncThumb);
-    syncThumb();
-
-    let dragging = false;
-    let startY = 0;
-    let startScroll = 0;
-
-    thumb.onmousedown = e => {
-        dragging = true;
-        startY = e.clientY;
-        startScroll = el.scrollTop;
-        document.body.style.userSelect = 'none';
-    };
-
-    document.onmousemove = e => {
-        if (!dragging) return;
-
-        const delta =
-            (e.clientY - startY) *
-            (el.scrollHeight / track.clientHeight);
-
-        el.scrollTop = startScroll + delta;
-    };
-
-    document.onmouseup = () => {
-        dragging = false;
-        document.body.style.userSelect = '';
-    };
-
-    scrollHolder.dataset.boundTo = el.id;
-
-    console.log('[FAKE SCROLLBAR] Bound successfully →', el.id);
+    // ===================== VANTA / THREE (EXACTLY AS YOU WROTE IT) =====================
+    bgTestCover = document.getElementById("bgTestCover");
+    bgTestCoverFront = document.getElementById("bgTestCoverFront");
+    setTimeout(() => {
+        threeScript = document.createElement('script');
+        threeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
+        threeScript.onload = () => {
+            vantaScript = document.createElement('script');
+            vantaScript.src = "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js";
+            vantaScript.onload = () => {
+                if (bgTestCover && window.VANTA && window.VANTA.FOG) {
+                    vantaBack = VANTA.FOG({
+                        el: "#bgTestCover",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200,
+                        minWidth: 200,
+                        highlightColor: 0x9d9d9d,
+                        midtoneColor: 0x989898,
+                        lowlightColor: 0x000000,
+                        baseColor: 0x000000,
+                        blurFactor: 0.52,
+                        speed: 0.70,
+                        zoom: 0.90,
+                    });
+                    console.log("VANTA Back Fog initialized ✅");
+                } else console.error("Cannot initialize BACK VANTA Fog!");
+                if (bgTestCoverFront && window.VANTA && window.VANTA.FOG) {
+                    vantaFront = VANTA.FOG({
+                        el: "#bgTestCoverFront",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200,
+                        minWidth: 200,
+                        highlightColor: 0x9d9d9d,
+                        midtoneColor: 0x989898,
+                        lowlightColor: 0x000000,
+                        baseColor: 0x000000,
+                        blurFactor: 0.52,
+                        speed: 0.70,
+                        zoom: 0.90,
+                    });
+                    console.log("VANTA Front Fog initialized ✅");
+                } else console.error("Cannot initialize FRONT VANTA Fog!");
+            };
+            document.body.appendChild(vantaScript);
+        };
+        document.body.appendChild(threeScript);
+    }, 500);
 }
-
