@@ -1858,8 +1858,10 @@ background:rgba(146,95,95,1);
 
 .dragonMobile{
 position:absolute;
-width:91%;
-height:84.38%;
+/* width:91%;
+height:84.38%; */
+    width: 76%;
+    height: 81.38%;
 background-color:#600006;
 padding:1.22%;
 box-sizing:border-box;
@@ -2061,6 +2063,10 @@ mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 1
     background-color: rgba(28, 46, 131, 0.75);
     border-radius: 25px 25px 25px 0;
     z-index: 3;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 

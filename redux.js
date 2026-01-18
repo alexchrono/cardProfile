@@ -356,9 +356,12 @@ async function runMobileStartupIntro() {
     // let bottomTextDisplay = document.getElementById("just4Startup")
 
     // bottomTextDisplay.style.visibility="visible"
+
+
+
       let bottomButtonMenu = document.getElementById("mainMenuMobile");
-    bottomButtonMenu.style.height="0%"
-    bottomButtonMenu.style.visibility="hidden";
+    // bottomButtonMenu.style.height="0%"
+    // bottomButtonMenu.style.visibility="hidden";
 
     // let expandForBeginning = document.getElementById("topViewMobile")
     // expandForBeginning.style.height="100%";
