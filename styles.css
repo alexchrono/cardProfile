@@ -1536,7 +1536,62 @@ h1 {
 
 
 /*====================================== MOBILE VARIABLES BUT WE CAN PUT THEM IN THE MAIN SECTION */
+#oocScrollFindMobile p {
+  position: relative;
+  padding-left: 2.2em;
+}
 
+#oocScrollFindMobile p::before {
+    content: "";
+    position: absolute;
+    left: .3rem;
+    top: 0;
+    width: 1.2em;
+    height: 1.2em;
+    background: url(/assets/ourDumbIconCropped.png) no-repeat center / contain;
+}
+
+
+
+#oocScrollFindMobile p::before {
+  /* background: linear-gradient(
+    145deg,
+    #3b82f6,
+    #1e40af,
+    #60a5fa
+  ); */
+  background:#4fa3c3;
+
+  mask: url("/assets/ourDumbIconCropped.png") no-repeat center / contain;
+  -webkit-mask: url("/assets/ourDumbIconCropped.png") no-repeat center / contain;
+}
+
+
+.info-contentMobile p {
+  margin: 2.3dvh 0 0 0;
+  line-height: 1.2;
+}
+
+.info-contentMobile p.first {
+
+  margin: 1dvh 0 0 0;
+  /* line-height: 1.4;
+  font-weight: bold;   */
+}
+
+.info-contentMobile p.drama {
+   margin: 2.3dvh 0 0 0;
+   line-height: 1.2;
+   text-align:end;
+   font-style: italic;
+   /* font-style: oblique 0deg; */
+   font-size: 1.3rem;
+  padding-right: 8%;
+
+   color:gray;
+
+
+}
 
 #leftSideMainMobile{
 box-sizing:border-box;
