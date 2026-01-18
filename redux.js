@@ -29,7 +29,8 @@ let previousClickedIdMobile;
 let mainTracker = {
 
     "previousClickedId": "statsButton",
-    "previousClickedIdMobile": "statsButtonMobile"
+    "previousClickedIdMobile": "statsButtonMobile",
+    "variableForDesktopGallery": "statsButton"
 
 }
 
@@ -75,70 +76,144 @@ function wait(ms) {
 }
 
 // ===================== GALLERY FUNCTIONS =====================
-function openGallery() {
-    console.log('not to open gallery yet');
-    return
+// function openGallery() {
+//     console.log('not to open gallery yet');
+//     return
+//     if (isMobile) {
+//         topGalleryDisplayMobile.style.visibility = "visible";
+//         requestAnimationFrame(() => {
+//             topGalleryDisplayMobile.style.opacity = "1";
+//         });
+//     } else {
+//         topGalleryDisplay.style.visibility = "visible";
+//         requestAnimationFrame(() => {
+//             topGalleryDisplay.style.opacity = "1";
+//         });
+//     }
+// }
+
+async function closeGallery() {
+    console.group('🧪 CLOSE GALLERY DEBUG');
+
+    console.log('📍 Entered closeGallery()');
+
+    console.log('📱 isMobile:', isMobile);
+
+    console.log('📦 mainTracker snapshot (start):', JSON.parse(JSON.stringify(mainTracker)));
+
+    const lastButtonId = mainTracker.variableForDesktopGallery;
+
+    console.log('🧠 variableForDesktopGallery:', lastButtonId);
+    console.log('🧠 previousClickedId (before):', mainTracker.previousClickedId);
+
+    // ---- STEP 1: close gallery UI ----
+    console.log('🎭 Calling setGalleryState(false)');
+    setGalleryState(false, isMobile);
+
+    // OPTIONAL: allow CSS transitions to settle
+    // await new Promise(r => setTimeout(r, 50));
+
+    // ---- STEP 2: desktop-only restore ----
     if (isMobile) {
-        topGalleryDisplayMobile.style.visibility = "visible";
-        requestAnimationFrame(() => {
-            topGalleryDisplayMobile.style.opacity = "1";
-        });
-    } else {
-        topGalleryDisplay.style.visibility = "visible";
-        requestAnimationFrame(() => {
-            topGalleryDisplay.style.opacity = "1";
-        });
+        console.log('📱 Mobile mode detected — skipping restore click');
+        console.groupEnd();
+        return;
     }
+
+    if (!lastButtonId) {
+        console.warn('❌ No variableForDesktopGallery stored');
+        console.groupEnd();
+        return;
+    }
+
+    const restoreButton = document.getElementById(lastButtonId);
+
+    console.log('🔎 Lookup restore button:', lastButtonId, restoreButton);
+
+    if (!restoreButton) {
+        console.warn('❌ Restore button NOT FOUND in DOM:', lastButtonId);
+        console.groupEnd();
+        return;
+    }
+
+    console.log(
+        '🧪 Restore button classes BEFORE click:',
+        restoreButton.className
+    );
+
+    // ---- STEP 3: state prep ----
+    console.log('✍️ Setting previousClickedId BEFORE click');
+    mainTracker.previousClickedId = lastButtonId;
+
+    console.log(
+        '🧠 previousClickedId (after set):',
+        mainTracker.previousClickedId
+    );
+
+    // OPTIONAL: give browser a tick to register state change
+    // await new Promise(r => setTimeout(r, 0));
+
+    // ---- STEP 4: fire synthetic click ----
+    console.log('🖱️ Triggering restoreButton.click()');
+
+    restoreButton.click();
+
+    // ---- STEP 5: post-click inspection ----
+    // allow handler to run
+    await new Promise(r => setTimeout(r, 0));
+
+    console.log(
+        '🧠 previousClickedId (after click):',
+        mainTracker.previousClickedId
+    );
+
+    console.log(
+        '🧪 Restore button classes AFTER click:',
+        restoreButton.className
+    );
+
+    console.log(
+        '📦 mainTracker snapshot (end):',
+        JSON.parse(JSON.stringify(mainTracker))
+    );
+
+    console.groupEnd();
 }
 
-function closeGallery() {
-    console.log('not to close gallery yet');
-    return
-    if (isMobile) {
-        topGalleryDisplayMobile.style.opacity = "0";
-        setTimeout(() => {
-            topGalleryDisplayMobile.style.visibility = "hidden";
-        }, 1000);
-    } else {
-        topGalleryDisplay.style.opacity = "0";
-        setTimeout(() => {
-            topGalleryDisplay.style.visibility = "hidden";
-        }, 1000);
-    }
-}
-//======== close gallery if open
 
-function closeGalleryMobileIfOpen() {
-    console.log('not to close galleryMobileIfOpen yet');
-    return
-    if (!topGalleryDisplayMobile) return;
+// //======== close gallery if open
 
-    const isVisible =
-        topGalleryDisplayMobile.style.visibility === "visible" ||
-        getComputedStyle(topGalleryDisplayMobile).visibility === "visible";
+// function closeGalleryMobileIfOpen() {
+//     console.log('not to close galleryMobileIfOpen yet');
+//     return
+//     if (!topGalleryDisplayMobile) return;
 
-    if (!isVisible) return;
+//     const isVisible =
+//         topGalleryDisplayMobile.style.visibility === "visible" ||
+//         getComputedStyle(topGalleryDisplayMobile).visibility === "visible";
 
-    console.log('📱 [MOBILE] Closing gallery due to non-gallery click');
+//     if (!isVisible) return;
 
-    // hide gallery
-    topGalleryDisplayMobile.style.opacity = "0";
-    setTimeout(() => {
-        topGalleryDisplayMobile.style.visibility = "hidden";
-    }, 300);
+//     console.log('📱 [MOBILE] Closing gallery due to non-gallery click');
 
-    // unhighlight gallery button
-    if (galleryButtonMobile) {
-        galleryButtonMobile.classList.remove("active");
-        galleryButtonMobile.classList.add("inactive");
-    }
+//     // hide gallery
+//     topGalleryDisplayMobile.style.opacity = "0";
+//     setTimeout(() => {
+//         topGalleryDisplayMobile.style.visibility = "hidden";
+//     }, 300);
 
-    // IMPORTANT: clear mobile gallery state
-    if (clickedIdMobile === "gallery") {
-        clickedIdMobile = null;
-        clickedButtonMobile = null;
-    }
-}
+//     // unhighlight gallery button
+//     if (galleryButtonMobile) {
+//         galleryButtonMobile.classList.remove("active");
+//         galleryButtonMobile.classList.add("inactive");
+//     }
+
+//     // IMPORTANT: clear mobile gallery state
+//     if (clickedIdMobile === "gallery") {
+//         clickedIdMobile = null;
+//         clickedButtonMobile = null;
+//     }
+// }
 
 
 
@@ -311,8 +386,11 @@ if (baseId === "gallery") {
         resetAllButtonsAndTabs(true);
         mainTracker.previousClickedIdMobile = "galleryButtonMobile";
     } else {
+        let ourTemp = mainTracker.previousClickedId;
+        mainTracker.variableForDesktopGallery = ourTemp
         resetAllButtonsAndTabs(false);
         mainTracker.previousClickedId = "galleryButton";
+
     }
 
     // activate gallery button
