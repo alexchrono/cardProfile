@@ -13,7 +13,7 @@ let encountersButtonMobile;
 let oocButtonMobile;
 
 let buttonList;
-let buttonListMobile;   
+let buttonListMobile;
 let clickedButton;
 let clickedId;
 
@@ -604,7 +604,16 @@ if (isMobile) {
 
     if (!mercierContainerDiv) return;
 
+    // buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClick));
+
+    if (isMobile) {
+    buttonListMobile.forEach(btn => btn && btn.addEventListener("click", handleButtonClick));
+} else {
     buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClick));
+}
+
+if (closeButton) closeButton.addEventListener("click", closeGallery);
+
     if (closeButton) closeButton.addEventListener("click", closeGallery);
 
     // ===================== VANTA / THREE (EXACTLY AS YOU WROTE IT) =====================
