@@ -140,9 +140,142 @@ function closeGalleryMobileIfOpen() {
     }
 }
 
+
+
+
+function bindFakeScrollbar({
+    clickedId,
+    isMobile
+}) {
+    /* ============================================================
+       ===================== FAKE SCROLLBAR =====================
+       ============================================================ */
+
+    const SCROLL = {
+        holderId: isMobile ? 'scrollHolderMobile' : 'scrollHolder',
+        trackClass: isMobile ? '.scroll-trackMobile' : '.scroll-track',
+        thumbClass: isMobile ? '.scroll-thumbMobile' : '.scroll-thumb',
+        scrollFindId: clickedId + (isMobile ? 'ScrollFindMobile' : 'ScrollFind')
+    };
+
+    const scrollHolder = document.getElementById(SCROLL.holderId);
+    const el = document.getElementById(SCROLL.scrollFindId);
+
+    /* ===================== CLEANUP ===================== */
+
+    if (scrollHolder?.dataset?.boundTo) {
+        const prevEl = document.getElementById(scrollHolder.dataset.boundTo);
+
+        console.log('[FAKE SCROLLBAR] Cleaning previous binding:', scrollHolder.dataset.boundTo);
+
+        if (prevEl) {
+            prevEl.removeEventListener('scroll', prevEl.__syncThumb);
+            delete prevEl.__syncThumb;
+        }
+
+        scrollHolder.classList.remove('visible');
+        scrollHolder.style.visibility = 'hidden';
+        scrollHolder.style.opacity = '0';
+
+        delete scrollHolder.dataset.boundTo;
+    }
+
+    /* ===================== GUARDS ===================== */
+
+    if (!scrollHolder || !el) {
+        console.log('[FAKE SCROLLBAR] Missing elements — aborting');
+        return;
+    }
+
+    if (el.scrollHeight <= el.clientHeight) {
+        console.log('[FAKE SCROLLBAR] No overflow — hiding');
+        return;
+    }
+
+    const track = scrollHolder.querySelector(SCROLL.trackClass);
+    const thumb = scrollHolder.querySelector(SCROLL.thumbClass);
+
+    if (!track || !thumb) {
+        console.warn('[FAKE SCROLLBAR] Track or thumb missing');
+        return;
+    }
+
+    /* ===================== SHOW ===================== */
+
+    scrollHolder.style.visibility = 'visible';
+    scrollHolder.style.opacity = '1';
+    scrollHolder.classList.add('visible');
+
+    console.log('[FAKE SCROLLBAR] Binding to:', el.id);
+
+    /* ===================== SYNC ===================== */
+
+    function syncThumb() {
+        const ratio = el.clientHeight / el.scrollHeight;
+        const thumbHeight = Math.max(
+            ratio * track.clientHeight,
+            track.clientHeight * 0.08
+        );
+
+        thumb.style.height = thumbHeight + 'px';
+
+        const buffer = track.clientHeight * 0.01;
+        const maxTop = track.clientHeight - thumbHeight - buffer;
+
+        const scrollRatio =
+            el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
+
+        thumb.style.top = buffer + scrollRatio * maxTop + 'px';
+    }
+
+    // store ref so we can cleanly remove it later
+    el.__syncThumb = syncThumb;
+    el.addEventListener('scroll', syncThumb);
+    syncThumb();
+
+    /* ===================== DRAG ===================== */
+
+    let dragging = false;
+    let startY = 0;
+    let startScroll = 0;
+
+    thumb.onmousedown = e => {
+        dragging = true;
+        startY = e.clientY;
+        startScroll = el.scrollTop;
+        document.body.style.userSelect = 'none';
+    };
+
+    document.onmousemove = e => {
+        if (!dragging) return;
+
+        const delta =
+            (e.clientY - startY) *
+            (el.scrollHeight / track.clientHeight);
+
+        el.scrollTop = startScroll + delta;
+    };
+
+    document.onmouseup = () => {
+        dragging = false;
+        document.body.style.userSelect = '';
+    };
+
+    scrollHolder.dataset.boundTo = el.id;
+
+    console.log('[FAKE SCROLLBAR] Bound successfully →', el.id);
+}
+
+
 function handleButtonClickNotStupid(event) {
     const btn = event.currentTarget;
     const btnId = btn.id;
+
+    const baseId = btnId
+    .replace("ButtonMobile", "")
+    .replace("Button", "");
+
+clickedId = baseId;
 
 
     let oldButtonToGrab;
@@ -235,7 +368,10 @@ function handleButtonClickNotStupid(event) {
         }
 
 
-
+bindFakeScrollbar({
+    clickedId,
+    isMobile
+});
 
 
     // console.log('STARTING OUT REAL SIMPLE...btn or event.currentTarget is', btn)
@@ -617,19 +753,51 @@ function activateTabByButtonId(buttonId) {
 }
 
 
+// async function switchMobileDesktop() {
+//     const wasMobile = isMobile;
+//     updateIsMobile();
+
+//     if (wasMobile === isMobile) return;
+
+//     console.log(
+//         isMobile
+//             ? "🔁 CHANGE DETECTED: DESKTOP → MOBILE"
+//             : "🔁 CHANGE DETECTED: MOBILE → DESKTOP"
+//     );
+
+//     // determine canonical tab name
+//     const sourceId = wasMobile
+//         ? mainTracker.previousClickedIdMobile
+//         : mainTracker.previousClickedId;
+
+//     const baseName = sourceId
+//         .replace("ButtonMobile", "")
+//         .replace("Button", "");
+
+//     await wait(30); // allow resize DOM settle
+
+//     // FULL RESET
+//     resetAllButtonsAndTabs(isMobile);
+
+//     // ACTIVATE EXACTLY ONE
+//     const targetButtonId = isMobile
+//         ? `${baseName}ButtonMobile`
+//         : `${baseName}Button`;
+
+//         await wait(30);
+
+//     activateTabByButtonId(targetButtonId);
+
+//     await wait(30);
+//     mainFunction();
+// }
+
 async function switchMobileDesktop() {
     const wasMobile = isMobile;
     updateIsMobile();
 
     if (wasMobile === isMobile) return;
 
-    console.log(
-        isMobile
-            ? "🔁 CHANGE DETECTED: DESKTOP → MOBILE"
-            : "🔁 CHANGE DETECTED: MOBILE → DESKTOP"
-    );
-
-    // determine canonical tab name
     const sourceId = wasMobile
         ? mainTracker.previousClickedIdMobile
         : mainTracker.previousClickedId;
@@ -638,23 +806,26 @@ async function switchMobileDesktop() {
         .replace("ButtonMobile", "")
         .replace("Button", "");
 
-    await wait(30); // allow resize DOM settle
+    await wait(30);
 
-    // FULL RESET
+    mainFunction();   // rebuild DOM first
+
+    await wait(30);
+
     resetAllButtonsAndTabs(isMobile);
 
-    // ACTIVATE EXACTLY ONE
     const targetButtonId = isMobile
         ? `${baseName}ButtonMobile`
         : `${baseName}Button`;
 
-        await wait(30);
-
     activateTabByButtonId(targetButtonId);
 
-    await wait(30);
-    mainFunction();
+    bindFakeScrollbar({
+        clickedId: baseName,
+        isMobile
+    });
 }
+
 
 
 // ===================== DOCUMENT READY =====================
