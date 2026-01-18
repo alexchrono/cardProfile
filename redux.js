@@ -97,7 +97,6 @@ function closeGallery() {
 
 // ===================== TAB / BUTTON HANDLER =====================
 function handleButtonClick(event) {
-
     const btn = event.currentTarget;
     const btnId = btn.id;
 
@@ -105,105 +104,71 @@ function handleButtonClick(event) {
         btnId === "galleryButton" ||
         btnId === "galleryButtonMobile";
 
-    /* ===================== GALLERY SHORT-CIRCUIT ===================== */
+    console.log('🖱️ BUTTON CLICKED:', btnId);
+    console.log('📱 isMobile:', isMobile);
+
+    // ================== HELPER FUNCTION ===================
+
+    function updateMobileState(btn, id) {
+        previousButtonMobile = clickedButtonMobile;
+        previousClickedIdMobile = clickedIdMobile;
+
+        clickedButtonMobile = btn;
+        clickedIdMobile = id;
+
+        console.log('📱 [MOBILE STATE UPDATED]');
+        console.log('   previousButtonMobile:', previousButtonMobile?.id);
+        console.log('   clickedButtonMobile:', clickedButtonMobile?.id);
+        console.log('   clickedIdMobile:', clickedIdMobile);
+    }
+
+    // ===================== ID DERIVATION =====================
+
+    const derivedId = isMobile
+        ? btnId.replace("ButtonMobile", "")
+        : btnId.replace("Button", "");
+
+    console.log('🧠 derivedId:', derivedId);
+
+    // ===================== MOBILE STATE UPDATE =====================
+
+    if (isMobile) {
+        updateMobileState(btn, derivedId);
+    }
+
+    // ===================== GALLERY SHORT-CIRCUIT =====================
 
     if (!isMobile && isGalleryButton) {
+        console.log('🖼️ [DESKTOP GALLERY CLICK]');
         openGallery();
         return;
     }
 
-    // if (isMobile && isGalleryButton) {
-    //     previousButtonMobile = clickedButtonMobile;
-    //     previousClickedIdMobile = clickedIdMobile;
-
-    //     clickedButtonMobile = btn;
-    //     clickedIdMobile = "gallery";
-
-    //     if (previousButtonMobile) {
-    //         previousButtonMobile.classList.remove("active");
-    //         previousButtonMobile.classList.add("inactive");
-    //     }
-
-    //     btn.classList.remove("inactive");
-    //     btn.classList.add("active");
-
-    //     openGallery();
-    //     return;
-    // }
-
-
     if (isMobile && isGalleryButton) {
-    console.log('📱 [GALLERY CLICK] Mobile gallery button clicked');
-    console.log('➡️ btn:', btn);
-    console.log('➡️ btn.id:', btn.id);
+        console.log('📱 [MOBILE GALLERY CLICK]');
 
-    console.log('🧠 BEFORE UPDATE STATE:');
-    console.log('   previousButtonMobile:', previousButtonMobile);
-    console.log('   previousClickedIdMobile:', previousClickedIdMobile);
-    console.log('   clickedButtonMobile:', clickedButtonMobile);
-    console.log('   clickedIdMobile:', clickedIdMobile);
+        if (previousButtonMobile && previousButtonMobile !== btn) {
+            console.log('🧹 Deactivating previous mobile button:', previousButtonMobile.id);
 
-    // save previous state
-    previousButtonMobile = clickedButtonMobile;
-    previousClickedIdMobile = clickedIdMobile;
+            previousButtonMobile.classList.remove("active");
+            previousButtonMobile.classList.add("inactive");
+        } else {
+            console.log('ℹ️ No previous mobile button to deactivate');
+        }
 
-    console.log('💾 SAVED PREVIOUS STATE:');
-    console.log('   previousButtonMobile NOW:', previousButtonMobile);
-    console.log('   previousClickedIdMobile NOW:', previousClickedIdMobile);
+        console.log('✨ Activating gallery button');
 
-    // set new clicked state
-    clickedButtonMobile = btn;
-    clickedIdMobile = "gallery";
+        btn.classList.remove("inactive");
+        btn.classList.add("active");
 
-    console.log('🎯 NEW CLICKED STATE SET:');
-    console.log('   clickedButtonMobile NOW:', clickedButtonMobile);
-    console.log('   clickedIdMobile NOW:', clickedIdMobile);
+        console.log('🖼️ Calling openGallery()');
+        openGallery();
 
-    // try to deactivate previous button
-    if (previousButtonMobile) {
-        console.log('🧹 ATTEMPTING TO DEACTIVATE PREVIOUS BUTTON');
-        console.log('   previousButtonMobile.id:', previousButtonMobile.id);
-        console.log(
-            '   classes BEFORE:',
-            [...previousButtonMobile.classList]
-        );
-
-        previousButtonMobile.classList.remove("active");
-        previousButtonMobile.classList.add("inactive");
-
-        console.log(
-            '   classes AFTER:',
-            [...previousButtonMobile.classList]
-        );
-    } else {
-        console.warn(
-            '⚠️ previousButtonMobile is NULL/UNDEFINED — nothing to deactivate'
-        );
+        console.log('✅ EXITING MOBILE GALLERY HANDLER');
+        return;
     }
 
-    console.log('✨ ACTIVATING GALLERY BUTTON');
-    console.log(
-        '   gallery button classes BEFORE:',
-        [...btn.classList]
-    );
-
-    btn.classList.remove("inactive");
-    btn.classList.add("active");
-
-    console.log(
-        '   gallery button classes AFTER:',
-        [...btn.classList]
-    );
-
-    console.log('🖼️ Calling openGallery()');
-    openGallery();
-
-    console.log('✅ EXITING MOBILE GALLERY HANDLER');
-    return;
-}
-
-
-    /* ===================== BUTTON STATE ===================== */
+    /* ===================== BUTTON STATE (DESKTOP / SHARED) ===================== */
 
     if (clickedButton && clickedId) {
         previousButton = clickedButton;
@@ -211,17 +176,21 @@ function handleButtonClick(event) {
     }
 
     clickedButton = btn;
+    clickedId = derivedId;
 
-    clickedId = isMobile
-        ? btnId.replace("ButtonMobile", "")
-        : btnId.replace("Button", "");
+    console.log('🎯 clickedId:', clickedId);
+    console.log('↩️ previousClickedId:', previousClickedId);
 
-    if (previousClickedId === clickedId) return;
+    if (previousClickedId === clickedId) {
+        console.log('⏭️ Same button clicked — aborting');
+        return;
+    }
 
     if (previousButton) {
         previousButton.classList.remove("active");
         previousButton.classList.add("inactive");
     } else {
+        console.log('📊 No previous button — defaulting to stats');
         statsButton.classList.remove("active");
         statsButton.classList.add("inactive");
     }
@@ -259,8 +228,6 @@ function handleButtonClick(event) {
        ===================== SCROLLBAR LOGIC =====================
        ============================================================ */
 
-    /* ---------- PARAMS ---------- */
-
     const SCROLL = {
         holderId: isMobile ? 'scrollHolderMobile' : 'scrollHolder',
         trackClass: isMobile ? '.scroll-trackMobile' : '.scroll-track',
@@ -270,8 +237,6 @@ function handleButtonClick(event) {
 
     const scrollHolder = document.getElementById(SCROLL.holderId);
     const el = document.getElementById(SCROLL.scrollFindId);
-
-    /* ---------- SAFEGUARD CLEANUP ---------- */
 
     if (scrollHolder?.dataset?.boundTo) {
         console.log('[FAKE SCROLLBAR] Cleaning previous binding:', scrollHolder.dataset.boundTo);
@@ -288,8 +253,6 @@ function handleButtonClick(event) {
         return;
     }
 
-    /* ---------- OVERFLOW CHECK ---------- */
-
     if (el.scrollHeight <= el.clientHeight) {
         console.log('[FAKE SCROLLBAR] No overflow — hiding');
 
@@ -298,8 +261,6 @@ function handleButtonClick(event) {
         scrollHolder.style.opacity = '0';
         return;
     }
-
-    /* ---------- INIT ---------- */
 
     console.log('[FAKE SCROLLBAR] Binding to:', el.id);
 
@@ -317,7 +278,11 @@ function handleButtonClick(event) {
 
     function syncThumb() {
         const ratio = el.clientHeight / el.scrollHeight;
-        const thumbHeight = Math.max(ratio * track.clientHeight, track.clientHeight * 0.08);
+        const thumbHeight = Math.max(
+            ratio * track.clientHeight,
+            track.clientHeight * 0.08
+        );
+
         thumb.style.height = thumbHeight + 'px';
 
         const buffer = track.clientHeight * 0.01;
@@ -331,8 +296,6 @@ function handleButtonClick(event) {
 
     el.addEventListener('scroll', syncThumb);
     syncThumb();
-
-    /* ---------- DRAG ---------- */
 
     let dragging = false;
     let startY = 0;
