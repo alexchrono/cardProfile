@@ -94,6 +94,38 @@ function closeGallery() {
         }, 1000);
     }
 }
+//======== close gallery if open
+
+function closeGalleryMobileIfOpen() {
+    if (!topGalleryDisplayMobile) return;
+
+    const isVisible =
+        topGalleryDisplayMobile.style.visibility === "visible" ||
+        getComputedStyle(topGalleryDisplayMobile).visibility === "visible";
+
+    if (!isVisible) return;
+
+    console.log('📱 [MOBILE] Closing gallery due to non-gallery click');
+
+    // hide gallery
+    topGalleryDisplayMobile.style.opacity = "0";
+    setTimeout(() => {
+        topGalleryDisplayMobile.style.visibility = "hidden";
+    }, 300);
+
+    // unhighlight gallery button
+    if (galleryButtonMobile) {
+        galleryButtonMobile.classList.remove("active");
+        galleryButtonMobile.classList.add("inactive");
+    }
+
+    // IMPORTANT: clear mobile gallery state
+    if (clickedIdMobile === "gallery") {
+        clickedIdMobile = null;
+        clickedButtonMobile = null;
+    }
+}
+
 
 // ===================== TAB / BUTTON HANDLER =====================
 function handleButtonClick(event) {
@@ -129,6 +161,10 @@ function handleButtonClick(event) {
         : btnId.replace("Button", "");
 
     console.log('🧠 derivedId:', derivedId);
+
+    if (isMobile && !isGalleryButton) {
+    closeGalleryMobileIfOpen();
+}
 
     // ===================== MOBILE STATE UPDATE =====================
 
