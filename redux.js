@@ -622,6 +622,7 @@ activePics.forEach((src, index) => {
     }, 500);
 }
 
+
 // ===================== MOBILE / DESKTOP SWITCH =====================
 async function switchMobileDesktop() {
     const wasMobile = isMobile;
