@@ -162,6 +162,9 @@ async function closeGallery() {
     // allow handler to run
     await new Promise(r => setTimeout(r, 0));
 
+    // restoreButton.classList.remove("inactive");
+    // restoreButton.classList.add("active");
+
     console.log(
         '🧠 previousClickedId (after click):',
         mainTracker.previousClickedId
@@ -385,13 +388,29 @@ if (baseId === "gallery") {
     if (isMobile) {
         resetAllButtonsAndTabs(true);
         mainTracker.previousClickedIdMobile = "galleryButtonMobile";
-    } else {
-        let ourTemp = mainTracker.previousClickedId;
-        mainTracker.variableForDesktopGallery = ourTemp
-        resetAllButtonsAndTabs(false);
-        mainTracker.previousClickedId = "galleryButton";
-
     }
+    if (!isMobile) {
+    // store previous tab first
+    mainTracker.variableForDesktopGallery = mainTracker.previousClickedId;
+
+    // reset buttons/tabs
+    resetAllButtonsAndTabs(false);
+
+    // mark gallery as "current" so guard works
+    mainTracker.previousClickedId = "galleryButton";
+}
+
+
+
+
+
+    // else {
+    //     let ourTemp = mainTracker.previousClickedId;
+    //     mainTracker.variableForDesktopGallery = ourTemp
+    //     resetAllButtonsAndTabs(false);
+    //     mainTracker.previousClickedId = "galleryButton";
+
+    // }
 
     // activate gallery button
     btn.classList.remove("inactive");
