@@ -1540,7 +1540,7 @@ h1 {
 #leftSideMainMobile{
 box-sizing:border-box;
 border:3px dotted brown;
-width:100%;
+width:55%;
 height:100%;
 display:flex;
 flex-direction:row;
@@ -1663,7 +1663,7 @@ align-items:center;
 
 #theRestMobile{
 position:relative;
-width:60.88%;
+width:45%;
 height:100%;
 display:flex;
 flex-direction:column;
@@ -1705,7 +1705,7 @@ align-items:center;
 }
 
 #mainMenuWrapperMobile{
-width:30%;
+width:100%;
 height:100%;
 box-sizing:border-box;
 border:3px dotted brown;
@@ -1762,6 +1762,19 @@ background-color:#600006;
 }
 
 #mainMenuRightSideMobile{
+box-sizing:border-box;
+border:3px dotted blue;
+width:70%;
+height:100%;
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+position:relative;
+padding-right:2.3%;
+}
+
+#seventyPatsy{
 box-sizing:border-box;
 border:3px dotted blue;
 width:70%;
