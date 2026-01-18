@@ -567,112 +567,94 @@ async function mainFunction() {
 //     mainFunction();
 // }
 
-async function switchMobileDesktop() {
-    const wasMobile = isMobile;
+function resetAllButtonsAndTabs(isMobileMode) {
+    const buttonSuffix = isMobileMode ? "ButtonMobile" : "Button";
+    const tabSuffix = isMobileMode ? "TabMobile" : "Tab";
 
-    updateIsMobile();
+    const ids = ["stats", "personality", "history", "encounters", "ooc"];
 
-    // no state change
-    if (wasMobile === isMobile) return;
+    ids.forEach(name => {
+        const btn = document.getElementById(`${name}${buttonSuffix}`);
+        const tab = document.getElementById(`${name}${tabSuffix}`);
 
-    // -------------------------------
-    // DESKTOP → MOBILE
-    // -------------------------------
-    if (!wasMobile && isMobile) {
-        console.log("🔁 CHANGE DETECTED: DESKTOP → MOBILE");
-
-        const desktopBtnId = mainTracker.previousClickedId; // e.g. "encountersButton"
-        if (!desktopBtnId) return;
-
-        const baseKey = desktopBtnId.replace("Button", ""); // "encounters"
-        const mobileBtnId = `${baseKey}ButtonMobile`;
-        const desktopTabId = `${baseKey}Tab`;
-        const mobileTabId = `${baseKey}TabMobile`;
-
-        const oldDesktopBtn = document.getElementById(desktopBtnId);
-        const oldDesktopTab = document.getElementById(desktopTabId);
-        const newMobileBtn = document.getElementById(mobileBtnId);
-        const newMobileTab = document.getElementById(mobileTabId);
-
-        // deactivate desktop
-        if (oldDesktopBtn) {
-            oldDesktopBtn.classList.remove("active");
-            oldDesktopBtn.classList.add("inactive");
+        if (btn) {
+            btn.classList.remove("active");
+            btn.classList.add("inactive");
         }
 
-        if (oldDesktopTab) {
-            oldDesktopTab.style.opacity = "0";
-            oldDesktopTab.style.visibility = "hidden";
+        if (tab) {
+            tab.style.opacity = "0";
+            tab.style.visibility = "hidden";
         }
-
-        // activate mobile
-        if (newMobileBtn) {
-            newMobileBtn.classList.remove("inactive");
-            newMobileBtn.classList.add("active");
-        }
-
-        if (newMobileTab) {
-            newMobileTab.style.visibility = "visible";
-            requestAnimationFrame(() => {
-                newMobileTab.style.opacity = "1";
-            });
-        }
-
-        // sync tracker
-        mainTracker.previousClickedIdMobile = mobileBtnId;
-    }
-
-    // -------------------------------
-    // MOBILE → DESKTOP
-    // -------------------------------
-    if (wasMobile && !isMobile) {
-        console.log("🔁 CHANGE DETECTED: MOBILE → DESKTOP");
-
-        const mobileBtnId = mainTracker.previousClickedIdMobile; // e.g. "encountersButtonMobile"
-        if (!mobileBtnId) return;
-
-        const baseKey = mobileBtnId.replace("ButtonMobile", ""); // "encounters"
-        const desktopBtnId = `${baseKey}Button`;
-        const mobileTabId = `${baseKey}TabMobile`;
-        const desktopTabId = `${baseKey}Tab`;
-
-        const oldMobileBtn = document.getElementById(mobileBtnId);
-        const oldMobileTab = document.getElementById(mobileTabId);
-        const newDesktopBtn = document.getElementById(desktopBtnId);
-        const newDesktopTab = document.getElementById(desktopTabId);
-
-        // deactivate mobile
-        if (oldMobileBtn) {
-            oldMobileBtn.classList.remove("active");
-            oldMobileBtn.classList.add("inactive");
-        }
-
-        if (oldMobileTab) {
-            oldMobileTab.style.opacity = "0";
-            oldMobileTab.style.visibility = "hidden";
-        }
-
-        // activate desktop
-        if (newDesktopBtn) {
-            newDesktopBtn.classList.remove("inactive");
-            newDesktopBtn.classList.add("active");
-        }
-
-        if (newDesktopTab) {
-            newDesktopTab.style.visibility = "visible";
-            requestAnimationFrame(() => {
-                newDesktopTab.style.opacity = "1";
-            });
-        }
-
-        // sync tracker
-        mainTracker.previousClickedId = desktopBtnId;
-    }
-
-    await wait(10);
-    mainFunction();
+    });
 }
 
+
+function activateTabByButtonId(buttonId) {
+    const isMobileMode = buttonId.endsWith("Mobile");
+
+    const btn = document.getElementById(buttonId);
+    const tab = document.getElementById(
+        buttonId.replace("ButtonMobile", "TabMobile")
+                .replace("Button", "Tab")
+    );
+
+    if (!btn || !tab) return;
+
+    btn.classList.remove("inactive");
+    btn.classList.add("active");
+
+    tab.style.visibility = "visible";
+    requestAnimationFrame(() => {
+        tab.style.opacity = "1";
+    });
+
+    if (isMobileMode) {
+        mainTracker.previousClickedIdMobile = buttonId;
+    } else {
+        mainTracker.previousClickedId = buttonId;
+    }
+}
+
+
+async function switchMobileDesktop() {
+    const wasMobile = isMobile;
+    updateIsMobile();
+
+    if (wasMobile === isMobile) return;
+
+    console.log(
+        isMobile
+            ? "🔁 CHANGE DETECTED: DESKTOP → MOBILE"
+            : "🔁 CHANGE DETECTED: MOBILE → DESKTOP"
+    );
+
+    // determine canonical tab name
+    const sourceId = wasMobile
+        ? mainTracker.previousClickedIdMobile
+        : mainTracker.previousClickedId;
+
+    const baseName = sourceId
+        .replace("ButtonMobile", "")
+        .replace("Button", "");
+
+    await wait(30); // allow resize DOM settle
+
+    // FULL RESET
+    resetAllButtonsAndTabs(isMobile);
+
+    // ACTIVATE EXACTLY ONE
+    const targetButtonId = isMobile
+        ? `${baseName}ButtonMobile`
+        : `${baseName}Button`;
+
+        await wait(30);
+
+    activateTabByButtonId(targetButtonId);
+
+    await wait(30);
+    mainFunction();
+}
 
 
 // ===================== DOCUMENT READY =====================
