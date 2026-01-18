@@ -27,12 +27,9 @@ let previousButtonMobile;
 let previousClickedIdMobile;
 
 let mainTracker = {
-    // "clickedButton": false,
-    "clickedId": false,
-    // "clickedButtonMobile": false,
-    "clickedIdMobile": false,
-    "previousClickedId": false,
-    "previousClickedIdMobile": false
+
+    "previousClickedId": "statsButton",
+    "previousClickedIdMobile": "statsButtonMobile"
 
 }
 
@@ -147,15 +144,15 @@ function handleButtonClickNotStupid(event) {
     const btn = event.currentTarget;
     const btnId = btn.id;
 
-    
+
     let oldButtonToGrab;
     let oldTabToHide;
     let newTabToFadeIn;
 
     if (isMobile) {
-        if (!mainTracker?.previousClickedIdMobile) {
-            previousClickedIdMobile = "statsButtonMobile"
-        }
+        // if (!mainTracker?.previousClickedIdMobile) {
+        //     mainTracker.previousClickedIdMobile = "statsButtonMobile"
+        // }
 
         if (mainTracker?.previousClickedIdMobile && btnId === mainTracker?.previousClickedIdMobile) {
             return
@@ -177,18 +174,19 @@ function handleButtonClickNotStupid(event) {
 
 
     }
-    else {
-        if (!mainTracker?.previousClickedId) {
-            previousClickedId = "statsButton"
-        }
+    else if (!isMobile){
+        console.log('555555555555btn Id is',btnId)
+        console.log('555555555 mainTracker previousClickedId is',mainTracker.previousClickedId)
 
-        if (mainTracker?.previousClickedId && btnId === mainTracker?.previousClickedId) {
+        if ((mainTracker?.previousClickedId) && (btnId === mainTracker?.previousClickedId)) {
             return
         }
 
-        if (mainTracker?.previousClickedId && btnId !== mainTracker?.previousClickedId) {
+        if ((mainTracker?.previousClickedId) && (btnId !== mainTracker?.previousClickedId)) {
+            console.log('5555555555 the clicked button is different from previous')
             oldButtonToGrab = document.getElementById(mainTracker?.previousClickedId)
-            oldTabToHide =  document.getElementById(mainTracker?.previousClickedIdMobile.replace("Button", "Tab"))
+            // let oldTabName = mainTracker?.previousClickedId.replace("Button", "Tab")
+            oldTabToHide =  document.getElementById(mainTracker?.previousClickedId.replace("Button", "Tab"))
             newTabToFadeIn = document.getElementById(btnId.replace("Button", "Tab"))
 
         }
@@ -240,16 +238,16 @@ function handleButtonClickNotStupid(event) {
 
 
 
-    console.log('STARTING OUT REAL SIMPLE...btn or event.currentTarget is', btn)
-    console.log('btnId will be......', btn.id)
+    // console.log('STARTING OUT REAL SIMPLE...btn or event.currentTarget is', btn)
+    // console.log('btnId will be......', btn.id)
 
 
-    console.log('before we do anything mainTracker is....', mainTracker)
-    const derivedId = isMobile
-        ? btnId.replace("ButtonMobile", "tabMobile")
-        : btnId.replace("Button", "tab");
+    // console.log('before we do anything mainTracker is....', mainTracker)
+    // const derivedId = isMobile
+    //     ? btnId.replace("ButtonMobile", "tabMobile")
+    //     : btnId.replace("Button", "tab");
 
-    console.log('we can get our item by grabbing the following....', derivedId)
+    // console.log('we can get our item by grabbing the following....', derivedId)
 
 
 
