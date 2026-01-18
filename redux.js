@@ -153,6 +153,11 @@ function handleButtonClick(event) {
             previousButtonMobile.classList.remove("active");
             previousButtonMobile.classList.add("inactive");
         } else {
+            let grabThisOne = document.getElementById("statsButtonMobile")
+            if (grabThisOne){
+                 grabThisOne.classList.remove("active");
+            grabThisOne.classList.add("inactive");
+            }
             console.log('ℹ️ No previous mobile button to deactivate');
         }
 
