@@ -143,6 +143,31 @@ function closeGalleryMobileIfOpen() {
 
 
 
+
+function setGalleryState(open, isMobileMode) {
+    const gallery = isMobileMode
+        ? topGalleryDisplayMobile
+        : topGalleryDisplay;
+
+    if (!gallery) return;
+
+    if (open) {
+        gallery.style.visibility = "visible";
+        requestAnimationFrame(() => {
+            gallery.style.opacity = "1";
+        });
+    } else {
+        gallery.style.opacity = "0";
+        setTimeout(() => {
+            gallery.style.visibility = "hidden";
+        }, 300);
+    }
+}
+
+    /* ============================================================
+       ===================== END GALLERY FUNCTIONS =====================
+       ============================================================ */
+
 function bindFakeScrollbar({
     clickedId,
     isMobile
@@ -158,7 +183,7 @@ function bindFakeScrollbar({
         scrollFindId: clickedId + (isMobile ? 'ScrollFindMobile' : 'ScrollFind')
     };
 
-    
+
     const scrollHolder = document.getElementById(SCROLL.holderId);
     const el = document.getElementById(SCROLL.scrollFindId);
 
@@ -278,6 +303,29 @@ function handleButtonClickNotStupid(event) {
 
 clickedId = baseId;
 
+// === GALLERY SPECIAL CASE ===
+if (baseId === "gallery") {
+
+    // close any existing tab
+    if (isMobile) {
+        resetAllButtonsAndTabs(true);
+        mainTracker.previousClickedIdMobile = "galleryButtonMobile";
+    } else {
+        resetAllButtonsAndTabs(false);
+        mainTracker.previousClickedId = "galleryButton";
+    }
+
+    // activate gallery button
+    btn.classList.remove("inactive");
+    btn.classList.add("active");
+
+    // open gallery UI
+    setGalleryState(true, isMobile);
+
+    return; // ⛔ DO NOT run normal tab logic
+}
+
+
 
     let oldButtonToGrab;
     let oldTabToHide;
@@ -342,6 +390,13 @@ clickedId = baseId;
 
             }
 
+            // if switching away from gallery, force-close it
+if (
+    (isMobile && mainTracker.previousClickedIdMobile === "galleryButtonMobile") ||
+    (!isMobile && mainTracker.previousClickedId === "galleryButton")
+) {
+    setGalleryState(false, isMobile);
+}
 
 
             if (oldTabToHide){
@@ -820,6 +875,11 @@ async function switchMobileDesktop() {
         : `${baseName}Button`;
 
     activateTabByButtonId(targetButtonId);
+    // restore gallery if it was active
+if (baseName === "gallery") {
+    setGalleryState(true, isMobile);
+}
+
 
     bindFakeScrollbar({
         clickedId: baseName,
