@@ -420,7 +420,7 @@ async function runMobileStartupIntro() {
     statTabsMobile.style.visibility="hidden";  //was visible
     bottomButtonMenu.style.height="0%" //height was originally 12
     topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
-
+    topTextLogo.style.visibility="visible" //was hidden
 
     await wait(4000);
 
