@@ -932,8 +932,42 @@ html, body {
 background-color: #600006;
 }
 
+.inactive {
+    /* background-color: #600006; */
+
+    background-color: #920009;
+
+    background-image:
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png');
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+
+    border: 1px solid #330000;
+    color: #ffcccc;
+}
+
 .active {
-    background-color: #09202a;
+    /* background-color: #09202a; */
+    background-color: #07b0f9;
+
+        background-image:
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png'),
+        url('./assets/marbleReal.png');
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
 }
 
 a.tab:link,
@@ -1102,6 +1136,8 @@ h1 {
   flex-direction:row;
   justify-content:flex-start;
   align-items:flex-end;
+    opacity:1;
+  visibility:visible;
 
 
 }
@@ -1114,6 +1150,7 @@ h1 {
   max-height:67dvh;
   width:auto;
   margin-left:5%;
+
 }
 
 
@@ -1255,9 +1292,10 @@ h1 {
 }
 
 @keyframes blinkBorder {
-  0%, 100% { border-color: red; }
+  0%, 100% { border-color: rgba(160, 4, 4, 0.677); }
   50% { border-color: transparent; }
 }
+
 
 .picturePreview.activePreview {
   border: 3px solid red;
@@ -1876,7 +1914,7 @@ align-items:center;
 }
 
 .menuInnerMobile{
-border:3px solid #737373;
+/* border:3px solid #737373; */
 border-radius:2rem 2rem 2rem 2rem;
 border-right:solid 3px #8c8c8c;
 width:92%;
@@ -1888,6 +1926,23 @@ text-align:center;
 color:white;
 font-size:1.2rem;
 cursor:pointer;
+}
+
+.menuInnerMobileLast {
+
+/* border:3px solid #737373; */
+border-radius:2rem 2rem 2rem 2rem;
+
+width:92%;
+height:68%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+font-size:1.2rem;
+cursor:pointer;
+
 }
 
 .activeMobile{
@@ -2270,6 +2325,84 @@ justify-content:center;
 }
 
 
+/* // TEST OUT NEW BUTTONs */
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.button-label {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.shine-button {
+  position: relative;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  min-width: 200px;
+}
+
+.shine-button::before {
+  content: '';
+  position: absolute;
+  height: 250%;
+  width: 40px;
+  top: 0;
+  left: -60px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: rotate(45deg) translateY(-35%);
+  animation: shine 3s ease infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -80px;
+  }
+  40% {
+    left: calc(100% + 20px);
+  }
+  100% {
+    left: calc(100% + 20px);
+  }
+}
+
+
+/* .button-fire {
+  background: linear-gradient(135deg, #ff4500 0%, #ff6347 50%, #ffa500 100%);
+  color: #fff;
+  box-shadow:
+    0 10px 30px rgba(255, 69, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+} */
+
+.button-fire {
+    background: linear-gradient(135deg, #5d210b 0%, #561307 50%, #851212 100%);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(255, 69, 0, 0.4), inset 0 1px 0 rgb(0 0 0 / 20%);
+}
+
+.button-fire:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 15px 40px rgba(255, 69, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+
+
 /* FOR CELLPHONES=================================================== */
 
 @media (orientation: portrait) {
@@ -2341,7 +2474,7 @@ mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 1
 #topViewMobileInner {
     width:100%;
     height:100%;
-    background-color: rgba(28, 46, 131, 0.75);
+    background-color: rgba(28, 46, 131, 0.5);
     border-radius: 2rem 2rem 2rem 2rem;
     z-index: 3;
     position:relative;
@@ -2411,8 +2544,8 @@ mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 1
 
 
     box-sizing: border-box;
-  border-top:.5vh solid white;
-  border-right:.5vh solid white;
+  /* border-top:.5vh solid white;
+  border-right:.5vh solid white; */
   border-radius: 0px 0px 0px 0px;
   height:100%;
   width:100%;

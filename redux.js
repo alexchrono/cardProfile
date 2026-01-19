@@ -329,7 +329,7 @@ async function runMobileStartupIntro() {
 
     // let expandForBeginning = document.getElementById("topViewMobile")
     // expandForBeginning.style.height="100%";
-
+    let containerOfCutout = document.getElementById("just4StartupColumn4Chara")
     let topViewMobileInner = document.getElementById("topViewMobileInner");
     let statTabsMobile = document.getElementById('statsTabMobile');
     let startUpFlashPics = document.getElementById('just4StartupFlashPics');
@@ -338,9 +338,16 @@ async function runMobileStartupIntro() {
     bottomButtonMenu.style.height="0%" //height was originally 12
     topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
 
+
+    await wait(4000);
+
+     //PART WHERE I ANIMATE THE IMAGES....
     startUpFlashPics.style.visibility="visible" //was hidden
 
     actualImage.src="https://i.ibb.co/Q3jjbsCY/first-Up-G.webp";
+
+    containerOfCutout.style.opacity = '0'
+    containerOfCutout.style.visibility = 'hidden'
     await wait(1500);
     actualImage.src="https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg";
     await wait(1500);
@@ -350,11 +357,13 @@ async function runMobileStartupIntro() {
 
     startUpFlashPics.style.visibility="hidden"
 
-    await wait(2000);
+
+    // await wait(2000);
+     //END ANIMATE IMAGES
     bottomButtonMenu.style.height="12%";
     statTabsMobile.style.visibility="visible";
     bottomButtonMenu.style.height="12%";
-    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.75)";
+    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
 
 
 
