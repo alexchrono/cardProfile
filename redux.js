@@ -311,6 +311,36 @@ async function switchMobileDesktop() {
     bindFakeScrollbar({ clickedId: baseName, isMobile });
 }
 
+//START UP CRAP========================================
+
+// ===================== STARTUP INTRO HOOK =====================
+async function runMobileStartupIntro() {
+    console.log("🚀 Mobile startup intro placeholder");
+
+    // let bottomTextDisplay = document.getElementById("just4Startup")
+
+    // bottomTextDisplay.style.visibility="visible"
+
+
+
+    let bottomButtonMenu = document.getElementById("mainMenuMobile");
+    bottomButtonMenu.style.height="0%" //height was originally 12
+    // bottomButtonMenu.style.visibility="hidden";
+
+    // let expandForBeginning = document.getElementById("topViewMobile")
+    // expandForBeginning.style.height="100%";
+
+    let topViewMobileInner = document.getElementById("topViewMobileInner");
+    let statTabsMobile = document.getElementById('statsTabMobile')
+
+
+    topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
+    statTabsMobile.style.visibility="hidden";  //was visible
+
+
+
+
+}
 
 
 //==================================MAIN FUNCTION ==========================================
