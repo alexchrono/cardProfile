@@ -661,9 +661,6 @@ async function mainFunction() {
         buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton, galleryButton];
     }
 
-    if (startedInMobile && isMobile) {
-        await runMobileStartupIntro();
-    }
 
     if (statsTab && !startedInMobile) {
         statsTab.style.visibility = "visible";
@@ -683,11 +680,17 @@ async function mainFunction() {
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', async () => {
     updateIsMobile();
-    if (isMobile) startedInMobile = true, console.log("📱 STARTED IN MOBILE MODE");
+    if (isMobile) startedInMobile = true;
+    console.log(isMobile ? "📱 STARTED IN MOBILE MODE" : "🖥️ STARTED IN DESKTOP MODE");
 
-    await mainFunction();   // wait for your main DOM stuff
-    initVantaFog();         // init fog (doesn't block)
-    fadeIn();               // then fade overlay
+    await mainFunction();   
+    initVantaFog();
+
+    if (isMobile) {
+        await runMobileStartupIntro();
+    }
+
+    fadeIn();
+
     window.addEventListener('resize', switchMobileDesktop);
 });
-
