@@ -815,28 +815,7 @@ html, body {
 /* =========================
    INFO PANEL
 ========================= */
-#statsTab {
-  position: absolute;
-  /* left: 30.68%;
-  bottom: 6.25%;
-  width: 67.07%; */
-  width: 91%;
-  height: 84.38%;
-  background-color: #600006;
-  padding: 1.22%;
-  box-sizing: border-box;
-  overflow: hidden;
-  font-family: muli;
-  /* font-size: 4.38%;
-  line-height: 4.38%; */
-  font-size: 1rem;
-  line-height: 1rem;
-  color: #fff;
-  border-radius: 0 3.05% 3.05% 0;
-  z-index: 25;
-  visibility: visible;
 
-}
 
 #statsTab,
 .dragon {
@@ -885,6 +864,17 @@ html, body {
   overflow-y:hidden;
 } */
 
+
+
+#statsTab {
+
+  z-index: 25;
+  visibility: visible;
+
+}
+
+
+
 .dragon {
   position: absolute;
   width: 91%;
@@ -902,6 +892,7 @@ html, body {
   transition: opacity 1s ease;
   overflow-y: hidden;
   z-index: 20;
+  border-radius: 2rem 2rem 2rem 2rem;
 }
 
 /* pseudo-element for overlay */
@@ -2614,4 +2605,3 @@ justify-content:center;
 
 
 }
-
