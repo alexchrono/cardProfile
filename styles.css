@@ -895,7 +895,11 @@ html, body {
   /* width: 67.07%; */
   width: 91%;
   height: 84.38%;
-  background-color: #600006;
+  /* background-color: #600006; */
+  /* background-color: rgba(96, 0, 6, 1); */
+      background-color: rgba(120, 11, 18,  67%);
+
+
   /* background: linear-gradient(
     to right,
     rgba(96, 0, 6, 0.3),
