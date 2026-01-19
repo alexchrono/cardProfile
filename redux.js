@@ -442,25 +442,26 @@ async function runMobileStartupIntro() {
 
     // containerOfCutout.style.opacity = '0'
     // containerOfCutout.style.visibility = 'hidden'
-    // await wait(1500);
-    // actualImage.src="https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg";
-    // await wait(1500);
+    await wait(1500);
+    actualImage.src="https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg";
+    await wait(1500);
 
-    // actualImage.src="https://i.ibb.co/sd7h9qZK/third-Up-G.jpg";
-    // await wait(1500);
+    actualImage.src="https://i.ibb.co/sd7h9qZK/third-Up-G.jpg";
+    await wait(1500);
 
-    // startUpFlashPics.style.visibility="hidden"
+    startUpFlashPics.style.visibility="hidden"
 
 
-    // await wait(2000);
+    await wait(2000);
      //END ANIMATE IMAGES
 
     // ================= SHOW THE DAMN MENU
 
-    // bottomButtonMenu.style.height="12%";
-    // statTabsMobile.style.visibility="visible";
-    // bottomButtonMenu.style.height="12%";
-    // topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
+    bottomButtonMenu.style.height="12%";
+    statTabsMobile.style.visibility="visible";
+    statTabsMobile.style.opacity="1";
+    bottomButtonMenu.style.height="12%";
+    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
 
    //========= ignore below
 

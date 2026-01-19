@@ -2421,9 +2421,11 @@ justify-content:center;
     filter: brightness(1.8);
 }
 
-
-
 #bgTestCoverFront {
+  z-index:16;
+}
+
+/* #bgTestCoverFront {
     position: absolute;
     top: 0;
     left: 0;
@@ -2437,8 +2439,8 @@ justify-content:center;
     mask-image: linear-gradient(to right, rgba(0, 0, 0, .4) 0%, rgba(0, 0, 0, .6) 30%,rgba(0, 0, 0, .15) 100%);
     mask-repeat: no-repeat;
     mask-size: 100% 100%;
-    /* background-color: transparent; */
-}
+
+} */
 
 #theRest {
   display:none;
