@@ -65,6 +65,21 @@ function wait(ms) {
 // ===================== VANTA INIT (RUN ONCE) =====================
 
 
+
+
+async function fadeIn() {
+
+    let blackOverlay= document.getElementById('ourFader');
+
+    blackOverlay.style.opacity='0';
+    await wait(700)
+    blackOverlay.style.visibility="hidden";
+    blackOverlay.style.display="none"
+
+}
+
+
+
 function initVantaFog() {
     if (vantaInitialized) {
         console.log("🟡 VANTA already initialized — skipping");
@@ -662,5 +677,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isMobile) startedInMobile = true, console.log("📱 STARTED IN MOBILE MODE");
     mainFunction();
     initVantaFog();
+    fadeIn()
     window.addEventListener('resize', switchMobileDesktop);
 });
