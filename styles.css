@@ -2453,7 +2453,7 @@ justify-content:center;
 #bgTestCover{
 
  /* IT WAS THIS  mask-image: linear-gradient(to right, rgba(0, 0, 0, .3) 50%, rgba(0, 0, 0, .5) 100%); */
-mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 100%);
+/* mask-image: linear-gradient(to right, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 100%); */
 }
 
 #topViewMobile {
