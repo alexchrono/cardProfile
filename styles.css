@@ -833,37 +833,6 @@ html, body {
 /* =========================
    DRAGON PANELS
 ========================= */
-/* .dragon {
-  position: absolute;
-
-  width: 94%;
-
-  height: 84.38%;
-  box-sizing: border-box;
-  border:3px dotted blue;
-
-  background: linear-gradient(
-    to right,
-    rgba(96, 0, 6, 0.1) 0%,
-    rgba(96, 0, 6, 1) 10%,
-    rgba(96, 0, 6, 1) 30%,
-    rgba(96, 0, 6, 1) 80%,
-    rgba(96, 0, 6, 0.3));
-  padding: 1.22%;
-  box-sizing: border-box;
-  font-family: muli;
-
-  font-size: 1rem;
-  line-height: 1rem;
-  color: #fff;
-  opacity: 0;
-  overflow: auto;
-  z-index: 20;
-  visibility: hidden;
-  transition: opacity 1s ease;
-  overflow-y:hidden;
-} */
-
 
 
 #statsTab {
@@ -2063,71 +2032,58 @@ cursor:grabbing;
 background:rgba(146,95,95,1);
 }
 
-.dragonMobile{
-position:absolute;
-/* width:91%;
-height:84.38%; */
-    /* width: 76%;
-    height: 81.38%; */
-        /* width: 95%;
-    height: 93.38%; */
+.dragonMobile {
+  position: absolute;
     width: 88%;
     height: 93.38%;
-background-color:#600006;
-padding:1.22%;
-box-sizing:border-box;
-font-family:muli;
-font-size:1rem;
-line-height:1rem;
-color:#fff;
-opacity:0;
-overflow:auto;
-z-index:20;
-visibility:hidden;
-transition:opacity 1s ease;
-overflow-y:hidden;
+  /* background-color: rgba(120, 11, 18, 0.67); */
+  background-color: #600006;
+  padding: 1.22%;
+  box-sizing: border-box;
+  font-family: muli;
+  font-size: 1rem;
+  line-height: 1rem;
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease;
+  overflow-y: hidden;
+  z-index: 20;
+  border-radius: 2rem 2rem 2rem 2rem;
+}
+
+/* pseudo-element for overlay */
+.dragonMobile::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-image: url("./assets/stone.jpg");
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+
+  /* add darkness */
+  background-color: rgba(0, 0, 0, 0.3);
+  background-blend-mode: darken;
+  opacity: 0.2;       /* still controls overall overlay transparency */
+  z-index: 1;
+  pointer-events: none;
 }
 
 
-#statsTabMobile{
-position:absolute;
-/* width:91%;
-height:84.38%; */
-    /* width: 76%;
-    height: 81.38%; */
-        /* width: 95%;
-    height: 93.38%; */
-    width: 88%;
-    height: 93.38%;
-background-color:#600006;
-padding:1.22%;
-box-sizing:border-box;
-font-family:muli;
-font-size:1rem;
-line-height:1rem;
-color:#fff;
-opacity:1;
-overflow:auto;
-z-index:20;
-visibility:visible;
-transition:opacity 1s ease;
-overflow-y:hidden;
+
+
+
+#statsTab {
+
+  z-index: 25;
+  visibility: visible;
+
 }
-/* #statsTabMobile{
-position:absolute;
-width:91%;
-height:84.38%;
-background-color:#600006;
-padding:1.22%;
-box-sizing:border-box;
-font-family:muli;
-font-size:1rem;
-line-height:1rem;
-color:#fff;
-border-radius:3.05% 3.05% 0;
-z-index:25;
-visibility:visible;
-} */
+
 
 .info-contentMobile{
 width:100%;
