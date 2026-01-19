@@ -2121,6 +2121,34 @@ color:gray;
     align-items: flex-end;
 }
 
+#just4StartupFlashPics {
+  z-index:10;
+  box-sizing: border-box;
+  border:4px dotted purple;
+  width:100%;
+  height:100%;
+  background-color: black;
+  display:flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
+  position:absolute;
+  left:0;
+  bottom:0;
+  visibility: hidden;
+
+
+}
+
+#just4StartupFlashPics img {
+  box-sizing: border-box;
+  border:2px dotted white;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+
+}
+
 
 #just4StartupCharaNameTop {
     box-sizing: border-box;
@@ -2138,6 +2166,7 @@ color:gray;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-end;
+    visibility:hidden;
 
 }
 

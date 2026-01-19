@@ -321,21 +321,48 @@ async function runMobileStartupIntro() {
 
     // bottomTextDisplay.style.visibility="visible"
 
-
+    let topTextLogo = document.getElementById("just4StartupCharaNameTop")
 
     let bottomButtonMenu = document.getElementById("mainMenuMobile");
-    bottomButtonMenu.style.height="0%" //height was originally 12
+
     // bottomButtonMenu.style.visibility="hidden";
 
     // let expandForBeginning = document.getElementById("topViewMobile")
     // expandForBeginning.style.height="100%";
 
     let topViewMobileInner = document.getElementById("topViewMobileInner");
-    let statTabsMobile = document.getElementById('statsTabMobile')
-
-
-    topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
+    let statTabsMobile = document.getElementById('statsTabMobile');
+    let startUpFlashPics = document.getElementById('just4StartupFlashPics');
+    let actualImage = document.getElementById('flashPicsImage');
     statTabsMobile.style.visibility="hidden";  //was visible
+    bottomButtonMenu.style.height="0%" //height was originally 12
+    topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
+
+    startUpFlashPics.style.visibility="visible" //was hidden
+
+    actualImage.src="https://i.ibb.co/Q3jjbsCY/first-Up-G.webp";
+    await wait(1500);
+    actualImage.src="https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg";
+    await wait(1500);
+
+    actualImage.src="https://i.ibb.co/sd7h9qZK/third-Up-G.jpg";
+    await wait(1500);
+
+    startUpFlashPics.style.visibility="hidden"
+
+    await wait(2000);
+    bottomButtonMenu.style.height="12%";
+    statTabsMobile.style.visibility="visible";
+    bottomButtonMenu.style.height="12%";
+    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.75)";
+
+
+
+    // bottomButtonMenu.style.height="0%" //height was originally 12
+    // topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
+
+    // topTextLogo.style.visibility="visible"; //was hidden
+
 
 
 
