@@ -422,14 +422,21 @@ async function runMobileStartupIntro() {
     topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
     topTextLogo.style.visibility="visible" //was hidden
 
-    
+
 
     await wait(4000);
 
-     //======================PART WHERE I ANIMATE THE IMAGES....
 
 
-    // startUpFlashPics.style.visibility="visible" //was hidden
+
+
+   //======================PART WHERE I ANIMATE THE IMAGES....
+    startUpFlashPics.style.visibility="visible" //was hidden
+    await wait(20)
+    topTextLogo.style.visibility="hidden"
+    containerOfCutout.style.opacity = '0'
+    containerOfCutout.style.visibility = 'hidden'
+
 
     // actualImage.src="https://i.ibb.co/Q3jjbsCY/first-Up-G.webp";
 
