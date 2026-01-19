@@ -642,17 +642,15 @@ html, body {
   z-index: 17;
   pointer-events: none;
 
-  /* Use a gradient mask to fade opacity horizontally */
-  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 39.12%, rgba(0,0,0,0) 40%);
+  /* uniform opacity gradient (flat) */
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,.3) 0%, rgba(0,0,0,.3) 100%);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
-  mask-image: linear-gradient(to right, rgba(0,0,0,.5) 39.12%, rgba(0,0,0,.2) 40%);
+  mask-image: linear-gradient(to right, rgba(0,0,0,.3) 0%, rgba(0,0,0,.3) 100%);
   mask-repeat: no-repeat;
   mask-size: 100% 100%;
-
-  /* Optional: keep the canvas itself fully opaque */
-  /* background-color: transparent; */
 }
+
 
 /* =========================
    SPACER
@@ -2616,3 +2614,4 @@ justify-content:center;
 
 
 }
+
