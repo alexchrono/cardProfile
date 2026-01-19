@@ -45,6 +45,7 @@ let pic4, pic5, pic6, pic7, pic8, pic9, pic10;
 let startedInMobile = false;
 let vantaInitialized = false;
 const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
+let hasFadedIn = false;
 
 // ===================== MOBILE DETECTION =====================
 function updateIsMobile() {
@@ -62,21 +63,29 @@ function wait(ms) {
 
 
 
-// ===================== VANTA INIT (RUN ONCE) =====================
 
+
+
+// ===================== OUR FADE-IN (RUN ONCE) =====================
 
 
 
 async function fadeIn() {
+    if (hasFadedIn) return;
+    hasFadedIn = true;
 
-    let blackOverlay= document.getElementById('ourFader');
+    const blackOverlay = document.getElementById('ourFader');
+    if (!blackOverlay) return;
 
-    blackOverlay.style.opacity='0';
-    await wait(700)
-    blackOverlay.style.visibility="hidden";
-    blackOverlay.style.display="none"
 
+    await wait(100);
+
+    blackOverlay.style.opacity = '0';
+    await wait(700);
+    blackOverlay.style.display = 'none';
 }
+
+// ===================== VANTA INIT (RUN ONCE) =====================
 
 
 
@@ -672,11 +681,13 @@ async function mainFunction() {
 
 
 // ===================== DOCUMENT READY =====================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     updateIsMobile();
     if (isMobile) startedInMobile = true, console.log("📱 STARTED IN MOBILE MODE");
-    mainFunction();
-    initVantaFog();
-    fadeIn()
+
+    await mainFunction();   // wait for your main DOM stuff
+    initVantaFog();         // init fog (doesn't block)
+    fadeIn();               // then fade overlay
     window.addEventListener('resize', switchMobileDesktop);
 });
+
