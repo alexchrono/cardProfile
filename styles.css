@@ -340,6 +340,48 @@ html, body {
   mix-blend-mode: normal; /* try: multiply, screen, overlay */
 }
 
+/* ===================== OVERLAY */
+
+#theWaveL {
+  box-sizing: border-box;
+  /* border:4px dotted pink; */
+  width:100%;
+  height:100%;
+  position:absolute;
+  bottom:0%;
+  left:0%;
+  z-index: 5;
+  display:flex;
+  justify-content:flex-start; /* left-align */
+  align-items:flex-end;       /* stick to bottom */
+  overflow:hidden;            /* clip anything that goes beyond container */
+}
+
+#theWaveL img {
+  height:100%;   /* fill container vertically */
+  width:auto;    /* keep aspect ratio */
+  opacity:.5;
+  /* z-index:1; */
+  /* object-fit:none; */
+}
+
+
+#theWaveL img {
+  height: 100%;
+  width: auto;
+  opacity: 0.3;
+
+  /* 🎛️ COLOR CONTROLS */
+  filter:
+    brightness(1)
+    contrast(1)
+    saturate(1)
+    hue-rotate(-35deg)
+    sepia(0);
+  /* Optional blending tricks */
+  mix-blend-mode: normal; /* try: multiply, screen, overlay */
+}
+
 /* Target the namespaced SVG inside #theWave */
 
 
