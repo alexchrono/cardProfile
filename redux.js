@@ -43,6 +43,7 @@ let pic3 = 'https://i.ibb.co/sd7h9qZK/third-Up-G.jpg';
 let pic4, pic5, pic6, pic7, pic8, pic9, pic10;
 
 let startedInMobile = false;
+let vantaInitialized = false;
 const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 
 // ===================== MOBILE DETECTION =====================
@@ -53,6 +54,88 @@ function updateIsMobile() {
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
+
+
+
+
+
+
+// ===================== VANTA INIT (RUN ONCE) =====================
+
+
+function initVantaFog() {
+    if (vantaInitialized) {
+        console.log("🟡 VANTA already initialized — skipping");
+        return;
+    }
+
+    bgTestCover = document.getElementById("bgTestCover");
+    bgTestCoverFront = document.getElementById("bgTestCoverFront");
+
+    if (!bgTestCover && !bgTestCoverFront) {
+        console.warn("⚠️ VANTA elements not found — aborting init");
+        return;
+    }
+
+    setTimeout(() => {
+        threeScript = document.createElement('script');
+        threeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
+        threeScript.onload = () => {
+            vantaScript = document.createElement('script');
+            vantaScript.src = "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js";
+            vantaScript.onload = () => {
+
+                if (bgTestCover && window.VANTA?.FOG) {
+                    vantaBack = VANTA.FOG({
+                        el: "#bgTestCover",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200,
+                        minWidth: 200,
+                        highlightColor: 0x9d9d9d,
+                        midtoneColor: 0x989898,
+                        lowlightColor: 0x000000,
+                        baseColor: 0x000000,
+                        blurFactor: 0.52,
+                        speed: 0.70,
+                        zoom: 0.90,
+                    });
+                    console.log("VANTA Back Fog initialized ✅");
+                }
+
+                if (bgTestCoverFront && window.VANTA?.FOG) {
+                    vantaFront = VANTA.FOG({
+                        el: "#bgTestCoverFront",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200,
+                        minWidth: 200,
+                        highlightColor: 0x9d9d9d,
+                        midtoneColor: 0x989898,
+                        lowlightColor: 0x000000,
+                        baseColor: 0x000000,
+                        blurFactor: 0.52,
+                        speed: 0.70,
+                        zoom: 0.90,
+                    });
+                    console.log("VANTA Front Fog initialized ✅");
+                }
+
+                vantaInitialized = true;
+            };
+
+            document.body.appendChild(vantaScript);
+        };
+
+        document.body.appendChild(threeScript);
+    }, 500);
+}
+
+
 
 // ===================== GALLERY FUNCTIONS =====================
 function setGalleryState(open, isMobileMode) {
@@ -553,58 +636,9 @@ async function mainFunction() {
     buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClickNotStupid));
     if (closeButton) closeButton.addEventListener("click", closeGallery);
 
-    // ===================== VANTA / THREE (EXACTLY AS YOU WROTE IT) =====================
-    bgTestCover = document.getElementById("bgTestCover");
-    bgTestCoverFront = document.getElementById("bgTestCoverFront");
-    setTimeout(() => {
-        threeScript = document.createElement('script');
-        threeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
-        threeScript.onload = () => {
-            vantaScript = document.createElement('script');
-            vantaScript.src = "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js";
-            vantaScript.onload = () => {
-                if (bgTestCover && window.VANTA && window.VANTA.FOG) {
-                    vantaBack = VANTA.FOG({
-                        el: "#bgTestCover",
-                        mouseControls: true,
-                        touchControls: true,
-                        gyroControls: false,
-                        minHeight: 200,
-                        minWidth: 200,
-                        highlightColor: 0x9d9d9d,
-                        midtoneColor: 0x989898,
-                        lowlightColor: 0x000000,
-                        baseColor: 0x000000,
-                        blurFactor: 0.52,
-                        speed: 0.70,
-                        zoom: 0.90,
-                    });
-                    console.log("VANTA Back Fog initialized ✅");
-                } else console.error("Cannot initialize BACK VANTA Fog!");
-                if (bgTestCoverFront && window.VANTA && window.VANTA.FOG) {
-                    vantaFront = VANTA.FOG({
-                        el: "#bgTestCoverFront",
-                        mouseControls: true,
-                        touchControls: true,
-                        gyroControls: false,
-                        minHeight: 200,
-                        minWidth: 200,
-                        highlightColor: 0x9d9d9d,
-                        midtoneColor: 0x989898,
-                        lowlightColor: 0x000000,
-                        baseColor: 0x000000,
-                        blurFactor: 0.52,
-                        speed: 0.70,
-                        zoom: 0.90,
-                    });
-                    console.log("VANTA Front Fog initialized ✅");
-                } else console.error("Cannot initialize FRONT VANTA Fog!");
-            };
-            document.body.appendChild(vantaScript);
-        };
-        document.body.appendChild(threeScript);
-    }, 500);
 }
+
+    // ===================== END OF MAINFUNCTION =====================
 
 
 // ===================== DOCUMENT READY =====================
@@ -612,5 +646,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateIsMobile();
     if (isMobile) startedInMobile = true, console.log("📱 STARTED IN MOBILE MODE");
     mainFunction();
+    initVantaFog();
     window.addEventListener('resize', switchMobileDesktop);
 });
