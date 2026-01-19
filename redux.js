@@ -422,6 +422,8 @@ async function runMobileStartupIntro() {
     topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
     topTextLogo.style.visibility="visible" //was hidden
 
+    
+
     await wait(4000);
 
      //======================PART WHERE I ANIMATE THE IMAGES....
