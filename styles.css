@@ -84,7 +84,7 @@ html, body {
 
 #leftSideMain {
   box-sizing: border-box;
-  border:3px dotted brown;
+  /* border:3px dotted brown; */
   width: 39.12%;
   height:100%;
   display:flex;
@@ -140,7 +140,7 @@ html, body {
   z-index: 200000;
 
   box-sizing: border-box;
-  border:5px dotted red;
+  /* border:5px dotted red; */
   background-color: black;
   visibility:hidden;
   opacity: 0;
@@ -150,7 +150,7 @@ html, body {
 
 #topGalleryTop {
   box-sizing: border-box;
-  border:3px dotted yellow;
+  /* border:3px dotted yellow; */
   width:100%;
   height:75%;
   display:flex;
@@ -163,7 +163,7 @@ html, body {
   box-sizing:border-box;
   width:100%;
   height:100%;
-  border:3px dotted gold;
+  /* border:3px dotted gold; */
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -181,7 +181,7 @@ html, body {
 
 #topGalleryBotBot{
   box-sizing: border-box;
-  border:3px dotted blue;
+  /* border:3px dotted blue; */
   width:100%;
   height:10%;
   display:flex;
@@ -192,7 +192,7 @@ html, body {
 
 #topGalleryBot {
   box-sizing: border-box;
-  border:3px dotted green;
+  /* border:3px dotted green; */
   width:100%;
   height:15%;
   display:flex;
@@ -204,7 +204,7 @@ html, body {
 
 .chevronHolders {
   box-sizing: border-box;
-  border:3px dotted white;
+  /* border:3px dotted white; */
   width:10%;
   height:100%;
   display:flex;
@@ -226,7 +226,7 @@ html, body {
 
 #chevronCenter {
   box-sizing: border-box;
-  border:3px dotted purple;
+  /* border:3px dotted purple; */
   width:80%;
   height:100%;
   display:flex;
@@ -238,7 +238,7 @@ html, body {
 
 #chevronHolder{
   box-sizing: border-box;
-  border:3px dotted blue;
+  /* border:3px dotted blue; */
   width:30%;
   height:100%;
   display:flex;
@@ -302,7 +302,7 @@ html, body {
 
 #theWave {
   box-sizing: border-box;
-  border:4px dotted pink;
+  /* border:4px dotted pink; */
   width:100%;
   height:100%;
   position:absolute;
@@ -348,7 +348,7 @@ html, body {
 
 #theWaveLines {
   box-sizing: border-box;
-  border:4px dotted pink;
+  /* border:4px dotted pink; */
   width:100%;
   height:100%;
   position:absolute;
@@ -710,7 +710,7 @@ html, body {
   width:30%;
   height:100%;
   box-sizing: border-box;
-  border:3px dotted brown;
+  /* border:3px dotted brown; */
   display:flex;
   flex-direction:row;
   justify-content:center;
@@ -719,7 +719,7 @@ html, body {
 
 #mainMenuRightSide {
   box-sizing: border-box;
-  border:3px dotted blue;
+  /* border:3px dotted blue; */
   width:70%;
   height:100%;
   display:flex;
@@ -1057,7 +1057,7 @@ h1 {
 /* THIS IS THE ONE MOBILE ONE WE CACN KEEP */
 #mobileMain {
   box-sizing: border-box;
-  border:3px dotted red;
+  /* border:3px dotted red; */
   width:100%;
   height:100%;
   display:none;
@@ -1104,7 +1104,7 @@ h1 {
 
 #just4Startup {
   box-sizing: border-box;
-  border:4px dotted green;
+  /* border:4px dotted green; */
   width:100%;
   height:100%;
   position:absolute;
@@ -1124,7 +1124,7 @@ h1 {
 
 #just4StartupColumn4Chara {
   box-sizing: border-box;
-  border:4px dotted purple;
+  /* border:4px dotted purple; */
   width:100%;
   height:100%;
   z-index:5;
@@ -1331,7 +1331,7 @@ h1 {
   font-size: 1rem;
   text-align: justify;
   box-sizing: border-box;
-  border:3px dotted green;
+  /* border:3px dotted green; */
   display:flex;
   flex-direction:row;
   justify-content:center;
@@ -1415,7 +1415,7 @@ h1 {
 .info-table {
     float: left;
     box-sizing: border-box;
-    border: 3px dotted gray;
+    /* border: 3px dotted gray; */
     width: 94.96%;
     height: 99.34%;
     /* padding-right: 1.49%; */
@@ -1660,7 +1660,7 @@ h1 {
 
 #leftSideMainMobile{
 box-sizing:border-box;
-border:3px dotted brown;
+/* border:3px dotted brown; */
 width:55%;
 height:100%;
 display:flex;
@@ -1692,7 +1692,7 @@ display:flex;
 flex-direction:column;
 z-index:200000;
 box-sizing:border-box;
-border:5px dotted red;
+/* border:5px dotted red; */
 background-color:black;
 visibility:hidden;
 opacity:0;
@@ -1702,7 +1702,7 @@ transition:opacity 1s ease;
 
 #topGalleryTopMobile{
 box-sizing:border-box;
-border:3px dotted yellow;
+/* border:3px dotted yellow; */
 width:100%;
 height:85%;
 display:flex;
@@ -1715,7 +1715,7 @@ align-items:center;
 box-sizing:border-box;
 width:100%;
 height:100%;
-border:3px dotted gold;
+/* border:3px dotted gold; */
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -1724,7 +1724,7 @@ align-items:center;
 
 #topGalleryBotMobile{
 box-sizing:border-box;
-border:3px dotted green;
+/* border:3px dotted green; */
 width:100%;
 height:15%;
 display:flex;
@@ -1738,7 +1738,7 @@ gap:2%;
 
 #topGalleryBotMobile {
     box-sizing: border-box;
-    border: 3px dotted green;
+    /* border: 3px dotted green; */
     width: 100%;
     height: 100%;
     display: flex;
@@ -1758,7 +1758,7 @@ gap:2%;
 
 #topGalleryBotBotMobile{
 box-sizing:border-box;
-border:3px dotted blue;
+/* border:3px dotted blue; */
 width:100%;
 height:15%;
 display:flex;
@@ -1769,7 +1769,7 @@ align-items:center;
 
 .chevronHoldersMobile{
 box-sizing:border-box;
-border:3px dotted white;
+/* border:3px dotted white; */
 width:10%;
 height:100%;
 display:flex;
@@ -1794,7 +1794,7 @@ cursor:pointer;
 
 #chevronCenterMobile{
 box-sizing:border-box;
-border:3px dotted purple;
+/* border:3px dotted purple; */
 width:80%;
 height:100%;
 display:flex;
@@ -1805,7 +1805,7 @@ align-items:center;
 
 #chevronHolderMobile{
 box-sizing:border-box;
-border:3px dotted blue;
+/* border:3px dotted blue; */
 width:30%;
 height:100%;
 display:flex;
@@ -1816,7 +1816,7 @@ align-items:center;
 
 #mainMenuRightSideMobile {
   box-sizing: border-box;
-  border:10px dotted black;
+  /* border:10px dotted black; */
   width:100%;
   height:100%;
 }
@@ -1868,7 +1868,7 @@ align-items:center;
 width:100%;
 height:100%;
 box-sizing:border-box;
-border:3px dotted brown;
+/* border:3px dotted brown; */
 display:flex;
 flex-direction:row;
 justify-content:center;
@@ -1893,7 +1893,7 @@ align-items:center;
 
 #mainMenuMobile {
     box-sizing: border-box;
-    border: 3px dotted blue;
+    /* border: 3px dotted blue; */
     width: 100%;
     height: 12%;
     position: relative;
@@ -1955,7 +1955,7 @@ background-color:#600006;
 
 #mainMenuRightSideMobile{
 box-sizing:border-box;
-border:3px dotted blue;
+/* border:3px dotted blue; */
 width:70%;
 height:100%;
 display:flex;
@@ -1968,7 +1968,7 @@ padding-right:2.3%;
 
 #seventyPatsy{
 box-sizing:border-box;
-border:3px dotted blue;
+/* border:3px dotted blue; */
 width:70%;
 height:100%;
 display:flex;
@@ -2097,7 +2097,7 @@ height:100%;
 font-size:1rem;
 text-align:justify;
 box-sizing:border-box;
-border:3px dotted green;
+/* border:3px dotted green; */
 display:flex;
 flex-direction:row;
 justify-content:center;
@@ -2107,7 +2107,7 @@ align-items:center;
 .info-tableMobile{
 float:left;
 box-sizing:border-box;
-border:3px dotted gray;
+/* border:3px dotted gray; */
 width:94.96%;
 height:99.34%;
 }
@@ -2160,7 +2160,7 @@ color:gray;
 
 #just4StartupColumn4Chara {
     box-sizing: border-box;
-    border: 4px dotted purple;
+    /* border: 4px dotted purple; */
     /* width: 100%; */
     height: 100%;
     width: 100%;
@@ -2179,7 +2179,7 @@ color:gray;
 #just4StartupFlashPics {
   z-index:10;
   box-sizing: border-box;
-  border:4px dotted purple;
+  /* border:4px dotted purple; */
   width:100%;
   height:100%;
   background-color: black;
@@ -2197,7 +2197,7 @@ color:gray;
 
 #just4StartupFlashPics img {
   box-sizing: border-box;
-  border:2px dotted white;
+  /* border:2px dotted white; */
   width:100%;
   height:100%;
   object-fit:contain;
@@ -2207,7 +2207,7 @@ color:gray;
 
 #just4StartupCharaNameTop {
     box-sizing: border-box;
-    border: 4px dotted blue;
+    /* border: 4px dotted blue; */
     /* width: 100%; */
     height: 20%;
     width: 100%;
@@ -2228,7 +2228,7 @@ color:gray;
 
 #left1 {
 box-sizing: border-box;
-border:2px dotted white;
+/* border:2px dotted white; */
 height:100%;
 width:40%;
 display:flex;
@@ -2239,7 +2239,7 @@ justify-content:center;
 }
 #center1 {
 box-sizing: border-box;
-border:2px dotted white;
+/* border:2px dotted white; */
 height:100%;
 width:5%;
 display:flex;
@@ -2250,7 +2250,7 @@ justify-content:center;
 }
 #right1 {
 box-sizing: border-box;
-border:2px dotted white;
+/* border:2px dotted white; */
 height:100%;
 width:55%;
 display:flex;
@@ -2458,7 +2458,7 @@ justify-content:center;
 
 #topViewMobile {
     box-sizing: border-box;
-    border: 3px dotted green;
+    /* border: 3px dotted green; */
     width: 100%;
     height: 100%;
     position: relative;
@@ -2487,7 +2487,7 @@ justify-content:center;
 
 #mainMenuMobile {
     box-sizing: border-box;
-    border: 3px dotted blue;
+    /* border: 3px dotted blue; */
     width: 100%;
     height: 12%;
     position: relative;
