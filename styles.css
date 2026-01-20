@@ -892,7 +892,7 @@ html, body {
   width: 100%;
   height: 100%;
 
-  background-image: url("./assets/stone.jpg");
+  background-image: url("https://i.ibb.co/fYcLSc2Y/stone.jpg");
   background-size: 100% auto;
   background-repeat: repeat-y;
 
@@ -964,10 +964,10 @@ background-color: #600006;
     background-color: #920009;
 
     background-image:
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png');
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png');
 
     background-size: cover;
     background-repeat: no-repeat;
@@ -982,14 +982,14 @@ background-color: #600006;
     background-color: #07b0f9;
 
         background-image:
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png'),
-        url('./assets/marbleReal.png');
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png'),
+        url('https://i.ibb.co/W4ZGPsRC/marble-Real.png');
 
     background-size: cover;
     background-repeat: no-repeat;
@@ -1400,7 +1400,7 @@ h1 {
     top: 0;
     width: 1.2em;
     height: 1.2em;
-    background: url(/assets/ourDumbIconCropped.png) no-repeat center / contain;
+    background: url("https://i.ibb.co/Gf0gmhnK/our-Dumb-Icon-Cropped.png") no-repeat center / contain;
 }
 
 
@@ -1414,8 +1414,8 @@ h1 {
   ); */
   background:#4fa3c3;
 
-  mask: url("/assets/ourDumbIconCropped.png") no-repeat center / contain;
-  -webkit-mask: url("/assets/ourDumbIconCropped.png") no-repeat center / contain;
+  mask: url("https://i.ibb.co/Gf0gmhnK/our-Dumb-Icon-Cropped.png") no-repeat center / contain;
+  -webkit-mask: url("https://i.ibb.co/Gf0gmhnK/our-Dumb-Icon-Cropped.png") no-repeat center / contain;
 }
 
 /* .info-table {
@@ -1630,7 +1630,7 @@ h1 {
     top: 0;
     width: 1.2em;
     height: 1.2em;
-    background: url(/assets/ourDumbIconCropped.png) no-repeat center / contain;
+    background: url(https://i.ibb.co/Gf0gmhnK/our-Dumb-Icon-Cropped.png) no-repeat center / contain;
 }
 
 
@@ -1644,8 +1644,8 @@ h1 {
   ); */
   background:#4fa3c3;
 
-  mask: url("/assets/ourDumbIconCropped.png") no-repeat center / contain;
-  -webkit-mask: url("/assets/ourDumbIconCropped.png") no-repeat center / contain;
+  mask: url("https://i.ibb.co/Gf0gmhnK/our-Dumb-Icon-Cropped.png") no-repeat center / contain;
+  -webkit-mask: url("https://i.ibb.co/Gf0gmhnK/our-Dumb-Icon-Cropped.png") no-repeat center / contain;
 }
 
 
@@ -2072,7 +2072,7 @@ background:rgba(146,95,95,1);
   width: 100%;
   height: 100%;
 
-  background-image: url("./assets/stone.jpg");
+  background-image: url("https://i.ibb.co/fYcLSc2Y/stone.jpg");
   background-size: 100% auto;
   background-repeat: repeat-y;
 
