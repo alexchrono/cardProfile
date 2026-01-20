@@ -440,106 +440,112 @@ async function switchMobileDesktop() {
 
 
 
-
 async function runMobileStartupIntro() {
     if (hasFadedIn) return;
 
     console.log("🚀 Running mobile startup intro");
 
     const topTextLogo = document.getElementById("just4StartupCharaNameTop");
-    const waitingWheel = document.getElementById("just4StartupWaitingWheel")
+    const waitingWheel = document.getElementById("just4StartupWaitingWheel");
     const bottomButtonMenu = document.getElementById("mainMenuMobile");
     const containerOfCutout = document.getElementById("just4StartupColumn4Chara");
     const topViewMobileInner = document.getElementById("topViewMobileInner");
-    const statTabsMobile = document.getElementById('statsTabMobile');
-    const startUpFlashPics = document.getElementById('just4StartupFlashPics');
-    const actualImage = document.getElementById('flashPicsImage');
+    const statTabsMobile = document.getElementById("statsTabMobile");
+    const startUpFlashPics = document.getElementById("just4StartupFlashPics");
+    const actualImage = document.getElementById("flashPicsImage");
 
-    // Initial setup
+    // ================= INITIAL SETUP =================
     statTabsMobile.style.visibility = "hidden";
     bottomButtonMenu.style.height = "0%";
     topViewMobileInner.style.backgroundColor = "transparent";
+
     topTextLogo.style.visibility = "visible";
     topTextLogo.style.opacity = "1";
+
     waitingWheel.style.visibility = "visible";
     waitingWheel.style.opacity = ".3";
 
-    // Fade overlay first
+    // ================= FADE BLACK OVERLAY =================
     await fadeIn();
 
-    // Wait before starting animation
     await wait(4000);
 
-    // Show flash overlay
+    // ================= SHOW FLASH OVERLAY =================
     startUpFlashPics.style.visibility = "visible";
     startUpFlashPics.style.opacity = "1";
     await wait(20);
 
-    // Fade out top logo and cutout
+    // ================= REMOVE LOGO / CUTOUT =================
     topTextLogo.style.opacity = "0";
-    containerOfCutout.style.opacity = '0';
+    containerOfCutout.style.opacity = "0";
     waitingWheel.style.opacity = "0";
-    await wait(700); // match CSS transition
-    containerOfCutout.style.visibility = 'hidden';
-    topTextLogo.style.visibility = 'hidden';
+
+    await wait(700);
+
+    containerOfCutout.style.visibility = "hidden";
+    topTextLogo.style.visibility = "hidden";
     waitingWheel.style.visibility = "hidden";
 
-    // Images to animate
+    // ================= IMAGE SEQUENCE =================
     const images = [
         "https://i.ibb.co/Q3jjbsCY/first-Up-G.webp",
         "https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg",
         "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg"
     ];
 
-    // Explicit fade-in/out for each image
+    // Image 1
     actualImage.src = images[0];
     actualImage.style.opacity = "1";
     await wait(1500);
 
-    // Fade to second image
+    // Image 2
     actualImage.style.opacity = "0";
-    await wait(1500); // fade out duration
+    await wait(1500);
     actualImage.src = images[1];
     actualImage.style.opacity = "1";
     await wait(1500);
 
-    // Fade to third image
+    // Image 3
     actualImage.style.opacity = "0";
-    await wait(1500); // fade out duration
+    await wait(1500);
     actualImage.src = images[2];
     actualImage.style.opacity = "1";
     await wait(1500);
 
-    // Fade out flash overlay smoothly
-    startUpFlashPics.style.opacity = "0";
-    await wait(1500);
-    startUpFlashPics.style.visibility = "hidden";
+    // ================= CINEMATIC BLACKOUT =================
+    actualImage.style.opacity = "0";
+    await wait(2200); // longer fade → full black moment
 
-    await wait(200); // extra pause before menu
-
-    // Show menu and stats tabs
+    // ================= PREP FINAL UI (BEHIND BLACKOUT) =================
     bottomButtonMenu.style.height = "12%";
     statTabsMobile.style.visibility = "visible";
     statTabsMobile.style.opacity = "1";
     topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
 
-    // Flip masks on mobile
     if (isMobile) {
         const bgBack = document.getElementById("bgTestCover");
         const bgFront = document.getElementById("bgTestCoverFront");
 
         if (bgBack) {
-            bgBack.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
-            bgBack.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+            bgBack.style.maskImage =
+                "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+            bgBack.style.WebkitMaskImage =
+                "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
         }
 
         if (bgFront) {
-            bgFront.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-            bgFront.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+            bgFront.style.maskImage =
+                "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+            bgFront.style.WebkitMaskImage =
+                "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
         }
     }
-}
 
+    // ================= REVEAL =================
+    startUpFlashPics.style.opacity = "0";
+    await wait(1800); // slightly slower reveal
+    startUpFlashPics.style.visibility = "hidden";
+}
 
 
 //==================================MAIN FUNCTION ==========================================
