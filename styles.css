@@ -2409,6 +2409,98 @@ justify-content:center;
 
 
 
+
+
+
+#just4StartupCharaNameTop {
+    box-sizing: border-box;
+    height: 20%;
+    width: 100%;
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; /* smooth fade in/out */
+}
+
+#mainMenuMobile {
+    box-sizing: border-box;
+    width: 100%;
+    height: 12%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: height 0.5s ease-in-out; /* smooth slide up */
+}
+
+#just4StartupColumn4Chara {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.7s ease-in-out, visibility 0.7s ease-in-out; /* smooth fade out */
+}
+
+#topViewMobileInner {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(28, 46, 131, 0.5);
+    border-radius: 2rem;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s ease-in-out; /* smooth bg color change */
+}
+
+#just4StartupFlashPics {
+    z-index: 10;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; /* fade in/out of flash overlay */
+}
+
+#just4StartupFlashPics img {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out; /* smooth fade between images */
+}
+
+
+
+
 /* FOR CELLPHONES=================================================== */
 
 @media (orientation: portrait) {
@@ -2479,7 +2571,7 @@ justify-content:center;
 
 
 
-#topViewMobileInner {
+/* #topViewMobileInner {
     width:100%;
     height:100%;
     background-color: rgba(28, 46, 131, 0.5);
@@ -2489,13 +2581,12 @@ justify-content:center;
     display:flex;
     justify-content:center;
     align-items:center;
-}
+} */
 
 
-
+/*
 #mainMenuMobile {
-    box-sizing: border-box;
-    /* border: 3px dotted blue; */
+  
     width: 100%;
     height: 12%;
     position: relative;
@@ -2504,7 +2595,7 @@ justify-content:center;
     justify-content: center;
     align-items: center;
 
-}
+} */
 
 
 .menuBlockMobile {
