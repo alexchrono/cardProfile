@@ -90,73 +90,86 @@ async function fadeIn() {
 
 
 function initVantaFog() {
-    if (vantaInitialized) {
-        console.log("🟡 VANTA already initialized — skipping");
-        return;
-    }
+    return new Promise((resolve, reject) => {
+        if (vantaInitialized) {
+            console.log("🟡 VANTA already initialized — skipping");
+            resolve(); // already done
+            return;
+        }
 
-    bgTestCover = document.getElementById("bgTestCover");
-    bgTestCoverFront = document.getElementById("bgTestCoverFront");
+        bgTestCover = document.getElementById("bgTestCover");
+        bgTestCoverFront = document.getElementById("bgTestCoverFront");
 
-    if (!bgTestCover && !bgTestCoverFront) {
-        console.warn("⚠️ VANTA elements not found — aborting init");
-        return;
-    }
+        if (!bgTestCover && !bgTestCoverFront) {
+            console.warn("⚠️ VANTA elements not found — aborting init");
+            resolve(); // nothing to do, but don’t block
+            return;
+        }
 
-    setTimeout(() => {
-        threeScript = document.createElement('script');
-        threeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
-        threeScript.onload = () => {
-            vantaScript = document.createElement('script');
-            vantaScript.src = "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js";
-            vantaScript.onload = () => {
+        setTimeout(() => {
+            threeScript = document.createElement('script');
+            threeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
 
-                if (bgTestCover && window.VANTA?.FOG) {
-                    vantaBack = VANTA.FOG({
-                        el: "#bgTestCover",
-                        mouseControls: true,
-                        touchControls: true,
-                        gyroControls: false,
-                        minHeight: 200,
-                        minWidth: 200,
-                        highlightColor: 0x9d9d9d,
-                        midtoneColor: 0x989898,
-                        lowlightColor: 0x000000,
-                        baseColor: 0x000000,
-                        blurFactor: 0.52,
-                        speed: 0.70,
-                        zoom: 0.90,
-                    });
-                    console.log("VANTA Back Fog initialized ✅");
-                }
+            threeScript.onload = () => {
+                vantaScript = document.createElement('script');
+                vantaScript.src = "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js";
 
-                if (bgTestCoverFront && window.VANTA?.FOG) {
-                    vantaFront = VANTA.FOG({
-                        el: "#bgTestCoverFront",
-                        mouseControls: true,
-                        touchControls: true,
-                        gyroControls: false,
-                        minHeight: 200,
-                        minWidth: 200,
-                        highlightColor: 0x9d9d9d,
-                        midtoneColor: 0x989898,
-                        lowlightColor: 0x000000,
-                        baseColor: 0x000000,
-                        blurFactor: 0.52,
-                        speed: 0.70,
-                        zoom: 0.90,
-                    });
-                    console.log("VANTA Front Fog initialized ✅");
-                }
+                vantaScript.onload = () => {
+                    try {
+                        if (bgTestCover && window.VANTA?.FOG) {
+                            vantaBack = VANTA.FOG({
+                                el: "#bgTestCover",
+                                mouseControls: true,
+                                touchControls: true,
+                                gyroControls: false,
+                                minHeight: 200,
+                                minWidth: 200,
+                                highlightColor: 0x9d9d9d,
+                                midtoneColor: 0x989898,
+                                lowlightColor: 0x000000,
+                                baseColor: 0x000000,
+                                blurFactor: 0.52,
+                                speed: 0.70,
+                                zoom: 0.90,
+                            });
+                            console.log("VANTA Back Fog initialized ✅");
+                        }
 
-                vantaInitialized = true;
+                        if (bgTestCoverFront && window.VANTA?.FOG) {
+                            vantaFront = VANTA.FOG({
+                                el: "#bgTestCoverFront",
+                                mouseControls: true,
+                                touchControls: true,
+                                gyroControls: false,
+                                minHeight: 200,
+                                minWidth: 200,
+                                highlightColor: 0x9d9d9d,
+                                midtoneColor: 0x989898,
+                                lowlightColor: 0x000000,
+                                baseColor: 0x000000,
+                                blurFactor: 0.52,
+                                speed: 0.70,
+                                zoom: 0.90,
+                            });
+                            console.log("VANTA Front Fog initialized ✅");
+                        }
+
+                        vantaInitialized = true;
+                        resolve(); // ✅ done!
+                    } catch (err) {
+                        console.error("❌ VANTA init failed:", err);
+                        reject(err);
+                    }
+                };
+
+                vantaScript.onerror = () => reject(new Error("VANTA script failed to load"));
+                document.body.appendChild(vantaScript);
             };
 
-            document.body.appendChild(vantaScript);
-        };
-
-        document.body.appendChild(threeScript);
-    }, 500);
+            threeScript.onerror = () => reject(new Error("Three.js failed to load"));
+            document.body.appendChild(threeScript);
+        }, 500);
+    });
 }
 
 
@@ -422,82 +435,54 @@ async function switchMobileDesktop() {
 
 // ===================== STARTUP INTRO HOOK =====================
 async function runMobileStartupIntro() {
-    console.log("🚀 Mobile startup intro placeholder");
+    if (hasFadedIn) return;
+    // hasFadedIn = true;
 
-    // let bottomTextDisplay = document.getElementById("just4Startup")
+    console.log("🚀 Running mobile startup intro");
 
-    // bottomTextDisplay.style.visibility="visible"
+    const topTextLogo = document.getElementById("just4StartupCharaNameTop");
+    const bottomButtonMenu = document.getElementById("mainMenuMobile");
+    const containerOfCutout = document.getElementById("just4StartupColumn4Chara");
+    const topViewMobileInner = document.getElementById("topViewMobileInner");
+    const statTabsMobile = document.getElementById('statsTabMobile');
+    const startUpFlashPics = document.getElementById('just4StartupFlashPics');
+    const actualImage = document.getElementById('flashPicsImage');
 
-    let topTextLogo = document.getElementById("just4StartupCharaNameTop")
+    // Initial setup
+    statTabsMobile.style.visibility = "hidden";
+    bottomButtonMenu.style.height = "0%";
+    topViewMobileInner.style.backgroundColor = "transparent";
+    topTextLogo.style.visibility = "visible";
 
-    let bottomButtonMenu = document.getElementById("mainMenuMobile");
+    // Fade overlay first
+    await fadeIn();
 
-    // bottomButtonMenu.style.visibility="hidden";
-
-    // let expandForBeginning = document.getElementById("topViewMobile")
-    // expandForBeginning.style.height="100%";
-    let containerOfCutout = document.getElementById("just4StartupColumn4Chara")
-    let topViewMobileInner = document.getElementById("topViewMobileInner");
-    let statTabsMobile = document.getElementById('statsTabMobile');
-    let startUpFlashPics = document.getElementById('just4StartupFlashPics');
-    let actualImage = document.getElementById('flashPicsImage');
-    statTabsMobile.style.visibility="hidden";  //was visible
-    bottomButtonMenu.style.height="0%" //height was originally 12
-    topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
-    topTextLogo.style.visibility="visible" //was hidden
-
-
-
+    // Wait a bit before starting animation
     await wait(4000);
 
+    // Animate flash images
+    startUpFlashPics.style.visibility = "visible";
+    await wait(20);
 
+    topTextLogo.style.visibility = "hidden";
+    containerOfCutout.style.opacity = '0';
+    containerOfCutout.style.visibility = 'hidden';
 
-
-
-   //======================PART WHERE I ANIMATE THE IMAGES....
-    startUpFlashPics.style.visibility="visible" //was hidden
-    await wait(20)
-    topTextLogo.style.visibility="hidden"
-    containerOfCutout.style.opacity = '0'
-    containerOfCutout.style.visibility = 'hidden'
-
-
-    // actualImage.src="https://i.ibb.co/Q3jjbsCY/first-Up-G.webp";
-
-    // containerOfCutout.style.opacity = '0'
-    // containerOfCutout.style.visibility = 'hidden'
     await wait(1500);
-    actualImage.src="https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg";
+    actualImage.src = "https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg";
+    await wait(1500);
+    actualImage.src = "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg";
     await wait(1500);
 
-    actualImage.src="https://i.ibb.co/sd7h9qZK/third-Up-G.jpg";
-    await wait(1500);
-
-    startUpFlashPics.style.visibility="hidden"
-
+    startUpFlashPics.style.visibility = "hidden";
 
     await wait(2000);
-     //END ANIMATE IMAGES
 
-    // ================= SHOW THE DAMN MENU
-
-    bottomButtonMenu.style.height="12%";
-    statTabsMobile.style.visibility="visible";
-    statTabsMobile.style.opacity="1";
-    bottomButtonMenu.style.height="12%";
+    // Show menu and stats tabs
+    bottomButtonMenu.style.height = "12%";
+    statTabsMobile.style.visibility = "visible";
+    statTabsMobile.style.opacity = "1";
     topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
-
-   //========= ignore below
-
-    // bottomButtonMenu.style.height="0%" //height was originally 12
-    // topViewMobileInner.style.backgroundColor = "transparent"; //was         background-color: rgba(28, 46, 131, 0.75);
-
-    // topTextLogo.style.visibility="visible"; //was hidden
-
-
-
-
-
 }
 
 
@@ -683,14 +668,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (isMobile) startedInMobile = true;
     console.log(isMobile ? "📱 STARTED IN MOBILE MODE" : "🖥️ STARTED IN DESKTOP MODE");
 
-    await mainFunction();   
-    initVantaFog();
+    await mainFunction();
 
-    if (isMobile) {
+
+    await initVantaFog();
+
+    if (!isMobile && !hasFadedIn) {
+        await fadeIn();
+    } else if (isMobile && !hasFadedIn) {
         await runMobileStartupIntro();
     }
-
-    fadeIn();
 
     window.addEventListener('resize', switchMobileDesktop);
 });
