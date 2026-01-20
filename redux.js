@@ -150,7 +150,72 @@ function activateTabByButtonId(buttonId) {
     if (isMobileMode) mainTracker.previousClickedIdMobile = buttonId;
     else mainTracker.previousClickedId = buttonId;
 }
-function handleButtonClickNotStupid(event) { /* ...same logic as before, handles mobile + desktop correctly... */ }
+function handleButtonClickNotStupid(event) {
+    const btn = event.currentTarget;
+    const btnId = btn.id;
+    const baseId = btnId.replace("ButtonMobile", "").replace("Button", "");
+    clickedId = baseId;
+
+    // === GALLERY SPECIAL CASE ===
+    if (baseId === "gallery") {
+        if (isMobile) {
+            resetAllButtonsAndTabs(true);
+            mainTracker.previousClickedIdMobile = "galleryButtonMobile";
+        } else {
+            mainTracker.variableForDesktopGallery = mainTracker.previousClickedId;
+            resetAllButtonsAndTabs(false);
+            mainTracker.previousClickedId = "galleryButton";
+        }
+
+        btn.classList.remove("inactive");
+        btn.classList.add("active");
+        setGalleryState(true, isMobile);
+        return; // skip normal tab logic
+    }
+
+    // NORMAL TAB SWITCH
+    let oldButton, oldTab, newTab;
+    if (isMobile) {
+        if (mainTracker.previousClickedIdMobile && btnId !== mainTracker.previousClickedIdMobile) {
+            oldButton = document.getElementById(mainTracker.previousClickedIdMobile);
+            oldTab = document.getElementById(mainTracker.previousClickedIdMobile.replace("ButtonMobile", "TabMobile"));
+        }
+        newTab = document.getElementById(btnId.replace("ButtonMobile", "TabMobile"));
+    } else {
+        if (mainTracker.previousClickedId && btnId !== mainTracker.previousClickedId) {
+            oldButton = document.getElementById(mainTracker.previousClickedId);
+            oldTab = document.getElementById(mainTracker.previousClickedId.replace("Button", "Tab"));
+        }
+        newTab = document.getElementById(btnId.replace("Button", "Tab"));
+    }
+
+    if (oldButton) oldButton.classList.remove("active"), oldButton.classList.add("inactive");
+    btn.classList.remove("inactive"), btn.classList.add("active");
+
+    // Close gallery if switching away
+    if ((isMobile && mainTracker.previousClickedIdMobile === "galleryButtonMobile") ||
+        (!isMobile && mainTracker.previousClickedId === "galleryButton")) {
+        setGalleryState(false, isMobile);
+        const galleryBtn = isMobile ? galleryButtonMobile : galleryButton;
+        if (galleryBtn) galleryBtn.classList.remove("active"), galleryBtn.classList.add("inactive");
+    }
+
+    if (oldTab) {
+        oldTab.style.opacity = "0";
+        setTimeout(() => oldTab.style.visibility = "hidden", 600);
+    }
+
+    if (newTab) {
+        newTab.style.visibility = "visible";
+        requestAnimationFrame(() => newTab.style.opacity = "1");
+    }
+
+    if (isMobile) mainTracker.previousClickedIdMobile = btnId;
+    else mainTracker.previousClickedId = btnId;
+
+    bindFakeScrollbar({ clickedId, isMobile });
+}
+
 
 // ===================== MOBILE / DESKTOP SWITCH =====================
 async function switchMobileDesktop() {
