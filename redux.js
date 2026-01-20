@@ -57,6 +57,30 @@ function wait(ms) {
 }
 
 
+// ==========OUR FONT SCALER ============================
+
+function updateRootFontSize() {
+    const root = document.documentElement;
+
+    const vw = window.innerWidth;
+
+    let fontSize;
+
+    if (isMobile) {
+        // 📱 Mobile: readable, breathable
+        fontSize = Math.max(14, Math.min(18, vw / 25));
+    } else {
+        // 🖥️ Desktop: tighter scale
+        fontSize = Math.max(13, Math.min(16, vw / 80));
+    }
+
+    root.style.fontSize = fontSize + "px";
+
+    console.log(
+        `🔤 Root font-size → ${fontSize}px (${isMobile ? "mobile" : "desktop"})`
+    );
+}
+
 
 // ======================= our background mask crap============
 
@@ -446,6 +470,8 @@ function handleButtonClickNotStupid(event) {
 async function switchMobileDesktop() {
     const wasMobile = isMobile;
     updateIsMobile();
+    updateRootFontSize();
+
 
     if (wasMobile === isMobile) return;
 
@@ -787,6 +813,7 @@ async function mainFunction() {
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', async () => {
     updateIsMobile();
+    updateRootFontSize();
     if (isMobile) startedInMobile = true;
     console.log(isMobile ? "📱 STARTED IN MOBILE MODE" : "🖥️ STARTED IN DESKTOP MODE");
 
@@ -801,5 +828,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         await runMobileStartupIntro();
     }
 
-    window.addEventListener('resize', switchMobileDesktop);
+    // window.addEventListener('resize', switchMobileDesktop);
+    window.addEventListener('resize', () => {
+    updateIsMobile();
+    updateRootFontSize();
+    switchMobileDesktop();
+});
 });
