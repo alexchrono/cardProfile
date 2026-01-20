@@ -56,34 +56,23 @@ function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
-// ==========OUR FONT SCALER ============================
-
+// ========== OUR FONT SCALER ============================
 function updateRootFontSize() {
     const root = document.documentElement;
-
     const vw = window.innerWidth;
-
     let fontSize;
 
     if (isMobile) {
-        // 📱 Mobile: readable, breathable
         fontSize = Math.max(14, Math.min(18, vw / 25));
     } else {
-        // 🖥️ Desktop: tighter scale
         fontSize = Math.max(13, Math.min(16, vw / 80));
     }
 
     root.style.fontSize = fontSize + "px";
-
-    console.log(
-        `🔤 Root font-size → ${fontSize}px (${isMobile ? "mobile" : "desktop"})`
-    );
+    console.log(`🔤 Root font-size → ${fontSize}px (${isMobile ? "mobile" : "desktop"})`);
 }
 
-
-// ======================= our background mask crap============
-
+// ======================= BACKGROUND MASKS ============================
 function applyBgMasks(isMobile) {
     const bgBack = document.getElementById("bgTestCover");
     const bgFront = document.getElementById("bgTestCoverFront");
@@ -91,7 +80,6 @@ function applyBgMasks(isMobile) {
     if (!bgBack || !bgFront) return;
 
     if (isMobile) {
-        // 📱 MOBILE MASKS
         bgBack.style.maskImage =
             "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
         bgBack.style.WebkitMaskImage =
@@ -103,7 +91,6 @@ function applyBgMasks(isMobile) {
             "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
 
     } else {
-        // 🖥️ DESKTOP MASKS (restore CSS intent)
         bgBack.style.maskImage =
             "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
         bgBack.style.WebkitMaskImage =
@@ -116,17 +103,7 @@ function applyBgMasks(isMobile) {
     }
 }
 
-
-
-
-
-
-
-
-// ===================== OUR FADE-IN (RUN ONCE) =====================
-
-
-
+// ===================== FADE-IN (RUN ONCE) =====================
 async function fadeIn() {
     if (hasFadedIn) return;
     hasFadedIn = true;
@@ -134,23 +111,18 @@ async function fadeIn() {
     const blackOverlay = document.getElementById('ourFader');
     if (!blackOverlay) return;
 
-
     await wait(100);
-
     blackOverlay.style.opacity = '0';
     await wait(700);
     blackOverlay.style.display = 'none';
 }
 
 // ===================== VANTA INIT (RUN ONCE) =====================
-
-
-
 function initVantaFog() {
     return new Promise((resolve, reject) => {
         if (vantaInitialized) {
             console.log("🟡 VANTA already initialized — skipping");
-            resolve(); // already done
+            resolve();
             return;
         }
 
@@ -159,7 +131,7 @@ function initVantaFog() {
 
         if (!bgTestCover && !bgTestCoverFront) {
             console.warn("⚠️ VANTA elements not found — aborting init");
-            resolve(); // nothing to do, but don’t block
+            resolve();
             return;
         }
 
@@ -212,7 +184,7 @@ function initVantaFog() {
                         }
 
                         vantaInitialized = true;
-                        resolve(); // ✅ done!
+                        resolve();
                     } catch (err) {
                         console.error("❌ VANTA init failed:", err);
                         reject(err);
@@ -228,8 +200,6 @@ function initVantaFog() {
         }, 500);
     });
 }
-
-
 
 // ===================== GALLERY FUNCTIONS =====================
 function setGalleryState(open, isMobileMode) {
@@ -255,17 +225,14 @@ async function closeGallery() {
     console.log('📱 isMobile:', isMobile);
     console.log('📦 mainTracker snapshot (start):', JSON.parse(JSON.stringify(mainTracker)));
 
-    // ---- STEP 1: Close gallery UI ----
     setGalleryState(false, isMobile);
 
-    // ---- STEP 2: Deactivate gallery button ----
     const galleryBtn = isMobile ? galleryButtonMobile : galleryButton;
     if (galleryBtn) {
         galleryBtn.classList.remove("active");
         galleryBtn.classList.add("inactive");
     }
 
-    // ---- STEP 3: Desktop-only restore ----
     if (!isMobile) {
         const lastButtonId = mainTracker.variableForDesktopGallery;
         if (lastButtonId) {
@@ -289,10 +256,8 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     const scrollHolder = document.getElementById(SCROLL.holderId);
     const el = document.getElementById(SCROLL.scrollFindId);
 
-    // Cleanup previous binding
     if (scrollHolder?.dataset?.boundTo) {
         const prevEl = document.getElementById(scrollHolder.dataset.boundTo);
-        console.log('[FAKE SCROLLBAR] Cleaning previous binding:', scrollHolder.dataset.boundTo);
         if (prevEl && prevEl.__syncThumb) {
             prevEl.removeEventListener('scroll', prevEl.__syncThumb);
             delete prevEl.__syncThumb;
@@ -303,31 +268,18 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
         delete scrollHolder.dataset.boundTo;
     }
 
-    if (!scrollHolder || !el) {
-        console.log('[FAKE SCROLLBAR] Missing elements — aborting');
-        return;
-    }
+    if (!scrollHolder || !el) return;
 
-    if (el.scrollHeight <= el.clientHeight) {
-        console.log('[FAKE SCROLLBAR] No overflow — hiding');
-        return;
-    }
+    if (el.scrollHeight <= el.clientHeight) return;
 
     const track = scrollHolder.querySelector(SCROLL.trackClass);
     const thumb = scrollHolder.querySelector(SCROLL.thumbClass);
-    if (!track || !thumb) {
-        console.warn('[FAKE SCROLLBAR] Track or thumb missing');
-        return;
-    }
+    if (!track || !thumb) return;
 
-    // Show scrollbar
     scrollHolder.style.visibility = 'visible';
     scrollHolder.style.opacity = '1';
     scrollHolder.classList.add('visible');
 
-    console.log('[FAKE SCROLLBAR] Binding to:', el.id);
-
-    // Thumb sync
     function syncThumb() {
         const ratio = el.clientHeight / el.scrollHeight;
         const thumbHeight = Math.max(ratio * track.clientHeight, track.clientHeight * 0.08);
@@ -343,7 +295,6 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     el.addEventListener('scroll', syncThumb);
     syncThumb();
 
-    // Drag logic
     let dragging = false;
     let startY = 0;
     let startScroll = 0;
@@ -367,7 +318,6 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     };
 
     scrollHolder.dataset.boundTo = el.id;
-    console.log('[FAKE SCROLLBAR] Bound successfully →', el.id);
 }
 
 // ===================== BUTTON / TAB LOGIC =====================
@@ -406,7 +356,6 @@ function handleButtonClickNotStupid(event) {
     const baseId = btnId.replace("ButtonMobile", "").replace("Button", "");
     clickedId = baseId;
 
-    // === GALLERY SPECIAL CASE ===
     if (baseId === "gallery") {
         if (isMobile) {
             resetAllButtonsAndTabs(true);
@@ -420,10 +369,9 @@ function handleButtonClickNotStupid(event) {
         btn.classList.remove("inactive");
         btn.classList.add("active");
         setGalleryState(true, isMobile);
-        return; // skip normal tab logic
+        return;
     }
 
-    // NORMAL TAB SWITCH
     let oldButton, oldTab, newTab;
     if (isMobile) {
         if (mainTracker.previousClickedIdMobile && btnId !== mainTracker.previousClickedIdMobile) {
@@ -442,7 +390,6 @@ function handleButtonClickNotStupid(event) {
     if (oldButton) oldButton.classList.remove("active"), oldButton.classList.add("inactive");
     btn.classList.remove("inactive"), btn.classList.add("active");
 
-    // Close gallery if switching away
     if ((isMobile && mainTracker.previousClickedIdMobile === "galleryButtonMobile") ||
         (!isMobile && mainTracker.previousClickedId === "galleryButton")) {
         setGalleryState(false, isMobile);
@@ -472,16 +419,7 @@ async function switchMobileDesktop() {
     updateIsMobile();
     updateRootFontSize();
 
-
     if (wasMobile === isMobile) return;
-
-    if (wasMobile){
-        console.log('switching from MOBILE to Desktop')
-    }
-    else {
-        console.log('switching from Desktop to Mobile')
-    }
-
 
     const sourceId = wasMobile
         ? mainTracker.previousClickedIdMobile
@@ -492,7 +430,7 @@ async function switchMobileDesktop() {
         .replace("Button", "");
 
     await wait(30);
-    mainFunction(); // rebuild DOM
+    mainFunction();
     await wait(30);
 
     resetAllButtonsAndTabs(isMobile);
@@ -509,23 +447,12 @@ async function switchMobileDesktop() {
 
     bindFakeScrollbar({ clickedId: baseName, isMobile });
 
-    // 🔥 CRITICAL FIX: reapply correct masks
     applyBgMasks(isMobile);
 }
 
-//START UP CRAP========================================
-
-// ===================== STARTUP INTRO HOOK =====================
-
-
-
-
-
-
+// ===================== MOBILE STARTUP INTRO =====================
 async function runMobileStartupIntro() {
     if (hasFadedIn) return;
-
-    console.log("🚀 Running mobile startup intro");
 
     const topTextLogo = document.getElementById("just4StartupCharaNameTop");
     const waitingWheel = document.getElementById("just4StartupWaitingWheel");
@@ -536,14 +463,12 @@ async function runMobileStartupIntro() {
     const startUpFlashPics = document.getElementById("just4StartupFlashPics");
     const actualImage = document.getElementById("flashPicsImage");
 
-    // ================= INITIAL SETUP =================
     statTabsMobile.style.visibility = "hidden";
     bottomButtonMenu.style.height = "0%";
     topViewMobileInner.style.backgroundColor = "transparent";
 
-
-        containerOfCutout.style.visibility = "visible";
-        containerOfCutout.style.opacity = "1";
+    containerOfCutout.style.visibility = "visible";
+    containerOfCutout.style.opacity = "1";
 
     topTextLogo.style.visibility = "visible";
     topTextLogo.style.opacity = "1";
@@ -551,95 +476,62 @@ async function runMobileStartupIntro() {
     waitingWheel.style.visibility = "visible";
     waitingWheel.style.opacity = ".3";
 
-    // ================= FADE BLACK OVERLAY =================
     await fadeIn();
-
     await wait(4000);
 
-    // ================= SHOW FLASH OVERLAY =================
     startUpFlashPics.style.visibility = "visible";
     startUpFlashPics.style.opacity = "1";
     await wait(20);
 
-    // ================= REMOVE LOGO / CUTOUT =================
     topTextLogo.style.opacity = "0";
     containerOfCutout.style.opacity = "0";
     waitingWheel.style.opacity = "0";
-
     await wait(700);
 
     containerOfCutout.style.visibility = "hidden";
     topTextLogo.style.visibility = "hidden";
     waitingWheel.style.visibility = "hidden";
 
-    // ================= IMAGE SEQUENCE =================
     const images = [
         "https://i.ibb.co/Q3jjbsCY/first-Up-G.webp",
         "https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg",
         "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg"
     ];
 
-    // Image 1
     actualImage.src = images[0];
     actualImage.style.opacity = "1";
     await wait(1500);
 
-    // Image 2
     actualImage.style.opacity = "0";
     await wait(1500);
     actualImage.src = images[1];
     actualImage.style.opacity = "1";
     await wait(1500);
 
-    // Image 3
     actualImage.style.opacity = "0";
     await wait(1500);
     actualImage.src = images[2];
     actualImage.style.opacity = "1";
     await wait(1500);
 
-    // ================= CINEMATIC BLACKOUT =================
     actualImage.style.opacity = "0";
-    await wait(2200); // longer fade → full black moment
+    await wait(2200); // final fade → full black moment
 
-    // ================= PREP FINAL UI (BEHIND BLACKOUT) =================
     bottomButtonMenu.style.height = "12%";
     statTabsMobile.style.visibility = "visible";
     statTabsMobile.style.opacity = "1";
     topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
     applyBgMasks(isMobile);
-    // if (isMobile) {
-    //     const bgBack = document.getElementById("bgTestCover");
-    //     const bgFront = document.getElementById("bgTestCoverFront");
 
-    //     if (bgBack) {
-    //         bgBack.style.maskImage =
-    //             "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
-    //         bgBack.style.WebkitMaskImage =
-    //             "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
-    //     }
-
-    //     if (bgFront) {
-    //         bgFront.style.maskImage =
-    //             "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-    //         bgFront.style.WebkitMaskImage =
-    //             "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-    //     }
-    // }
-
-    // ================= REVEAL =================
     startUpFlashPics.style.opacity = "0";
-    await wait(1800); // slightly slower reveal
+    await wait(1800);
     startUpFlashPics.style.visibility = "hidden";
 }
 
-
-//==================================MAIN FUNCTION ==========================================
-
+// ===================== MAIN FUNCTION =====================
 async function mainFunction() {
     console.log("📌 mainFunction started");
 
-    // ===================== CAROUSEL LOGIC (UNCHANGED) =====================
     let imageToGrab;
     let leftChev;
     let rightChev;
@@ -661,21 +553,14 @@ async function mainFunction() {
         classNameForPreviews = 'picturePreviewMobile';
     }
 
-
     const activePics = allPics.filter(p => typeof p === "string" && p.trim() !== "");
-
-
-
-
-
-
 
     previewContainer.innerHTML = '';
     previewNodes = [];
 
     activePics.forEach((src, index) => {
         const preview = document.createElement('div');
-        preview.className = `${classNameForPreviews}`
+        preview.className = `${classNameForPreviews}`;
 
         const img = document.createElement('img');
         img.src = src;
@@ -690,30 +575,12 @@ async function mainFunction() {
         previewNodes.push(preview);
     });
 
-
-
-
-
-
-
-
-
-
-
-    let pics = {};
-    activePics.forEach((url, index) => pics[index] = url);
-
-
     let currentPicIndex = 0;
-    // let previewNodes = [];
 
     function setActivePic(index) {
         currentPicIndex = index;
-
-        // update main image
         updateMainImage(index);
 
-        // update preview borders
         previewNodes.forEach((node, i) => {
             node.classList.toggle('activePreview', i === index);
         });
@@ -726,8 +593,7 @@ async function mainFunction() {
         if (!isMobile) {
             rchevContainer = document.getElementById('rchev');
             lchevContainer = document.getElementById('lchev');
-        }
-        else {
+        } else {
             rchevContainer = document.getElementById('rchevMobile');
             lchevContainer = document.getElementById('lchevMobile');
         }
@@ -735,7 +601,6 @@ async function mainFunction() {
         if (!activePics[index] || !imageToGrab) return;
 
         imageToGrab.src = activePics[index];
-        // uniCount = index;
 
         let prevIndex = index - 1 >= 0 ? index - 1 : activePics.length - 1;
         let nextIndex = index + 1 < activePics.length ? index + 1 : 0;
@@ -744,24 +609,19 @@ async function mainFunction() {
             let newLeftChev = leftChev.cloneNode(true);
             lchevContainer.replaceChild(newLeftChev, leftChev);
             leftChev = newLeftChev;
-            // leftChev.addEventListener('click', () => updateMainImage(prevIndex));
             leftChev.addEventListener('click', () => setActivePic(prevIndex));
-
         }
 
         if (rchevContainer && rightChev) {
             let newRightChev = rightChev.cloneNode(true);
             rchevContainer.replaceChild(newRightChev, rightChev);
             rightChev = newRightChev;
-            // rightChev.addEventListener('click', () => updateMainImage(nextIndex));
             rightChev.addEventListener('click', () => setActivePic(nextIndex));
-
         }
     }
 
     if (activePics.length > 0) setActivePic(0);
 
-    // ===================== TABS / BUTTONS =====================
     let statsTab;
     let mercierContainerDiv;
 
@@ -794,7 +654,6 @@ async function mainFunction() {
         buttonList = [statsButton, personalityButton, historyButton, encountersButton, oocButton, galleryButton];
     }
 
-
     if (statsTab && !startedInMobile) {
         statsTab.style.visibility = "visible";
         statsTab.style.opacity = "1";
@@ -804,11 +663,7 @@ async function mainFunction() {
 
     buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClickNotStupid));
     if (closeButton) closeButton.addEventListener("click", closeGallery);
-
 }
-
-    // ===================== END OF MAINFUNCTION =====================
-
 
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', async () => {
@@ -818,8 +673,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log(isMobile ? "📱 STARTED IN MOBILE MODE" : "🖥️ STARTED IN DESKTOP MODE");
 
     await mainFunction();
-
-
     await initVantaFog();
 
     if (!isMobile && !hasFadedIn) {
@@ -828,10 +681,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         await runMobileStartupIntro();
     }
 
-    // window.addEventListener('resize', switchMobileDesktop);
     window.addEventListener('resize', () => {
-    updateIsMobile();
-    updateRootFontSize();
-    switchMobileDesktop();
-});
+        updateIsMobile();
+        updateRootFontSize();
+        switchMobileDesktop();
+    });
 });
