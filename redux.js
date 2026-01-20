@@ -447,6 +447,7 @@ async function runMobileStartupIntro() {
     console.log("🚀 Running mobile startup intro");
 
     const topTextLogo = document.getElementById("just4StartupCharaNameTop");
+    const waitingWheel = document.getElementById("just4StartupWaitingWheel")
     const bottomButtonMenu = document.getElementById("mainMenuMobile");
     const containerOfCutout = document.getElementById("just4StartupColumn4Chara");
     const topViewMobileInner = document.getElementById("topViewMobileInner");
@@ -460,6 +461,8 @@ async function runMobileStartupIntro() {
     topViewMobileInner.style.backgroundColor = "transparent";
     topTextLogo.style.visibility = "visible";
     topTextLogo.style.opacity = "1";
+    waitingWheel.style.visibility = "visible";
+    waitingWheel.style.opacity = ".3";
 
     // Fade overlay first
     await fadeIn();
@@ -467,72 +470,74 @@ async function runMobileStartupIntro() {
     // Wait before starting animation
     await wait(4000);
 
-    // Show flash overlay
-    startUpFlashPics.style.visibility = "visible";
-    startUpFlashPics.style.opacity = "1";
-    await wait(20);
+    // // Show flash overlay
+    // startUpFlashPics.style.visibility = "visible";
+    // startUpFlashPics.style.opacity = "1";
+    // await wait(20);
 
-    // Fade out top logo and cutout
-    topTextLogo.style.opacity = "0";
-    containerOfCutout.style.opacity = '0';
-    await wait(700); // match CSS transition
-    containerOfCutout.style.visibility = 'hidden';
-    topTextLogo.style.visibility = 'hidden';
+    // // Fade out top logo and cutout
+    // topTextLogo.style.opacity = "0";
+    // containerOfCutout.style.opacity = '0';
+    //waitingWheel.style.opacity = "0";
+    // await wait(700); // match CSS transition
+    // containerOfCutout.style.visibility = 'hidden';
+    // topTextLogo.style.visibility = 'hidden';
+    //waitingWheel.style.visibility = "hidden";
 
-    // Images to animate
-    const images = [
-        "https://i.ibb.co/Q3jjbsCY/first-Up-G.webp",
-        "https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg",
-        "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg"
-    ];
+    // // Images to animate
+    // const images = [
+    //     "https://i.ibb.co/Q3jjbsCY/first-Up-G.webp",
+    //     "https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg",
+    //     "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg"
+    // ];
 
-    // Explicit fade-in/out for each image
-    actualImage.src = images[0];
-    actualImage.style.opacity = "1";
-    await wait(1500);
+    // // Explicit fade-in/out for each image
+    // actualImage.src = images[0];
+    // actualImage.style.opacity = "1";
+    // await wait(1500);
 
-    // Fade to second image
-    actualImage.style.opacity = "0";
-    await wait(1500); // fade out duration
-    actualImage.src = images[1];
-    actualImage.style.opacity = "1";
-    await wait(1500);
+    // // Fade to second image
+    // actualImage.style.opacity = "0";
+    // await wait(1500); // fade out duration
+    // actualImage.src = images[1];
+    // actualImage.style.opacity = "1";
+    // await wait(1500);
 
-    // Fade to third image
-    actualImage.style.opacity = "0";
-    await wait(1500); // fade out duration
-    actualImage.src = images[2];
-    actualImage.style.opacity = "1";
-    await wait(1500);
+    // // Fade to third image
+    // actualImage.style.opacity = "0";
+    // await wait(1500); // fade out duration
+    // actualImage.src = images[2];
+    // actualImage.style.opacity = "1";
+    // await wait(1500);
 
-    // Fade out flash overlay smoothly
-    startUpFlashPics.style.opacity = "0";
-    await wait(1500);
-    startUpFlashPics.style.visibility = "hidden";
+    // // Fade out flash overlay smoothly
+    // startUpFlashPics.style.opacity = "0";
+    // await wait(1500);
+    // startUpFlashPics.style.visibility = "hidden";
 
-    await wait(200); // extra pause before menu
+    // await wait(200); // extra pause before menu
 
-    // Show menu and stats tabs
-    bottomButtonMenu.style.height = "12%";
-    statTabsMobile.style.visibility = "visible";
-    statTabsMobile.style.opacity = "1";
-    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
+    // // Show menu and stats tabs
+    // bottomButtonMenu.style.height = "12%";
+    // statTabsMobile.style.visibility = "visible";
+    // statTabsMobile.style.opacity = "1";
+    // topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
 
-    // Flip masks on mobile
-    if (isMobile) {
-        const bgBack = document.getElementById("bgTestCover");
-        const bgFront = document.getElementById("bgTestCoverFront");
+    // // Flip masks on mobile
+    // if (isMobile) {
+    //     const bgBack = document.getElementById("bgTestCover");
+    //     const bgFront = document.getElementById("bgTestCoverFront");
 
-        if (bgBack) {
-            bgBack.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
-            bgBack.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
-        }
+    //     if (bgBack) {
+    //         bgBack.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+    //         bgBack.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+    //     }
 
-        if (bgFront) {
-            bgFront.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-            bgFront.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-        }
-    }
+    //     if (bgFront) {
+    //         bgFront.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+    //         bgFront.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+    //     }
+    // }
 }
 
 
