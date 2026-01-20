@@ -498,26 +498,49 @@ if (isMobile) {
         previewNodes.forEach((node,i)=>node.classList.toggle('activePreview',i===index));
     }
     function updateMainImage(index) {
-        if (!activePics[index] || !imageToGrab) return;
-        imageToGrab.src = activePics[index];
+    if (!activePics[index] || !imageToGrab) return;
 
-        const prevIndex = index-1 >= 0 ? index-1 : activePics.length-1;
-        const nextIndex = index+1 < activePics.length ? index+1 : 0;
+    imageToGrab.src = activePics[index];
 
-        const lchevContainer = isMobile ? document.getElementById('lchevMobile') : document.getElementById('lchev');
-        const rchevContainer = isMobile ? document.getElementById('rchevMobile') : document.getElementById('rchev');
+    const prevIndex = index - 1 >= 0 ? index - 1 : activePics.length - 1;
+    const nextIndex = index + 1 < activePics.length ? index + 1 : 0;
 
-        if (lchevContainer && leftChev) {
-            let newLeftChev = leftChev.cloneNode(true);
-            lchevContainer.parentNode.replaceChild(newLeftChev,lchevContainer);
-            newLeftChev.addEventListener('click',()=>setActivePic(prevIndex));
+    const lchevContainer = isMobile
+        ? document.getElementById('lchevMobile')
+        : document.getElementById('lchev');
+    const rchevContainer = isMobile
+        ? document.getElementById('rchevMobile')
+        : document.getElementById('rchev');
+
+    if (lchevContainer) {
+        if (!lchevContainer.contains(leftChev)) {
+            leftChev = document.getElementById(isMobile ? 'leftChevMobile' : 'leftChev');
+            if (!leftChev) {
+                leftChev = document.createElement('img');
+                leftChev.src = "https://i.ibb.co/4S4XsLX/chevron-left-fa.png";
+                leftChev.className = "chevrons";
+                leftChev.id = isMobile ? "leftChevMobile" : "leftChev";
+                lchevContainer.appendChild(leftChev);
+            } else lchevContainer.appendChild(leftChev);
         }
-        if (rchevContainer && rightChev) {
-            let newRightChev = rightChev.cloneNode(true);
-            rchevContainer.parentNode.replaceChild(newRightChev,rchevContainer);
-            newRightChev.addEventListener('click',()=>setActivePic(nextIndex));
-        }
+        leftChev.onclick = () => setActivePic(prevIndex);
     }
+
+    if (rchevContainer) {
+        if (!rchevContainer.contains(rightChev)) {
+            rightChev = document.getElementById(isMobile ? 'rightChevMobile' : 'rightChev');
+            if (!rightChev) {
+                rightChev = document.createElement('img');
+                rightChev.src = "https://i.ibb.co/jkXDWgv/chevron-right-fa.png";
+                rightChev.className = "chevrons";
+                rightChev.id = isMobile ? "rightChevMobile" : "rightChev";
+                rchevContainer.appendChild(rightChev);
+            } else rchevContainer.appendChild(rightChev);
+        }
+        rightChev.onclick = () => setActivePic(nextIndex);
+    }
+}
+
 
     if (activePics.length>0) setActivePic(0);
 
