@@ -39,6 +39,85 @@ function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// ==================== MOBILE STARTUP ANIMATION ==================
+
+async function runMobileStartupIntro() {
+    if (hasFadedIn) return;
+
+    const topTextLogo = document.getElementById("just4StartupCharaNameTop");
+    const waitingWheel = document.getElementById("just4StartupWaitingWheel");
+    const bottomButtonMenu = document.getElementById("mainMenuMobile");
+    const containerOfCutout = document.getElementById("just4StartupColumn4Chara");
+    const topViewMobileInner = document.getElementById("topViewMobileInner");
+    const statTabsMobile = document.getElementById("statsTabMobile");
+    const startUpFlashPics = document.getElementById("just4StartupFlashPics");
+    const actualImage = document.getElementById("flashPicsImage");
+
+    statTabsMobile.style.visibility = "hidden";
+    bottomButtonMenu.style.height = "0%";
+    topViewMobileInner.style.backgroundColor = "transparent";
+
+    containerOfCutout.style.visibility = "visible";
+    containerOfCutout.style.opacity = "1";
+
+    topTextLogo.style.visibility = "visible";
+    topTextLogo.style.opacity = "1";
+
+    waitingWheel.style.visibility = "visible";
+    waitingWheel.style.opacity = ".3";
+
+    await fadeIn();
+    await wait(4000);
+
+    startUpFlashPics.style.visibility = "visible";
+    startUpFlashPics.style.opacity = "1";
+    await wait(20);
+
+    topTextLogo.style.opacity = "0";
+    containerOfCutout.style.opacity = "0";
+    waitingWheel.style.opacity = "0";
+    await wait(700);
+
+    containerOfCutout.style.visibility = "hidden";
+    topTextLogo.style.visibility = "hidden";
+    waitingWheel.style.visibility = "hidden";
+
+    const images = [
+        "https://i.ibb.co/Q3jjbsCY/first-Up-G.webp",
+        "https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg",
+        "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg"
+    ];
+
+    actualImage.src = images[0];
+    actualImage.style.opacity = "1";
+    await wait(1500);
+
+    actualImage.style.opacity = "0";
+    await wait(1500);
+    actualImage.src = images[1];
+    actualImage.style.opacity = "1";
+    await wait(1500);
+
+    actualImage.style.opacity = "0";
+    await wait(1500);
+    actualImage.src = images[2];
+    actualImage.style.opacity = "1";
+    await wait(1500);
+
+    actualImage.style.opacity = "0";
+    await wait(2200); // final fade → full black moment
+
+    bottomButtonMenu.style.height = "12%";
+    statTabsMobile.style.visibility = "visible";
+    statTabsMobile.style.opacity = "1";
+    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
+    applyBgMasks(isMobile);
+
+    startUpFlashPics.style.opacity = "0";
+    await wait(1800);
+    startUpFlashPics.style.visibility = "hidden";
+}
+
 // ===================== ROOT FONT SIZE =====================
 function updateRootFontSize() {
     const root = document.documentElement;
@@ -125,7 +204,97 @@ async function closeGallery() {
 
 // ===================== FAKE SCROLLBAR =====================
 // (same as your original bindFakeScrollbar function)
-function bindFakeScrollbar({ clickedId, isMobile }) { /* ... */ }
+function bindFakeScrollbar({ clickedId, isMobile }) {
+    const SCROLL = {
+        holderId: isMobile ? 'scrollHolderMobile' : 'scrollHolder',
+        trackClass: isMobile ? '.scroll-trackMobile' : '.scroll-track',
+        thumbClass: isMobile ? '.scroll-thumbMobile' : '.scroll-thumb',
+        scrollFindId: clickedId + (isMobile ? 'ScrollFindMobile' : 'ScrollFind')
+    };
+
+    const scrollHolder = document.getElementById(SCROLL.holderId);
+    const el = document.getElementById(SCROLL.scrollFindId);
+
+    // Cleanup previous binding
+    if (scrollHolder?.dataset?.boundTo) {
+        const prevEl = document.getElementById(scrollHolder.dataset.boundTo);
+        console.log('[FAKE SCROLLBAR] Cleaning previous binding:', scrollHolder.dataset.boundTo);
+        if (prevEl && prevEl.__syncThumb) {
+            prevEl.removeEventListener('scroll', prevEl.__syncThumb);
+            delete prevEl.__syncThumb;
+        }
+        scrollHolder.classList.remove('visible');
+        scrollHolder.style.visibility = 'hidden';
+        scrollHolder.style.opacity = '0';
+        delete scrollHolder.dataset.boundTo;
+    }
+
+    if (!scrollHolder || !el) {
+        console.log('[FAKE SCROLLBAR] Missing elements — aborting');
+        return;
+    }
+
+    if (el.scrollHeight <= el.clientHeight) {
+        console.log('[FAKE SCROLLBAR] No overflow — hiding');
+        return;
+    }
+
+    const track = scrollHolder.querySelector(SCROLL.trackClass);
+    const thumb = scrollHolder.querySelector(SCROLL.thumbClass);
+    if (!track || !thumb) {
+        console.warn('[FAKE SCROLLBAR] Track or thumb missing');
+        return;
+    }
+
+    // Show scrollbar
+    scrollHolder.style.visibility = 'visible';
+    scrollHolder.style.opacity = '1';
+    scrollHolder.classList.add('visible');
+
+    console.log('[FAKE SCROLLBAR] Binding to:', el.id);
+
+    // Thumb sync
+    function syncThumb() {
+        const ratio = el.clientHeight / el.scrollHeight;
+        const thumbHeight = Math.max(ratio * track.clientHeight, track.clientHeight * 0.08);
+        thumb.style.height = thumbHeight + 'px';
+
+        const buffer = track.clientHeight * 0.01;
+        const maxTop = track.clientHeight - thumbHeight - buffer;
+        const scrollRatio = el.scrollTop / (el.scrollHeight - el.clientHeight || 1);
+        thumb.style.top = buffer + scrollRatio * maxTop + 'px';
+    }
+
+    el.__syncThumb = syncThumb;
+    el.addEventListener('scroll', syncThumb);
+    syncThumb();
+
+    // Drag logic
+    let dragging = false;
+    let startY = 0;
+    let startScroll = 0;
+
+    thumb.onmousedown = e => {
+        dragging = true;
+        startY = e.clientY;
+        startScroll = el.scrollTop;
+        document.body.style.userSelect = 'none';
+    };
+
+    document.onmousemove = e => {
+        if (!dragging) return;
+        const delta = (e.clientY - startY) * (el.scrollHeight / track.clientHeight);
+        el.scrollTop = startScroll + delta;
+    };
+
+    document.onmouseup = () => {
+        dragging = false;
+        document.body.style.userSelect = '';
+    };
+
+    scrollHolder.dataset.boundTo = el.id;
+    console.log('[FAKE SCROLLBAR] Bound successfully →', el.id);
+}
 
 // ===================== BUTTON / TAB LOGIC =====================
 function resetAllButtonsAndTabs(isMobileMode) {
