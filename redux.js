@@ -149,6 +149,9 @@ function updateRootFontSize() {
     const vh = window.innerHeight; // optional, for logging
     let fontSize;
 
+    console.log("🖥️🟢 updateRootFontSize called");
+    console.log(`Window size: ${vw}×${vh}, isMobile: ${isMobile}`);
+
     if (isMobile) {
         // Mobile interpolation: 375→15px, 500→19px
         const mobileBreakpoints = [
@@ -156,12 +159,19 @@ function updateRootFontSize() {
             { w: 500, f: 19 }
         ];
 
-        if (vw <= mobileBreakpoints[0].w) fontSize = mobileBreakpoints[0].f;
-        else if (vw >= mobileBreakpoints[1].w) fontSize = mobileBreakpoints[1].f;
-        else {
+        console.log("Mobile breakpoints:", mobileBreakpoints);
+
+        if (vw <= mobileBreakpoints[0].w) {
+            fontSize = mobileBreakpoints[0].f;
+            console.log(`vw <= ${mobileBreakpoints[0].w}, fontSize set to ${fontSize}`);
+        } else if (vw >= mobileBreakpoints[1].w) {
+            fontSize = mobileBreakpoints[1].f;
+            console.log(`vw >= ${mobileBreakpoints[1].w}, fontSize set to ${fontSize}`);
+        } else {
             const a = mobileBreakpoints[0];
             const b = mobileBreakpoints[1];
             fontSize = a.f + ((vw - a.w) / (b.w - a.w)) * (b.f - a.f);
+            console.log(`Interpolating: a=${JSON.stringify(a)}, b=${JSON.stringify(b)}, fontSize=${fontSize.toFixed(2)}`);
         }
     } else {
         // Desktop interpolation: 500→4px, 726→8px, 1085→12px, 1517→15px, 1920→19px, 2880→25px
@@ -174,6 +184,8 @@ function updateRootFontSize() {
             { w: 2880, f: 25 }
         ];
 
+        console.log("Desktop breakpoints:", desktopBreakpoints);
+
         let lower = desktopBreakpoints[0];
         let upper = desktopBreakpoints[desktopBreakpoints.length - 1];
 
@@ -181,15 +193,18 @@ function updateRootFontSize() {
             if (vw >= desktopBreakpoints[i].w && vw <= desktopBreakpoints[i + 1].w) {
                 lower = desktopBreakpoints[i];
                 upper = desktopBreakpoints[i + 1];
+                console.log(`Found interval: lower=${JSON.stringify(lower)}, upper=${JSON.stringify(upper)}`);
                 break;
             }
         }
 
         fontSize = lower.f + ((vw - lower.w) / (upper.w - lower.w)) * (upper.f - lower.f);
+        console.log(`Interpolating: fontSize=${fontSize.toFixed(2)}`);
     }
 
     root.style.fontSize = fontSize.toFixed(2) + "px"; // smooth decimals
-    console.log(`🔤 Root font-size → ${fontSize.toFixed(2)}px (${isMobile ? "mobile" : "desktop"}), window: ${vw}×${vh}, zoom: ${Math.round(window.devicePixelRatio*100)}%`);
+    console.log(`✅ Applied root font-size: ${root.style.fontSize}`);
+    console.log(`🔤 Full info → ${fontSize.toFixed(2)}px (${isMobile ? "mobile" : "desktop"}), window: ${vw}×${vh}, zoom: ${Math.round(window.devicePixelRatio*100)}%`);
 }
 
 // ===================== BACKGROUND MASKS =====================
@@ -615,8 +630,9 @@ if (isMobile) {
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', async () => {
     updateIsMobile();
+    updateRootFontSize();  // <--- THIS MUST RUN
     logFontDebugInfo();
-    // updateRootFontSize();
+
     if (isMobile) startedInMobile = true;
     console.log(isMobile ? "📱 STARTED IN MOBILE MODE" : "🖥️ STARTED IN DESKTOP MODE");
 
@@ -628,7 +644,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Resize handling — single source of truth
     window.addEventListener('resize', () => {
-    updateIsMobile();
-    logFontDebugInfo(); // <- print whenever resized
-});
+        updateIsMobile();
+        updateRootFontSize(); // <--- ALSO RUN ON RESIZE
+        logFontDebugInfo();
+    });
 });
