@@ -478,11 +478,87 @@ async function runMobileStartupIntro() {
 
     await wait(2000);
 
-    // Show menu and stats tabs
-    bottomButtonMenu.style.height = "12%";
-    statTabsMobile.style.visibility = "visible";
-    statTabsMobile.style.opacity = "1";
-    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
+    //BEFORE WE SHOW OUR MENU AND STUFF WE NEED TO CHANGE THE VALUES OF FOREGROUND AND BACKGROUND FOG.
+    /*
+
+    originally  background fog is like this:
+    #bgTestCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  background-color: transparent;
+}
+
+and bgTestCoverFront is liek this:
+
+#bgTestCoverFront {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 17;
+  pointer-events: none;
+
+
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to right, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+    BUT ONLY IN MOBILE MODE.....and only after we drag the button menu up and crap...
+
+    we are going to flip the mask-image and -webkit-mask-image properties
+
+
+    SO HOW DO WE DO THAT GPT?
+
+
+
+    */
+
+// Show menu and stats tabs
+bottomButtonMenu.style.height = "12%";
+statTabsMobile.style.visibility = "visible";
+statTabsMobile.style.opacity = "1";
+topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
+
+// FLIP MASKS ON MOBILE
+
+if (isMobile) {
+    const bgBack = document.getElementById("bgTestCover");
+    const bgFront = document.getElementById("bgTestCoverFront");
+
+    if (bgBack) {
+        bgBack.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.3) 0%, rgba(0,0,0,.3) 100%)";
+        bgBack.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.3) 0%, rgba(0,0,0,.3) 100%)";
+    }
+
+    if (bgFront) {
+        bgFront.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.3) 0%, rgba(0,0,0,.3) 100%)";
+        bgFront.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.3) 0%, rgba(0,0,0,.3) 100%)";
+    }
+}
+
+
+
+
 }
 
 
