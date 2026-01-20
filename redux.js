@@ -28,6 +28,7 @@ let startedInMobile = false;
 let vantaInitialized = false;
 const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 let hasFadedIn = false;
+let isMobile = false;
 
 //  FONT DEBUG SIZE CRAP=======================
 
@@ -54,9 +55,17 @@ function logFontDebugInfo() {
 }
 
 // ===================== MOBILE DETECTION =====================
-function updateIsMobile() {
+async function updateIsMobile() {
+    const prev = isMobile;
     isMobile = window.innerHeight > window.innerWidth;
+
+    console.log(
+        `📐 updateIsMobile → ${prev} → ${isMobile} (${window.innerWidth}×${window.innerHeight})`
+    );
+
+    return isMobile;
 }
+
 
 // ===================== UTILITY =====================
 function wait(ms) {
@@ -143,53 +152,51 @@ async function runMobileStartupIntro() {
 }
 
 // ===================== ROOT FONT SIZE =====================
-function updateRootFontSize() {
+async function updateRootFontSize() {
     const root = document.documentElement;
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+    // const vw = window.innerWidth;
+    // const vh = window.innerHeight;
+
+
+    const vw = window.visualViewport?.width || window.innerWidth;
+const vh = window.visualViewport?.height || window.innerHeight;
+
     let fontSize;
 
     console.log("🖥️🟢 updateRootFontSize called");
     console.log(`Window size: ${vw}×${vh}, isMobile: ${isMobile}`);
 
     // =====================
-    // MOBILE FIRST
-    // 375px → 15px
-    // 500px → 19px
-    // >500px clamps at 19px
+    // MOBILE — DISCRETE STEPS
     // =====================
     if (isMobile) {
-        const mobileBreakpoints = [
-            { w: 375, f: 15 },
-            { w: 500, f: 19 }
-        ];
+        // if (vw <= 375) {
+        //     fontSize = 15;
+        // } else if (vw <= 850) {
+        //     fontSize = 19;
+        // } else {
+        //     fontSize = 24;
+        // }
 
-        console.log("📱 Mobile breakpoints:", mobileBreakpoints);
 
-        if (vw <= mobileBreakpoints[0].w) {
-            fontSize = mobileBreakpoints[0].f;
-            console.log(`📱 vw <= ${mobileBreakpoints[0].w}, fontSize = ${fontSize}px`);
-        } else if (vw >= mobileBreakpoints[1].w) {
-            fontSize = mobileBreakpoints[1].f;
-            console.log(`📱 vw >= ${mobileBreakpoints[1].w}, fontSize = ${fontSize}px (clamped)`);
-        } else {
-            const lower = mobileBreakpoints[0];
-            const upper = mobileBreakpoints[1];
 
-            fontSize =
-                lower.f +
-                ((vw - lower.w) / (upper.w - lower.w)) *
-                (upper.f - lower.f);
 
-            console.log(
-                `📱 Interpolating mobile: lower=${JSON.stringify(lower)}, upper=${JSON.stringify(upper)}, fontSize=${fontSize.toFixed(2)}`
-            );
-        }
+            // root.style.fontSize = fontSize + "px";
+            root.style.fontSize = "2vh";
 
+    await wait(200)
+
+    console.log(`✅ Applied root font-size: ${fontSize}px`);
+
+    return {
+        fontsize: "2vh",
+        mode: isMobile ? "mobile" : "desktop",
+        vw,
+        vh
+    };
     }
     // =====================
-    // DESKTOP
-    // Smooth interpolation across all breakpoints
+    // DESKTOP — SMOOTH SCALING
     // =====================
     else {
         const desktopBreakpoints = [
@@ -201,17 +208,13 @@ function updateRootFontSize() {
             { w: 2880, f: 25 }
         ];
 
-        console.log("🖥️ Desktop breakpoints:", desktopBreakpoints);
-
         let lower = desktopBreakpoints[0];
         let upper = desktopBreakpoints[desktopBreakpoints.length - 1];
 
         if (vw <= lower.w) {
             fontSize = lower.f;
-            console.log(`🖥️ vw <= ${lower.w}, fontSize = ${fontSize}px`);
         } else if (vw >= upper.w) {
             fontSize = upper.f;
-            console.log(`🖥️ vw >= ${upper.w}, fontSize = ${fontSize}px`);
         } else {
             for (let i = 0; i < desktopBreakpoints.length - 1; i++) {
                 if (vw >= desktopBreakpoints[i].w && vw <= desktopBreakpoints[i + 1].w) {
@@ -225,22 +228,21 @@ function updateRootFontSize() {
                 lower.f +
                 ((vw - lower.w) / (upper.w - lower.w)) *
                 (upper.f - lower.f);
-
-            console.log(
-                `🖥️ Interpolating desktop: lower=${JSON.stringify(lower)}, upper=${JSON.stringify(upper)}, fontSize=${fontSize.toFixed(2)}`
-            );
         }
     }
 
-    // =====================
-    // APPLY
-    // =====================
-    root.style.fontSize = fontSize.toFixed(2) + "px";
+    root.style.fontSize = fontSize + "px";
 
-    console.log(`✅ Applied root font-size: ${root.style.fontSize}`);
-    console.log(
-        `🔤 Full info → ${fontSize.toFixed(2)}px (${isMobile ? "mobile" : "desktop"}), window: ${vw}×${vh}, DPR: ${Math.round(window.devicePixelRatio * 100)}%`
-    );
+    await wait(200)
+
+    console.log(`✅ Applied root font-size: ${fontSize}px`);
+
+    return {
+        fontSize,
+        mode: isMobile ? "mobile" : "desktop",
+        vw,
+        vh
+    };
 }
 
 // ===================== BACKGROUND MASKS =====================
@@ -665,8 +667,13 @@ if (isMobile) {
 
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', async () => {
-    updateIsMobile();
-    updateRootFontSize();  // <--- THIS MUST RUN
+    await updateIsMobile();
+    await updateRootFontSize();
+
+updateRootFontSize().then(info => {
+    console.log("Font sizing complete:", info);
+});
+    // updateRootFontSize();  // <--- THIS MUST RUN
     logFontDebugInfo();
 
     if (isMobile) startedInMobile = true;
@@ -679,9 +686,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     else if (isMobile && !hasFadedIn) await runMobileStartupIntro();
 
     // Resize handling — single source of truth
-    window.addEventListener('resize', () => {
-        updateIsMobile();
-        updateRootFontSize(); // <--- ALSO RUN ON RESIZE
+    window.addEventListener('resize', async () => {
+        await updateIsMobile();
+        await updateRootFontSize();
+
+updateRootFontSize().then(info => {
+    console.log("Font sizing complete:", info);
+});
+        // updateRootFontSize(); // <--- ALSO RUN ON RESIZE
         logFontDebugInfo();
     });
 });
