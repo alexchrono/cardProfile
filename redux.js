@@ -146,65 +146,101 @@ async function runMobileStartupIntro() {
 function updateRootFontSize() {
     const root = document.documentElement;
     const vw = window.innerWidth;
-    const vh = window.innerHeight; // optional, for logging
+    const vh = window.innerHeight;
     let fontSize;
 
     console.log("🖥️🟢 updateRootFontSize called");
     console.log(`Window size: ${vw}×${vh}, isMobile: ${isMobile}`);
 
+    // =====================
+    // MOBILE FIRST
+    // 375px → 15px
+    // 500px → 19px
+    // >500px clamps at 19px
+    // =====================
     if (isMobile) {
-        // Mobile interpolation: 375→15px, 500→19px
         const mobileBreakpoints = [
             { w: 375, f: 15 },
             { w: 500, f: 19 }
         ];
 
-        console.log("Mobile breakpoints:", mobileBreakpoints);
+        console.log("📱 Mobile breakpoints:", mobileBreakpoints);
 
         if (vw <= mobileBreakpoints[0].w) {
             fontSize = mobileBreakpoints[0].f;
-            console.log(`vw <= ${mobileBreakpoints[0].w}, fontSize set to ${fontSize}`);
+            console.log(`📱 vw <= ${mobileBreakpoints[0].w}, fontSize = ${fontSize}px`);
         } else if (vw >= mobileBreakpoints[1].w) {
             fontSize = mobileBreakpoints[1].f;
-            console.log(`vw >= ${mobileBreakpoints[1].w}, fontSize set to ${fontSize}`);
+            console.log(`📱 vw >= ${mobileBreakpoints[1].w}, fontSize = ${fontSize}px (clamped)`);
         } else {
-            const a = mobileBreakpoints[0];
-            const b = mobileBreakpoints[1];
-            fontSize = a.f + ((vw - a.w) / (b.w - a.w)) * (b.f - a.f);
-            console.log(`Interpolating: a=${JSON.stringify(a)}, b=${JSON.stringify(b)}, fontSize=${fontSize.toFixed(2)}`);
+            const lower = mobileBreakpoints[0];
+            const upper = mobileBreakpoints[1];
+
+            fontSize =
+                lower.f +
+                ((vw - lower.w) / (upper.w - lower.w)) *
+                (upper.f - lower.f);
+
+            console.log(
+                `📱 Interpolating mobile: lower=${JSON.stringify(lower)}, upper=${JSON.stringify(upper)}, fontSize=${fontSize.toFixed(2)}`
+            );
         }
-    } else {
-        // Desktop interpolation: 500→4px, 726→8px, 1085→12px, 1517→15px, 1920→19px, 2880→25px
+
+    }
+    // =====================
+    // DESKTOP
+    // Smooth interpolation across all breakpoints
+    // =====================
+    else {
         const desktopBreakpoints = [
-            { w: 500, f: 4 },
-            { w: 726, f: 8 },
+            { w: 500,  f: 4 },
+            { w: 726,  f: 8 },
             { w: 1085, f: 12 },
             { w: 1517, f: 15 },
             { w: 1920, f: 19 },
             { w: 2880, f: 25 }
         ];
 
-        console.log("Desktop breakpoints:", desktopBreakpoints);
+        console.log("🖥️ Desktop breakpoints:", desktopBreakpoints);
 
         let lower = desktopBreakpoints[0];
         let upper = desktopBreakpoints[desktopBreakpoints.length - 1];
 
-        for (let i = 0; i < desktopBreakpoints.length - 1; i++) {
-            if (vw >= desktopBreakpoints[i].w && vw <= desktopBreakpoints[i + 1].w) {
-                lower = desktopBreakpoints[i];
-                upper = desktopBreakpoints[i + 1];
-                console.log(`Found interval: lower=${JSON.stringify(lower)}, upper=${JSON.stringify(upper)}`);
-                break;
+        if (vw <= lower.w) {
+            fontSize = lower.f;
+            console.log(`🖥️ vw <= ${lower.w}, fontSize = ${fontSize}px`);
+        } else if (vw >= upper.w) {
+            fontSize = upper.f;
+            console.log(`🖥️ vw >= ${upper.w}, fontSize = ${fontSize}px`);
+        } else {
+            for (let i = 0; i < desktopBreakpoints.length - 1; i++) {
+                if (vw >= desktopBreakpoints[i].w && vw <= desktopBreakpoints[i + 1].w) {
+                    lower = desktopBreakpoints[i];
+                    upper = desktopBreakpoints[i + 1];
+                    break;
+                }
             }
-        }
 
-        fontSize = lower.f + ((vw - lower.w) / (upper.w - lower.w)) * (upper.f - lower.f);
-        console.log(`Interpolating: fontSize=${fontSize.toFixed(2)}`);
+            fontSize =
+                lower.f +
+                ((vw - lower.w) / (upper.w - lower.w)) *
+                (upper.f - lower.f);
+
+            console.log(
+                `🖥️ Interpolating desktop: lower=${JSON.stringify(lower)}, upper=${JSON.stringify(upper)}, fontSize=${fontSize.toFixed(2)}`
+            );
+        }
     }
 
-    root.style.fontSize = fontSize.toFixed(2) + "px"; // smooth decimals
+    // =====================
+    // APPLY
+    // =====================
+    root.style.fontSize = fontSize.toFixed(2) + "px";
+
     console.log(`✅ Applied root font-size: ${root.style.fontSize}`);
-    console.log(`🔤 Full info → ${fontSize.toFixed(2)}px (${isMobile ? "mobile" : "desktop"}), window: ${vw}×${vh}, zoom: ${Math.round(window.devicePixelRatio*100)}%`);
+    console.log(
+        `🔤 Full info → ${fontSize.toFixed(2)}px (${isMobile ? "mobile" : "desktop"}), window: ${vw}×${vh}, DPR: ${Math.round(window.devicePixelRatio * 100)}%`
+    );
 }
 
 // ===================== BACKGROUND MASKS =====================
@@ -269,7 +305,7 @@ function initVantaFog() {
 // ===================== GALLERY FUNCTIONS =====================
 function setGalleryState(open, isMobileMode) {
     const gallery = isMobileMode ? topGalleryDisplayMobile : topGalleryDisplay;
-    console.log("🔥 setGalleryState", { open, isMobileMode, gallery });
+
     if (!gallery) return;
     if (open) { gallery.style.visibility = "visible"; requestAnimationFrame(() => gallery.style.opacity = "1"); }
     else { gallery.style.opacity = "0"; setTimeout(() => { gallery.style.visibility = "hidden"; }, 300); }
@@ -298,7 +334,7 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     // Cleanup previous binding
     if (scrollHolder?.dataset?.boundTo) {
         const prevEl = document.getElementById(scrollHolder.dataset.boundTo);
-        console.log('[FAKE SCROLLBAR] Cleaning previous binding:', scrollHolder.dataset.boundTo);
+
         if (prevEl && prevEl.__syncThumb) {
             prevEl.removeEventListener('scroll', prevEl.__syncThumb);
             delete prevEl.__syncThumb;
@@ -310,12 +346,12 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     }
 
     if (!scrollHolder || !el) {
-        console.log('[FAKE SCROLLBAR] Missing elements — aborting');
+
         return;
     }
 
     if (el.scrollHeight <= el.clientHeight) {
-        console.log('[FAKE SCROLLBAR] No overflow — hiding');
+
         return;
     }
 
@@ -331,7 +367,7 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     scrollHolder.style.opacity = '1';
     scrollHolder.classList.add('visible');
 
-    console.log('[FAKE SCROLLBAR] Binding to:', el.id);
+
 
     // Thumb sync
     function syncThumb() {
@@ -373,7 +409,7 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     };
 
     scrollHolder.dataset.boundTo = el.id;
-    console.log('[FAKE SCROLLBAR] Bound successfully →', el.id);
+
 }
 
 // ===================== BUTTON / TAB LOGIC =====================
