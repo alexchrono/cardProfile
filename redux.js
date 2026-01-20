@@ -474,9 +474,11 @@ async function runMobileStartupIntro() {
     actualImage.src = "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg";
     await wait(1500);
 
-    startUpFlashPics.style.visibility = "hidden";
 
-    await wait(2000);
+
+    await wait(1800);
+    startUpFlashPics.style.visibility = "hidden";
+    await wait(200)
 
     //BEFORE WE SHOW OUR MENU AND STUFF WE NEED TO CHANGE THE VALUES OF FOREGROUND AND BACKGROUND FOG.
     /*
