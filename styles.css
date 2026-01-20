@@ -13,6 +13,13 @@ html, body {
   cursor: url(http://31.media.tumblr.com/tumblr_lqs4idHqTZ1qfoi4t.png), progress !important;
 }
 
+:root {
+  --sb-size: 0.2rem;
+  --sb-thumb-color: #66213c;
+  --sb-track-color: #2a2a2a;
+}
+
+
 
 .inknut-antiqua-semibold {
   font-family: "Inknut Antiqua", serif;
@@ -1332,11 +1339,6 @@ h1 {
 /*================= OUR NEW STATS SECTION ============================= */
 
 
-:root {
-  --sb-size: 0.2rem;
-  --sb-thumb-color: #66213c;
-  --sb-track-color: #2a2a2a;
-}
 
 .info-content {
   width: 100%;
