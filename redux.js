@@ -191,10 +191,12 @@ function initVantaFog() {
 // ===================== GALLERY FUNCTIONS =====================
 function setGalleryState(open, isMobileMode) {
     const gallery = isMobileMode ? topGalleryDisplayMobile : topGalleryDisplay;
+    console.log("🔥 setGalleryState", { open, isMobileMode, gallery });
     if (!gallery) return;
     if (open) { gallery.style.visibility = "visible"; requestAnimationFrame(() => gallery.style.opacity = "1"); }
     else { gallery.style.opacity = "0"; setTimeout(() => { gallery.style.visibility = "hidden"; }, 300); }
 }
+
 async function closeGallery() {
     setGalleryState(false, isMobile);
     const galleryBtn = isMobile ? galleryButtonMobile : galleryButton;
@@ -325,22 +327,24 @@ function handleButtonClickNotStupid(event) {
     const baseId = btnId.replace("ButtonMobile", "").replace("Button", "");
     clickedId = baseId;
 
-    // === GALLERY SPECIAL CASE ===
-    if (baseId === "gallery") {
-        if (isMobile) {
-            resetAllButtonsAndTabs(true);
-            mainTracker.previousClickedIdMobile = "galleryButtonMobile";
-        } else {
-            mainTracker.variableForDesktopGallery = mainTracker.previousClickedId;
-            resetAllButtonsAndTabs(false);
-            mainTracker.previousClickedId = "galleryButton";
-        }
 
-        btn.classList.remove("inactive");
-        btn.classList.add("active");
-        setGalleryState(true, isMobile);
-        return; // skip normal tab logic
+
+    // === GALLERY SPECIAL CASE ===
+if (baseId === "gallery") {
+    if (isMobile) {
+        resetAllButtonsAndTabs(true);
+        mainTracker.previousClickedIdMobile = "galleryButtonMobile";
+    } else {
+        mainTracker.variableForDesktopGallery = mainTracker.previousClickedId;
+        resetAllButtonsAndTabs(false);
+        mainTracker.previousClickedId = "galleryButton";
     }
+
+    btn.classList.remove("inactive");
+    btn.classList.add("active");
+    setGalleryState(true, isMobile);
+    return; // skip normal tab logic
+}
 
     // NORMAL TAB SWITCH
     let oldButton, oldTab, newTab;
@@ -412,6 +416,13 @@ async function switchMobileDesktop() {
 // ===================== MAIN FUNCTION =====================
 async function mainFunction() {
     // Button assignment
+
+topGalleryDisplay = document.getElementById('topGalleryDisplay');
+topGalleryDisplayMobile = document.getElementById('topGalleryDisplayMobile');
+galleryButton = document.getElementById('galleryButton');
+galleryButtonMobile = document.getElementById('galleryButtonMobile');
+closeButton = document.getElementById('closeButton');
+closeButtonMobile = document.getElementById('closeButtonMobile');
 // ===================== BUTTON ASSIGNMENT =====================
 if (isMobile) {
     statsButtonMobile = document.getElementById("statsButtonMobile");
@@ -455,6 +466,9 @@ if (isMobile) {
     buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClickNotStupid));
     if (closeButton) closeButton.addEventListener("click", closeGallery);
 }
+
+
+
 
 
     // Initialize carousel
