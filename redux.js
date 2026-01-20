@@ -29,6 +29,30 @@ let vantaInitialized = false;
 const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 let hasFadedIn = false;
 
+//  FONT DEBUG SIZE CRAP=======================
+
+function logFontDebugInfo() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const zoom = Math.round(window.devicePixelRatio * 100); // in %
+    const root = document.documentElement;
+
+    // current computed font-size
+    const computedFontSize = parseFloat(getComputedStyle(root).fontSize);
+
+    // suggested font-size logic (same as your current function)
+    let suggestedFontSize;
+    if (isMobile) suggestedFontSize = Math.max(14, Math.min(18, width / 25));
+    else suggestedFontSize = Math.max(13, Math.min(16, width / 80));
+
+    console.log(`
+📐 Window: ${width}px × ${height}px
+🔎 Zoom: ${zoom}%
+🅰️ Current root font-size: ${computedFontSize}px
+💡 Suggested font-size: ${suggestedFontSize}px
+`);
+}
+
 // ===================== MOBILE DETECTION =====================
 function updateIsMobile() {
     isMobile = window.innerHeight > window.innerWidth;
@@ -122,11 +146,50 @@ async function runMobileStartupIntro() {
 function updateRootFontSize() {
     const root = document.documentElement;
     const vw = window.innerWidth;
+    const vh = window.innerHeight; // optional, for logging
     let fontSize;
-    if (isMobile) fontSize = Math.max(14, Math.min(18, vw / 25));
-    else fontSize = Math.max(13, Math.min(16, vw / 80));
-    root.style.fontSize = fontSize + "px";
-    console.log(`🔤 Root font-size → ${fontSize}px (${isMobile ? "mobile" : "desktop"})`);
+
+    if (isMobile) {
+        // Mobile interpolation: 375→15px, 500→19px
+        const mobileBreakpoints = [
+            { w: 375, f: 15 },
+            { w: 500, f: 19 }
+        ];
+
+        if (vw <= mobileBreakpoints[0].w) fontSize = mobileBreakpoints[0].f;
+        else if (vw >= mobileBreakpoints[1].w) fontSize = mobileBreakpoints[1].f;
+        else {
+            const a = mobileBreakpoints[0];
+            const b = mobileBreakpoints[1];
+            fontSize = a.f + ((vw - a.w) / (b.w - a.w)) * (b.f - a.f);
+        }
+    } else {
+        // Desktop interpolation: 500→4px, 726→8px, 1085→12px, 1517→15px, 1920→19px, 2880→25px
+        const desktopBreakpoints = [
+            { w: 500, f: 4 },
+            { w: 726, f: 8 },
+            { w: 1085, f: 12 },
+            { w: 1517, f: 15 },
+            { w: 1920, f: 19 },
+            { w: 2880, f: 25 }
+        ];
+
+        let lower = desktopBreakpoints[0];
+        let upper = desktopBreakpoints[desktopBreakpoints.length - 1];
+
+        for (let i = 0; i < desktopBreakpoints.length - 1; i++) {
+            if (vw >= desktopBreakpoints[i].w && vw <= desktopBreakpoints[i + 1].w) {
+                lower = desktopBreakpoints[i];
+                upper = desktopBreakpoints[i + 1];
+                break;
+            }
+        }
+
+        fontSize = lower.f + ((vw - lower.w) / (upper.w - lower.w)) * (upper.f - lower.f);
+    }
+
+    root.style.fontSize = fontSize.toFixed(2) + "px"; // smooth decimals
+    console.log(`🔤 Root font-size → ${fontSize.toFixed(2)}px (${isMobile ? "mobile" : "desktop"}), window: ${vw}×${vh}, zoom: ${Math.round(window.devicePixelRatio*100)}%`);
 }
 
 // ===================== BACKGROUND MASKS =====================
@@ -552,7 +615,8 @@ if (isMobile) {
 // ===================== DOCUMENT READY =====================
 document.addEventListener('DOMContentLoaded', async () => {
     updateIsMobile();
-    updateRootFontSize();
+    logFontDebugInfo();
+    // updateRootFontSize();
     if (isMobile) startedInMobile = true;
     console.log(isMobile ? "📱 STARTED IN MOBILE MODE" : "🖥️ STARTED IN DESKTOP MODE");
 
@@ -563,5 +627,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     else if (isMobile && !hasFadedIn) await runMobileStartupIntro();
 
     // Resize handling — single source of truth
-    window.addEventListener('resize', () => { switchMobileDesktop(); });
+    window.addEventListener('resize', () => {
+    updateIsMobile();
+    logFontDebugInfo(); // <- print whenever resized
+});
 });

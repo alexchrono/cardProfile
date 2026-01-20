@@ -2060,6 +2060,7 @@ background:rgba(146,95,95,1);
   overflow-y: hidden;
   z-index: 20;
   border-radius: 2rem 2rem 2rem 2rem;
+  padding-top:10%;
 }
 
 /* pseudo-element for overlay */
@@ -2268,7 +2269,7 @@ justify-content:center;
     font-family: "Inknut Antiqua", serif;
     font-weight: 600;
     font-style: italic;
-    font-size: 43px;
+    font-size: 2.3rem;
     text-align: center;
     -webkit-text-stroke: 1px black;
     text-stroke: 1px black;
@@ -2304,7 +2305,7 @@ justify-content:center;
     font-family: "Inknut Antiqua", serif;
     font-weight: 700;
     font-style: italic;
-    font-size: 42px;
+    font-size: 2.3rem;
     text-align: center;
     letter-spacing: 0.05em;
     line-height: 1.1;
