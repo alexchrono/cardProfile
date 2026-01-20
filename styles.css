@@ -2178,6 +2178,8 @@ background:linear-gradient(90deg,#ffdddd,#880000);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 text-shadow:0 0 4px #ffaaaa,2px 2px 0 black;
+margin-top:2vh;
+margin-bottom:2vh;
 }
 
 .firstMobile{
