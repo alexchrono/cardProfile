@@ -182,14 +182,14 @@ const vh = window.visualViewport?.height || window.innerHeight;
 
 
             // root.style.fontSize = fontSize + "px";
-            root.style.fontSize = "2vh";
+            root.style.fontSize = "2.4vh";
 
     await wait(200)
 
     console.log(`✅ Applied root font-size: ${fontSize}px`);
 
     return {
-        fontsize: "2vh",
+        fontsize: "2.4vh",
         mode: isMobile ? "mobile" : "desktop",
         vw,
         vh
