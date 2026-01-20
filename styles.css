@@ -1142,25 +1142,21 @@ h1 {
 
 
 #just4StartupColumn4Chara {
-  box-sizing: border-box;
-  /* border:4px dotted purple; */
-  width:100%;
-  height:100%;
-  z-index:5;
-  /* visibility:hidden; */
-  position:absolute;
-  top:0;
-  left:0;
-  display:flex;
-  flex-direction:row;
-  justify-content:flex-start;
-  align-items:flex-end;
-    opacity:1;
-  visibility:visible;
-
-
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s ease-in-out, visibility 0.7s ease-in-out; /* smooth fade out */
 }
-
 
 #just4StartupColumn4Chara img {
   object-fit:contain;
@@ -2485,22 +2481,7 @@ justify-content:center;
     transition: height 0.5s ease-in-out; /* smooth slide up */
 }
 
-#just4StartupColumn4Chara {
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-end;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.7s ease-in-out, visibility 0.7s ease-in-out; /* smooth fade out */
-}
+
 
 #topViewMobileInner {
     width: 100%;

@@ -58,6 +58,39 @@ function wait(ms) {
 
 
 
+// ======================= our background mask crap============
+
+function applyBgMasks(isMobile) {
+    const bgBack = document.getElementById("bgTestCover");
+    const bgFront = document.getElementById("bgTestCoverFront");
+
+    if (!bgBack || !bgFront) return;
+
+    if (isMobile) {
+        // 📱 MOBILE MASKS
+        bgBack.style.maskImage =
+            "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+        bgBack.style.WebkitMaskImage =
+            "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+
+        bgFront.style.maskImage =
+            "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+        bgFront.style.WebkitMaskImage =
+            "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+
+    } else {
+        // 🖥️ DESKTOP MASKS (restore CSS intent)
+        bgBack.style.maskImage =
+            "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+        bgBack.style.WebkitMaskImage =
+            "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+
+        bgFront.style.maskImage =
+            "linear-gradient(to right, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+        bgFront.style.WebkitMaskImage =
+            "linear-gradient(to right, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+    }
+}
 
 
 
@@ -413,22 +446,45 @@ function handleButtonClickNotStupid(event) {
 async function switchMobileDesktop() {
     const wasMobile = isMobile;
     updateIsMobile();
+
     if (wasMobile === isMobile) return;
 
-    const sourceId = wasMobile ? mainTracker.previousClickedIdMobile : mainTracker.previousClickedId;
-    const baseName = sourceId.replace("ButtonMobile", "").replace("Button", "");
+    if (wasMobile){
+        console.log('switching from MOBILE to Desktop')
+    }
+    else {
+        console.log('switching from Desktop to Mobile')
+    }
+
+
+    const sourceId = wasMobile
+        ? mainTracker.previousClickedIdMobile
+        : mainTracker.previousClickedId;
+
+    const baseName = sourceId
+        .replace("ButtonMobile", "")
+        .replace("Button", "");
 
     await wait(30);
     mainFunction(); // rebuild DOM
     await wait(30);
 
     resetAllButtonsAndTabs(isMobile);
-    const targetButtonId = isMobile ? `${baseName}ButtonMobile` : `${baseName}Button`;
+
+    const targetButtonId = isMobile
+        ? `${baseName}ButtonMobile`
+        : `${baseName}Button`;
+
     activateTabByButtonId(targetButtonId);
 
-    if (baseName === "gallery") setGalleryState(true, isMobile);
+    if (baseName === "gallery") {
+        setGalleryState(true, isMobile);
+    }
 
     bindFakeScrollbar({ clickedId: baseName, isMobile });
+
+    // 🔥 CRITICAL FIX: reapply correct masks
+    applyBgMasks(isMobile);
 }
 
 //START UP CRAP========================================
@@ -458,6 +514,10 @@ async function runMobileStartupIntro() {
     statTabsMobile.style.visibility = "hidden";
     bottomButtonMenu.style.height = "0%";
     topViewMobileInner.style.backgroundColor = "transparent";
+
+
+        containerOfCutout.style.visibility = "visible";
+        containerOfCutout.style.opacity = "1";
 
     topTextLogo.style.visibility = "visible";
     topTextLogo.style.opacity = "1";
@@ -521,25 +581,25 @@ async function runMobileStartupIntro() {
     statTabsMobile.style.visibility = "visible";
     statTabsMobile.style.opacity = "1";
     topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
+    applyBgMasks(isMobile);
+    // if (isMobile) {
+    //     const bgBack = document.getElementById("bgTestCover");
+    //     const bgFront = document.getElementById("bgTestCoverFront");
 
-    if (isMobile) {
-        const bgBack = document.getElementById("bgTestCover");
-        const bgFront = document.getElementById("bgTestCoverFront");
+    //     if (bgBack) {
+    //         bgBack.style.maskImage =
+    //             "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+    //         bgBack.style.WebkitMaskImage =
+    //             "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
+    //     }
 
-        if (bgBack) {
-            bgBack.style.maskImage =
-                "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
-            bgBack.style.WebkitMaskImage =
-                "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
-        }
-
-        if (bgFront) {
-            bgFront.style.maskImage =
-                "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-            bgFront.style.WebkitMaskImage =
-                "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-        }
-    }
+    //     if (bgFront) {
+    //         bgFront.style.maskImage =
+    //             "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+    //         bgFront.style.WebkitMaskImage =
+    //             "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+    //     }
+    // }
 
     // ================= REVEAL =================
     startUpFlashPics.style.opacity = "0";
