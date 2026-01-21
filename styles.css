@@ -209,6 +209,7 @@ html, body {
   flex-direction: row;
   justify-content:center;
   align-items: center;
+  padding:2.5%;
 }
 
 #justTheProfPic2 {
