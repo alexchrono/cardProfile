@@ -30,6 +30,31 @@ const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 let hasFadedIn = false;
 let isMobile = false;
 
+
+
+
+//=============== bind buttons =========================
+
+
+function bindButtonsOnce(buttons) {
+    buttons.forEach(btn => {
+        if (!btn || btn.dataset.bound) return;
+
+        // CLOSE BUTTONS (explicit routing)
+        if (btn.id === "closeButton" || btn.id === "closeButtonMobile") {
+            btn.addEventListener("click", closeGallery);
+            btn.dataset.bound = "true";
+            return;
+        }
+
+        // NORMAL TAB / GALLERY BUTTONS
+        btn.addEventListener("click", handleButtonClickNotStupid);
+        btn.dataset.bound = "true";
+    });
+}
+
+
+
 //  FONT DEBUG SIZE CRAP=======================
 
 function logFontDebugInfo() {
@@ -149,6 +174,9 @@ async function runMobileStartupIntro() {
     startUpFlashPics.style.opacity = "0";
     await wait(1800);
     startUpFlashPics.style.visibility = "hidden";
+    startedInMobile = false;
+    wait(30)
+    mainFunction()
 }
 
 // ===================== ROOT FONT SIZE =====================
@@ -508,25 +536,37 @@ if (baseId === "gallery") {
 
 // ===================== MOBILE / DESKTOP SWITCH =====================
 async function switchMobileDesktop() {
-    const wasMobile = isMobile;
-    updateIsMobile();
-    updateRootFontSize();
-    startedInMobile = isMobile;
-    if (wasMobile === isMobile) return;
+  const wasMobile = isMobile;
+  await updateIsMobile();
+  await updateRootFontSize();
 
-    const sourceId = wasMobile ? mainTracker.previousClickedIdMobile : mainTracker.previousClickedId;
-    const baseName = sourceId.replace("ButtonMobile","").replace("Button","");
-    await wait(30);
-    mainFunction();
-    await wait(30);
+  if (wasMobile === isMobile) return;
 
-    resetAllButtonsAndTabs(isMobile);
-    const targetButtonId = isMobile ? `${baseName}ButtonMobile` : `${baseName}Button`;
-    activateTabByButtonId(targetButtonId);
+  const sourceId = wasMobile
+    ? mainTracker.previousClickedIdMobile
+    : mainTracker.previousClickedId;
 
-    if (baseName === "gallery") setGalleryState(true, isMobile);
-    bindFakeScrollbar({ clickedId: baseName, isMobile });
-    applyBgMasks();
+  const baseName = sourceId
+    .replace("ButtonMobile","")
+    .replace("Button","");
+
+  await wait(30);
+  await mainFunction();
+
+  resetAllButtonsAndTabs(isMobile);
+
+  const targetButtonId = isMobile
+    ? `${baseName}ButtonMobile`
+    : `${baseName}Button`;
+
+  activateTabByButtonId(targetButtonId);
+
+  if (baseName === "gallery") {
+    setGalleryState(true, isMobile);
+  }
+
+  bindFakeScrollbar({ clickedId: baseName, isMobile });
+  applyBgMasks();
 }
 
 // ===================== MAIN FUNCTION =====================
@@ -558,7 +598,11 @@ if (isMobile) {
         galleryButtonMobile
     ];
 
-    buttonListMobile.forEach(btn => btn && btn.addEventListener("click", handleButtonClickNotStupid));
+
+    bindButtonsOnce(buttonListMobile);
+
+
+    // buttonListMobile.forEach(btn => btn && btn.addEventListener("click", handleButtonClickNotStupid));
     if (closeButtonMobile) closeButtonMobile.addEventListener("click", closeGallery);
 
 } else {
@@ -578,6 +622,10 @@ if (isMobile) {
         oocButton,
         galleryButton
     ];
+
+
+    bindButtonsOnce(buttonList);
+
 
     buttonList.forEach(btn => btn && btn.addEventListener("click", handleButtonClickNotStupid));
     if (closeButton) closeButton.addEventListener("click", closeGallery);
@@ -686,14 +734,6 @@ updateRootFontSize().then(info => {
     else if (isMobile && !hasFadedIn) await runMobileStartupIntro();
 
     // Resize handling — single source of truth
-    window.addEventListener('resize', async () => {
-        await updateIsMobile();
-        await updateRootFontSize();
+    window.addEventListener('resize', switchMobileDesktop);
 
-updateRootFontSize().then(info => {
-    console.log("Font sizing complete:", info);
-});
-        // updateRootFontSize(); // <--- ALSO RUN ON RESIZE
-        logFontDebugInfo();
-    });
 });
