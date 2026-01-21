@@ -219,6 +219,8 @@ html, body {
   justify-content:center;
   align-items: center;
   gap:2%;
+  background-color: rgba(128, 128, 128, .19);
+
 }
 
 .chevronHolders {
@@ -1759,6 +1761,7 @@ justify-content:center;
 align-items:center;
 gap:2%;
 /* display:none; */
+background-color: rgba(128, 128, 128, .19);
 }
 
 
