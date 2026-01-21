@@ -55,6 +55,7 @@ function bindButtonsOnce(buttons) {
 
 
 
+
 //  FONT DEBUG SIZE CRAP=======================
 
 function logFontDebugInfo() {
