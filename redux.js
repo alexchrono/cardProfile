@@ -104,7 +104,7 @@ async function runMobileStartupIntro() {
     if (hasFadedIn) return;
 
     const topTextLogo = document.getElementById("just4StartupCharaNameTopVertical");
-    const waitingWheel = document.getElementById("just4StartupWaitingWheel");
+    // const waitingWheel = document.getElementById("just4StartupWaitingWheel");
     const bottomButtonMenu = document.getElementById("mainMenuMobile");
     const containerOfCutout = document.getElementById("just4StartupColumn4Chara");
     const topViewMobileInner = document.getElementById("topViewMobileInner");
@@ -122,8 +122,8 @@ async function runMobileStartupIntro() {
     topTextLogo.style.visibility = "visible";
     topTextLogo.style.opacity = "1";
 
-    waitingWheel.style.visibility = "visible";
-    waitingWheel.style.opacity = ".3";
+    // waitingWheel.style.visibility = "visible";
+    // waitingWheel.style.opacity = ".3";
 
     await fadeIn();
     await wait(4000);

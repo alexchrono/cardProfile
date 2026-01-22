@@ -1223,7 +1223,7 @@ h1 {
     transition: opacity 0.7s ease-in-out, visibility 0.7s ease-in-out; /* smooth fade out */
 }
 
-#just4StartupColumn4Chara img {
+/* #just4StartupColumn4Chara img {
   object-fit:contain;
 
   height:100%;
@@ -1231,7 +1231,7 @@ h1 {
   width:auto;
   margin-left:5%;
 
-}
+} */
 
 
 
@@ -2554,7 +2554,7 @@ justify-content:center;
     font-size:1.8rem;
 }
 
-#just4StartupCharaNameTopVertical {
+/* #just4StartupCharaNameTopVertical {
       box-sizing: border-box;
     border:3px dotted red;
     height: 23%;
@@ -2565,12 +2565,32 @@ justify-content:center;
     left: 0;
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-start;
-    align-items: flex-end; */
+    NOTE JUSTIFY AND ALIGN WERE COMMENTED OUT
+    justify-content: flex-start;
+    align-items: flex-end;
     visibility: hidden;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out; /* smooth fade in/out */
+    transition: opacity 0.5s ease-in-out;
     font-size:3rem;
+} */
+
+
+#just4StartupCharaNameTopVertical {
+    box-sizing: border-box;
+    border: 3px dotted red;
+    height: 23%;
+    width: 80%;
+    z-index: 209;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, .2);
+    transition: opacity 0.5s ease-in-out;
+    font-size: 3rem;
 }
 
 
@@ -2676,6 +2696,30 @@ justify-content:center;
 /* FOR CELLPHONES=================================================== */
 
 @media (orientation: portrait) {
+
+
+  #just4StartupColumn4Chara img {
+  object-fit:contain;
+
+
+  height:100%;
+  max-height:74dvh;
+  width:auto;
+  /* margin-left:5%; */
+}
+
+
+
+  #theWave img {
+opacity:0;
+  }
+
+
+    #theWaveL img {
+opacity:0;
+  }
+
+
 
   #mobileMain {
 
