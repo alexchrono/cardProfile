@@ -4,6 +4,8 @@ let statsButtonMobile, personalityButtonMobile, historyButtonMobile, encountersB
 
 let buttonList, buttonListMobile;
 let clickedId;
+let theWaveOpacity;
+let theWaveLOpacity;
 
 let mainTracker = {
     previousClickedId: "statsButton",
@@ -111,7 +113,12 @@ async function runMobileStartupIntro() {
     const statTabsMobile = document.getElementById("statsTabMobile");
     const startUpFlashPics = document.getElementById("just4StartupFlashPics");
     const actualImage = document.getElementById("flashPicsImage");
+    theWaveOpacity = document.getElementById("theWaveImg");
+    theWaveLOpacity= document.getElementById("theWaveLImg");
 
+    //kenshin wave opacity was 0.5 changing to 0.  wavveLopacity was 0.3 changing to 0
+    theWaveOpacity.style.opacity="0";
+    theWaveLOpacity.style.opacity="0"
     statTabsMobile.style.visibility = "hidden";
     bottomButtonMenu.style.height = "0%";
     topViewMobileInner.style.backgroundColor = "transparent";
