@@ -331,56 +331,56 @@ async function runMobileStartupIntro() {
     await fadeIn();
     await wait(4000);
 
-    startUpFlashPics.style.visibility = "visible";
-    startUpFlashPics.style.opacity = "1";
-    await wait(20);
+    // startUpFlashPics.style.visibility = "visible";
+    // startUpFlashPics.style.opacity = "1";
+    // await wait(20);
 
-    topTextLogo.style.opacity = "0";
-    containerOfCutout.style.opacity = "0";
-    // waitingWheel.style.opacity = "0";
-    await wait(700);
+    // topTextLogo.style.opacity = "0";
+    // containerOfCutout.style.opacity = "0";
+    // // waitingWheel.style.opacity = "0";
+    // await wait(700);
 
-    containerOfCutout.style.visibility = "hidden";
-    topTextLogo.style.visibility = "hidden";
-    // waitingWheel.style.visibility = "hidden";
+    // containerOfCutout.style.visibility = "hidden";
+    // topTextLogo.style.visibility = "hidden";
+    // // waitingWheel.style.visibility = "hidden";
 
-    const images = [
-        "https://i.ibb.co/Q3jjbsCY/first-Up-G.webp",
-        "https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg",
-        "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg"
-    ];
+    // const images = [
+    //     "https://i.ibb.co/Q3jjbsCY/first-Up-G.webp",
+    //     "https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg",
+    //     "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg"
+    // ];
 
-    actualImage.src = images[0];
-    actualImage.style.opacity = "1";
-    await wait(1500);
+    // actualImage.src = images[0];
+    // actualImage.style.opacity = "1";
+    // await wait(1500);
 
-    actualImage.style.opacity = "0";
-    await wait(1500);
-    actualImage.src = images[1];
-    actualImage.style.opacity = "1";
-    await wait(1500);
+    // actualImage.style.opacity = "0";
+    // await wait(1500);
+    // actualImage.src = images[1];
+    // actualImage.style.opacity = "1";
+    // await wait(1500);
 
-    actualImage.style.opacity = "0";
-    await wait(1500);
-    actualImage.src = images[2];
-    actualImage.style.opacity = "1";
-    await wait(1500);
+    // actualImage.style.opacity = "0";
+    // await wait(1500);
+    // actualImage.src = images[2];
+    // actualImage.style.opacity = "1";
+    // await wait(1500);
 
-    actualImage.style.opacity = "0";
-    await wait(2200); // final fade → full black moment
+    // actualImage.style.opacity = "0";
+    // await wait(2200); // final fade → full black moment
 
-    bottomButtonMenu.style.height = "12%";
-    statTabsMobile.style.visibility = "visible";
-    statTabsMobile.style.opacity = "1";
-    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
-    applyBgMasks(isMobile);
+    // bottomButtonMenu.style.height = "12%";
+    // statTabsMobile.style.visibility = "visible";
+    // statTabsMobile.style.opacity = "1";
+    // topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
+    // applyBgMasks(isMobile);
 
-    startUpFlashPics.style.opacity = "0";
-    await wait(1800);
-    startUpFlashPics.style.visibility = "hidden";
-    startedInMobile = false;
-    wait(30)
-    mainFunction()
+    // startUpFlashPics.style.opacity = "0";
+    // await wait(1800);
+    // startUpFlashPics.style.visibility = "hidden";
+    // startedInMobile = false;
+    // wait(30)
+    // mainFunction()
 }
 
 // ===================== ROOT FONT SIZE =====================
