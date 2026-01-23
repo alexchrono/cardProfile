@@ -34,6 +34,192 @@ let isMobile = false;
 
 
 
+const LAYOUT_STATE = {
+  desktop: [
+    {
+      selector: "#just4StartupColumn4Chara img",
+      styles: {
+        objectFit: "contain",
+        height: "100%",
+        maxHeight: "79dvh",
+        width: "auto",
+        marginLeft: "5%"
+      }
+    },
+    {
+      selector: "#theWaveImg",
+      styles: { opacity: "1" }
+    },
+    {
+      selector: "#theWaveLImg",
+      styles: { opacity: "1" }
+    },
+    {
+      selector: "#mobileMain",
+      styles: { display: "none" }
+    },
+    {
+      selector: "#leftSideMain",
+      styles: { display: "flex" }
+    },
+    {
+      selector: "#bg-test img",
+      styles: { filter: "brightness(1.4)" }
+    },
+    {
+      selector: "#bgTestCoverFront",
+      styles: { zIndex: "17" }
+    },
+    {
+      selector: "#theRest",
+      styles: { display: "flex" }
+    },
+    {
+      selector: "#topViewMobile",
+      styles: {
+        boxSizing: "",
+        width: "",
+        height: "",
+        position: "",
+        display: "none",
+        flexDirection: "",
+        justifyContent: "",
+        alignItems: ""
+      }
+    },
+    {
+      selector: ".menuBlockMobile",
+      styles: {
+        boxSizing: "",
+        width: "",
+        height: "",
+        display: "",
+        justifyContent: "",
+        alignItems: ""
+      }
+    },
+    {
+      selector: ".menuInnerMobile",
+      styles: {
+        boxSizing: "",
+        borderRadius: "",
+        height: "",
+        width: "",
+        fontSize: "",
+        display: "",
+        justifyContent: "",
+        alignItems: "",
+        textAlign: "",
+        color: "",
+        cursor: ""
+      }
+    }
+  ],
+
+  portrait: [
+    {
+      selector: "#just4StartupColumn4Chara img",
+      styles: {
+        objectFit: "contain",
+        height: "100%",
+        maxHeight: "66dvh",
+        width: "auto",
+        marginLeft: "0"
+      }
+    },
+    {
+      selector: "#theWaveImg",
+      styles: { opacity: "0" }
+    },
+    {
+      selector: "#theWaveLImg",
+      styles: { opacity: "0" }
+    },
+    {
+      selector: "#mobileMain",
+      styles: { display: "flex" }
+    },
+    {
+      selector: "#leftSideMain",
+      styles: { display: "none" }
+    },
+    {
+      selector: "#bg-test img",
+      styles: { filter: "brightness(1.8)" }
+    },
+    {
+      selector: "#bgTestCoverFront",
+      styles: { zIndex: "16" }
+    },
+    {
+      selector: "#theRest",
+      styles: { display: "none" }
+    },
+    {
+      selector: "#topViewMobile",
+      styles: {
+        boxSizing: "border-box",
+        width: "100%",
+        height: "100%",
+        position: "relative",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+      }
+    },
+    {
+      selector: ".menuBlockMobile",
+      styles: {
+        boxSizing: "border-box",
+        width: "16.66%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }
+    },
+    {
+      selector: ".menuInnerMobile",
+      styles: {
+        boxSizing: "border-box",
+        borderRadius: "0",
+        height: "100%",
+        width: "100%",
+        fontSize: ".6rem",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        color: "white",
+        cursor: "pointer"
+      }
+    }
+  ]
+};
+
+
+
+
+//   APPLY CSS CCHANGES
+
+// helper function
+
+function syncLayoutState() {
+  applyLayoutState(isMobile ? "portrait" : "desktop");
+}
+//main
+
+function applyLayoutState(mode) {
+  LAYOUT_STATE[mode].forEach(rule => {
+    document.querySelectorAll(rule.selector).forEach(el => {
+      Object.assign(el.style, rule.styles);
+    });
+  });
+}
+
+
+
 
 //=============== bind buttons =========================
 
@@ -87,12 +273,22 @@ async function updateIsMobile() {
     const prev = isMobile;
     isMobile = window.innerHeight > window.innerWidth;
 
-    console.log(
-        `📐 updateIsMobile → ${prev} → ${isMobile} (${window.innerWidth}×${window.innerHeight})`
-    );
+    if (prev !== isMobile){
+        syncLayoutState()
+        await wait(40)
+    }
+
+    if (prev === false && isMobile === true) {
+        console.log("📱 it WAS desktop... but now is mobile");
+    }
+
+    if (prev === true && isMobile === false) {
+        console.log("🖥️ it WAS mobile... but now is desktop");
+    }
 
     return isMobile;
 }
+
 
 
 // ===================== UTILITY =====================
