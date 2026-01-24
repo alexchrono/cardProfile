@@ -474,21 +474,54 @@ html, body {
 /* =========================
    BACKGROUND LAYER
 ========================= */
-#bg-test {
+
+
+
+#bgTestBlackBackdrop {
+  box-sizing: border-box;
+  border:3px dotted green;
+  width:100%;
+  height:100%;
+  position:absolute;
+  bottom:0;
+  left:0;
+  z-index: -5;
+  background-color: black;
+}
+
+
+#bg-testBlackOverlay {
   position: absolute;
   inset: 0;
-  z-index: -5;
+  z-index: -3;
   pointer-events: none;
 }
 
-/* #bg-test img {
+#bg-testBlackOverlay img {
   position: absolute;
   width: 139%;
   height: 139%;
   top: -38%;
   left: -3%;
   object-fit: cover;
-} */
+  /* filter: brightness(1.4); */
+  filter: brightness(1.6);
+}
+
+
+
+
+
+
+
+
+#bg-test {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .0;
+}
 
 #bg-test img {
   position: absolute;
@@ -500,7 +533,6 @@ html, body {
   /* filter: brightness(1.4); */
   filter: brightness(1.6);
 }
-
 
 
 /* #bgTestCover {
