@@ -296,6 +296,74 @@ function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+
+
+//================== RISING SUN ANIMATION =========
+
+function riseSun({
+  element,
+  overlay = null,
+  from = -70,
+  to = 0,
+  brightnessFrom = 0.2,
+  brightnessTo = 1,
+  duration = 4000,
+  easing = (t) => t
+}) {
+  let startTime = null;
+
+  function animate(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easing(progress);
+
+    // Sun position
+    // const currentBottom = from + (to - from) * eased;
+    // element.style.bottom = `${currentBottom}%`;
+
+    // Overlay brightness (SYNCED 🔥)
+    // if (overlay) {
+    //   const currentBrightness =
+    //     brightnessFrom + (brightnessTo - brightnessFrom) * eased;
+    //   overlay.style.filter = `brightness(${currentBrightness})`;
+    // }
+
+    // if (progress < 1) {
+    //   requestAnimationFrame(animate);
+    // }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+
+// ================= SUN ANIMATION USE FOR ALL ========
+
+async function runSunStartup() {
+let blackBacking = document.getElementById("bgTestBlackBackdrop");
+let originalBg =   document.getElementById("bg-test");
+let theSunOnly = document.getElementById("bg-testSunOnly");
+let darkOverlay = document.getElementById("bg-testBlackOverlay");
+   let darkOverlayImg =   document.getElementById("bgTestBoverlayImg");
+
+ riseSun({
+    element: theSunOnly,
+    overlay: darkOverlayImg,
+    duration: 2500,      // ⏱️ ONE knob controls everything
+    brightnessFrom: 0.2,
+    brightnessTo: 1
+  });
+
+
+}
+
+
+
+
+
+
+
 // ==================== MOBILE STARTUP ANIMATION ==================
 
 async function runMobileStartupIntro() {
@@ -934,7 +1002,9 @@ updateRootFontSize().then(info => {
     await mainFunction();
     await initVantaFog();
 
-    if (!isMobile && !hasFadedIn) await fadeIn();
+    if (!isMobile && !hasFadedIn) {
+        await fadeIn();
+        runSunStartup()}
     else if (isMobile && !hasFadedIn) await runMobileStartupIntro();
 
     // Resize handling — single source of truth
