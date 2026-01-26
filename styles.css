@@ -624,7 +624,7 @@ html, body {
   left: -3%;
   object-fit: cover;
   /* filter: brightness(1.4); */
-  filter: brightness(1.6);
+  filter: brightness(1);
 }
 
 

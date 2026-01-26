@@ -309,7 +309,8 @@ function riseSun({
   brightnessFrom = 0.2,
   brightnessTo = 1,
   duration = 4000,
-  fadeDuration = duration,   // 👈 NEW (can be longer)
+  fadeDuration = duration,
+  postSunFadeSpeed = 2,   // 👈 NEW CONTROL
   easing = (t) => t
 }) {
   let startTime = null;
@@ -318,19 +319,30 @@ function riseSun({
     if (!startTime) startTime = timestamp;
     const elapsed = timestamp - startTime;
 
-    // 🌄 Sun progress (normal)
+    // 🌄 Sun timing
     const sunProgress = Math.min(elapsed / duration, 1);
     const sunEased = easing(sunProgress);
 
-    // 🌅 Fade progress (slower / longer)
-    const fadeProgress = Math.min(elapsed / fadeDuration, 1);
+    // 🌅 Fade timing (piecewise speed)
+    let effectiveFadeElapsed = elapsed;
+
+    if (elapsed > duration) {
+      const extraTime = elapsed - duration;
+      effectiveFadeElapsed =
+        duration + extraTime * postSunFadeSpeed;
+    }
+
+    const fadeProgress = Math.min(
+      effectiveFadeElapsed / fadeDuration,
+      1
+    );
     const fadeEased = easing(fadeProgress);
 
     // 🌄 Sun position
     const currentBottom = from + (to - from) * sunEased;
     element.style.bottom = `${currentBottom}%`;
 
-    // 🔆 Brightness overlays (sync with sun)
+    // 🔆 Brightness overlays
     overlays.forEach(overlay => {
       if (overlay) {
         const currentBrightness =
@@ -339,7 +351,7 @@ function riseSun({
       }
     });
 
-    // 🌅 Top overlay vertical fade (SLOWER)
+    // 🌅 Top overlay reveal (slow → FAST)
     if (topOverlay) {
       const reveal = fadeEased * 100;
 
@@ -370,17 +382,19 @@ async function runSunStartup() {
   let normOverlayImg = document.getElementById("bgTestBoverlayImg");
   let topOverlayImg = document.getElementById("bgTestTopPicImg");
 
-  riseSun({
+riseSun({
   element: theSunOnly,
   overlays: [ourDarkBgImage, normOverlayImg],
   topOverlay: topOverlayImg,
 
-  duration: 4000,      // 🌄 sun + brightness 8000 and 23000
-  fadeDuration: 10000, // 🌅 overlay reveal (slower)
+  duration: 3000,        // sun
+  fadeDuration: 7500,   // total overlay time  4000 and 13000 look pretty good
+  postSunFadeSpeed: 1.5,   // 🚀 SPEED BOOST AFTER SUN
 
   brightnessFrom: 0.2,
   brightnessTo: 1
 });
+
 }
 
 
