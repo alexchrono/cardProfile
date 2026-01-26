@@ -532,6 +532,18 @@ html, body {
   pointer-events: none;
 }
 
+/* #bg-testTopOverlay img {
+  position: absolute;
+  width: 139%;
+  height: 139%;
+  top: -38%;
+  left: -3%;
+  object-fit: cover;
+  opacity:0;
+
+} */
+
+
 #bg-testTopOverlay img {
   position: absolute;
   width: 139%;
@@ -539,11 +551,23 @@ html, body {
   top: -38%;
   left: -3%;
   object-fit: cover;
-  opacity:.2;
-  /* filter: brightness(1.4); */
-  /* filter: brightness(.2);
-  display:none; */
-  /* display:none; */
+  opacity: 1; /* opacity stays 1 – mask controls visibility */
+
+  mask-image: linear-gradient(
+    to top,
+    rgba(255,255,255,1) 0%,
+    rgba(255,255,255,0) 0%
+  );
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-image: linear-gradient(
+    to top,
+    rgba(255,255,255,1) 0%,
+    rgba(255,255,255,0) 0%
+  );
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
 }
 
 

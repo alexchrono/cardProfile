@@ -302,12 +302,14 @@ function wait(ms) {
 
 function riseSun({
   element,
-  overlays = [],          // now accepts an array of elements
+  overlays = [],
+  topOverlay = null,
   from = -70,
   to = 0,
   brightnessFrom = 0.2,
   brightnessTo = 1,
   duration = 4000,
+  fadeDuration = duration,   // 👈 NEW (can be longer)
   easing = (t) => t
 }) {
   let startTime = null;
@@ -315,23 +317,43 @@ function riseSun({
   function animate(timestamp) {
     if (!startTime) startTime = timestamp;
     const elapsed = timestamp - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = easing(progress);
 
-    // Sun position
-    const currentBottom = from + (to - from) * eased;
+    // 🌄 Sun progress (normal)
+    const sunProgress = Math.min(elapsed / duration, 1);
+    const sunEased = easing(sunProgress);
+
+    // 🌅 Fade progress (slower / longer)
+    const fadeProgress = Math.min(elapsed / fadeDuration, 1);
+    const fadeEased = easing(fadeProgress);
+
+    // 🌄 Sun position
+    const currentBottom = from + (to - from) * sunEased;
     element.style.bottom = `${currentBottom}%`;
 
-    // Brightness for all overlays (SYNCED 🔥)
+    // 🔆 Brightness overlays (sync with sun)
     overlays.forEach(overlay => {
       if (overlay) {
         const currentBrightness =
-          brightnessFrom + (brightnessTo - brightnessFrom) * eased;
+          brightnessFrom + (brightnessTo - brightnessFrom) * sunEased;
         overlay.style.filter = `brightness(${currentBrightness})`;
       }
     });
 
-    if (progress < 1) {
+    // 🌅 Top overlay vertical fade (SLOWER)
+    if (topOverlay) {
+      const reveal = fadeEased * 100;
+
+      const gradient = `linear-gradient(
+        to top,
+        rgba(255,255,255,1) ${reveal}%,
+        rgba(255,255,255,0) ${reveal + 15}%
+      )`;
+
+      topOverlay.style.maskImage = gradient;
+      topOverlay.style.webkitMaskImage = gradient;
+    }
+
+    if (sunProgress < 1 || fadeProgress < 1) {
       requestAnimationFrame(animate);
     }
   }
@@ -346,16 +368,20 @@ async function runSunStartup() {
   let theSunOnly = document.getElementById("bg-testSunOnly");
   let ourDarkBgImage = document.getElementById("ourDarkBgImageNow");
   let normOverlayImg = document.getElementById("bgTestBoverlayImg");
-  let topOverlayImg = document.getElementById("bgTestTopPicImg")
-  riseSun({
-    element: theSunOnly,
-    overlays: [ourDarkBgImage, normOverlayImg],  // both will brighten together
-    duration: 8000,      // ⏱️ ONE knob controls timing
-    brightnessFrom: 0.2,
-    brightnessTo: 1
-  });
-}
+  let topOverlayImg = document.getElementById("bgTestTopPicImg");
 
+  riseSun({
+  element: theSunOnly,
+  overlays: [ourDarkBgImage, normOverlayImg],
+  topOverlay: topOverlayImg,
+
+  duration: 4000,      // 🌄 sun + brightness 8000 and 23000
+  fadeDuration: 10000, // 🌅 overlay reveal (slower)
+
+  brightnessFrom: 0.2,
+  brightnessTo: 1
+});
+}
 
 
 
