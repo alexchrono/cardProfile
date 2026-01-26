@@ -302,7 +302,7 @@ function wait(ms) {
 
 function riseSun({
   element,
-  overlay = null,
+  overlays = [],          // now accepts an array of elements
   from = -70,
   to = 0,
   brightnessFrom = 0.2,
@@ -319,19 +319,21 @@ function riseSun({
     const eased = easing(progress);
 
     // Sun position
-    // const currentBottom = from + (to - from) * eased;
-    // element.style.bottom = `${currentBottom}%`;
+    const currentBottom = from + (to - from) * eased;
+    element.style.bottom = `${currentBottom}%`;
 
-    // Overlay brightness (SYNCED 🔥)
-    // if (overlay) {
-    //   const currentBrightness =
-    //     brightnessFrom + (brightnessTo - brightnessFrom) * eased;
-    //   overlay.style.filter = `brightness(${currentBrightness})`;
-    // }
+    // Brightness for all overlays (SYNCED 🔥)
+    overlays.forEach(overlay => {
+      if (overlay) {
+        const currentBrightness =
+          brightnessFrom + (brightnessTo - brightnessFrom) * eased;
+        overlay.style.filter = `brightness(${currentBrightness})`;
+      }
+    });
 
-    // if (progress < 1) {
-    //   requestAnimationFrame(animate);
-    // }
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
   }
 
   requestAnimationFrame(animate);
@@ -341,22 +343,19 @@ function riseSun({
 // ================= SUN ANIMATION USE FOR ALL ========
 
 async function runSunStartup() {
-let blackBacking = document.getElementById("bgTestBlackBackdrop");
-let originalBg =   document.getElementById("bg-test");
-let theSunOnly = document.getElementById("bg-testSunOnly");
-let darkOverlay = document.getElementById("bg-testBlackOverlay");
-   let darkOverlayImg =   document.getElementById("bgTestBoverlayImg");
+  let theSunOnly = document.getElementById("bg-testSunOnly");
+  let ourDarkBgImage = document.getElementById("ourDarkBgImageNow");
+  let normOverlayImg = document.getElementById("bgTestBoverlayImg");
 
- riseSun({
+  riseSun({
     element: theSunOnly,
-    overlay: darkOverlayImg,
-    duration: 2500,      // ⏱️ ONE knob controls everything
+    overlays: [ourDarkBgImage, normOverlayImg],  // both will brighten together
+    duration: 2500,      // ⏱️ ONE knob controls timing
     brightnessFrom: 0.2,
     brightnessTo: 1
   });
-
-
 }
+
 
 
 

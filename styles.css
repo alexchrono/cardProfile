@@ -487,31 +487,56 @@ html, body {
   left:0;
   z-index: -5;
   background-color: black;
+
+
 }
 
 
 
-#bgTestBlackBackdrop {
-  box-sizing: border-box;
-  border:3px dotted blue;
+
+
+#bg-testNormOverlay {
+  position: absolute;
   width:100%;
   height:100%;
-  position:absolute;
-  bottom:0;
-  left:0;
-  z-index: -4;
-
-}
-
-
-#bg-testBlackOverlay {
-  position: absolute;
-  inset: 0;
-  z-index: -3;
+  left:0%;
+  bottom:0%;
+  /* inset: 0; */
+  z-index: -1;
   pointer-events: none;
 }
 
-#bg-testBlackOverlay img {
+#bg-testNormOverlay img {
+  position: absolute;
+  width: 139%;
+  height: 139%;
+  top: -38%;
+  left: -3%;
+  object-fit: cover;
+  filter: brightness(.2);
+  /* filter: brightness(1.4); */
+  /* filter: brightness(.2);
+  display:none; */
+  /* display:none; */
+}
+
+
+
+
+#bg-testOurDark {
+  position: absolute;
+  /* inset: 0; */
+    width:100%;
+  height:100%;
+  left:0%;
+  bottom:0%;
+  z-index: -3;
+  pointer-events: none;
+  opacity: 1;
+  visibility:visible;
+}
+
+#bg-testOurDark img {
   position: absolute;
   width: 139%;
   height: 139%;
@@ -525,28 +550,6 @@ html, body {
 
 
 
-#bg-testCircleBlocker {
-  position: absolute;
-  inset: 0;
-  z-index: -4;
-  pointer-events: none;
-  opacity: 1;
-}
-
-#bg-testCircleBlocker img {
-  position: absolute;
-  width: 139%;
-  height: 139%;
-  top: -38%;
-  left: -3%;
-  object-fit: cover;
-  /* filter: brightness(1.4); */
-  filter: brightness(1.6);
-}
-
-
-
-
 
 
 
@@ -554,12 +557,13 @@ html, body {
 #bg-testSunOnly {
     position: absolute;
     /* inset: 0; */
-    z-index: -4;
+    z-index: -2;
     pointer-events: none;
     left: 0%;
     bottom: -70%;
     width: 100%;
     height: 100%;
+    /* visibility:hidden; */
 }
 
 #bg-testSunOnly img {
