@@ -346,11 +346,11 @@ async function runSunStartup() {
   let theSunOnly = document.getElementById("bg-testSunOnly");
   let ourDarkBgImage = document.getElementById("ourDarkBgImageNow");
   let normOverlayImg = document.getElementById("bgTestBoverlayImg");
-
+  let topOverlayImg = document.getElementById("bgTestTopPicImg")
   riseSun({
     element: theSunOnly,
     overlays: [ourDarkBgImage, normOverlayImg],  // both will brighten together
-    duration: 2500,      // ⏱️ ONE knob controls timing
+    duration: 8000,      // ⏱️ ONE knob controls timing
     brightnessFrom: 0.2,
     brightnessTo: 1
   });
