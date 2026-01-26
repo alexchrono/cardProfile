@@ -310,7 +310,7 @@ function riseSun({
   brightnessTo = 1,
   duration = 4000,
   fadeDuration = duration,
-  postSunFadeSpeed = 2,   // 👈 NEW CONTROL
+  postSunFadeSpeed = 2,
   easing = (t) => t
 }) {
   let startTime = null;
@@ -319,13 +319,12 @@ function riseSun({
     if (!startTime) startTime = timestamp;
     const elapsed = timestamp - startTime;
 
-    // 🌄 Sun timing
+    // 🌄 Sun progress
     const sunProgress = Math.min(elapsed / duration, 1);
     const sunEased = easing(sunProgress);
 
-    // 🌅 Fade timing (piecewise speed)
+    // 🌅 Fade progress (with acceleration)
     let effectiveFadeElapsed = elapsed;
-
     if (elapsed > duration) {
       const extraTime = elapsed - duration;
       effectiveFadeElapsed =
@@ -351,18 +350,38 @@ function riseSun({
       }
     });
 
-    // 🌅 Top overlay reveal (slow → FAST)
+    // 🌅 Top overlay behavior
     if (topOverlay) {
-      const reveal = fadeEased * 100;
+// sunProgress < 1
+      if (sunProgress < 1) {
+        // BEFORE SUN DONE → gradient reveal
+        const reveal = fadeEased * 100;
 
-      const gradient = `linear-gradient(
-        to top,
-        rgba(255,255,255,1) ${reveal}%,
-        rgba(255,255,255,0) ${reveal + 15}%
-      )`;
+        const gradient = `linear-gradient(
+          to top,
+          rgba(255,255,255,1) ${reveal}%,
+          rgba(255,255,255,0) ${reveal + 15}%
+        )`;
 
-      topOverlay.style.maskImage = gradient;
-      topOverlay.style.webkitMaskImage = gradient;
+        topOverlay.style.maskImage = gradient;
+        topOverlay.style.webkitMaskImage = gradient;
+
+        // keep opacity subtle during reveal
+        topOverlay.style.opacity = fadeEased * 0.5;
+      }
+      else {
+        // AFTER SUN DONE → full opacity fade
+        const opacityProgress =
+          (fadeProgress - (duration / fadeDuration)) /
+          (1 - (duration / fadeDuration));
+
+        const safeOpacity = Math.max(0, Math.min(opacityProgress, 1));
+
+        topOverlay.style.maskImage = "none";
+        topOverlay.style.webkitMaskImage = "none";
+
+        topOverlay.style.opacity = safeOpacity;
+      }
     }
 
     if (sunProgress < 1 || fadeProgress < 1) {
@@ -389,7 +408,7 @@ riseSun({
 
   duration: 3000,        // sun
   fadeDuration: 7500,   // total overlay time  4000 and 13000 look pretty good
-  postSunFadeSpeed: 1.5,   // 🚀 SPEED BOOST AFTER SUN
+  postSunFadeSpeed: 3,   // 🚀 SPEED BOOST AFTER SUN
 
   brightnessFrom: 0.2,
   brightnessTo: 1
