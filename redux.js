@@ -642,10 +642,9 @@ function applyBgMasks() {
     if (isMobile) {
         bgBack.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
         bgBack.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
-        // bgFront.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-        // bgFront.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-        bgFront.style.maskImage = "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 100%)";
-        bgFront.style.WebkitMaskImage = "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 100%)";
+        bgFront.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+        bgFront.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+
 
     } else {
         bgBack.style.maskImage = "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
