@@ -27,6 +27,7 @@ let pic3 = 'https://i.ibb.co/sd7h9qZK/third-Up-G.jpg';
 let pic4, pic5, pic6, pic7, pic8, pic9, pic10;
 
 let startedInMobile = false;
+let startedInMobile2 = false;
 let vantaInitialized = false;
 const allPics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10];
 let hasFadedIn = false;
@@ -399,6 +400,8 @@ function riseSun({
     if (sunProgress < 1 || fadeProgress < 1) {
       requestAnimationFrame(animate);
     }
+
+
   }
 
   requestAnimationFrame(animate);
@@ -440,6 +443,8 @@ riseSun({
 // ==================== MOBILE STARTUP ANIMATION ==================
 
 async function runMobileStartupIntro() {
+    let topOverlayImg = document.getElementById("bgTestTopPicImg");
+
     if (hasFadedIn) return;
 
     const topTextLogo = document.getElementById("just4StartupCharaNameTopVertical");
@@ -470,19 +475,22 @@ async function runMobileStartupIntro() {
     // waitingWheel.style.opacity = ".3";
 
     await fadeIn();
-    await wait(4000);
+
+
+    runSunStartup()
+    await wait(6500);
 
     // startUpFlashPics.style.visibility = "visible";
     // startUpFlashPics.style.opacity = "1";
     // await wait(20);
 
-    // topTextLogo.style.opacity = "0";
-    // containerOfCutout.style.opacity = "0";
+    topTextLogo.style.opacity = "0";
+    containerOfCutout.style.opacity = "0";
     // // waitingWheel.style.opacity = "0";
-    // await wait(700);
+    await wait(700);
 
-    // containerOfCutout.style.visibility = "hidden";
-    // topTextLogo.style.visibility = "hidden";
+    containerOfCutout.style.visibility = "hidden";
+    topTextLogo.style.visibility = "hidden";
     // // waitingWheel.style.visibility = "hidden";
 
     // const images = [
@@ -510,18 +518,23 @@ async function runMobileStartupIntro() {
     // actualImage.style.opacity = "0";
     // await wait(2200); // final fade → full black moment
 
-    // bottomButtonMenu.style.height = "12%";
-    // statTabsMobile.style.visibility = "visible";
-    // statTabsMobile.style.opacity = "1";
-    // topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
-    // applyBgMasks(isMobile);
+    bottomButtonMenu.style.height = "12%";
+    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
+    bottomButtonMenu.style.opacity = "1";
+    bottomButtonMenu.style.pointerEvents = "auto";
+    statTabsMobile.style.opacity = "1";
+    await wait(1500)
+    statTabsMobile.style.visibility = "visible";
+
+    applyBgMasks(isMobile);
 
     // startUpFlashPics.style.opacity = "0";
     // await wait(1800);
     // startUpFlashPics.style.visibility = "hidden";
-    // startedInMobile = false;
-    // wait(30)
-    // mainFunction()
+    startedInMobile = false;
+    startedInMobile2 = true;
+    await wait(700)
+    mainFunction()
 }
 
 // ===================== ROOT FONT SIZE =====================
@@ -1055,7 +1068,23 @@ if (isMobile) {
 
     // Show stats tab if not started in mobile
     const statsTab = isMobile ? document.getElementById("statsTabMobile") : document.getElementById("statsTab");
-    if (statsTab && !startedInMobile) { statsTab.style.visibility="visible"; statsTab.style.opacity="1"; }
+    if (statsTab && !startedInMobile && !startedInMobile2) { statsTab.style.visibility="visible"; statsTab.style.opacity="1"; }
+    else if (statsTab && !startedInMobile && startedInMobile2) {
+
+
+    // 🔥 NOW ACTUALLY SHOW IT
+
+    requestAnimationFrame(() => {
+        statsTab.style.opacity = "1";
+    });
+    statsTab.style.visibility = "visible";
+    await wait(1000);
+    startedInMobile2=false;
+}
+
+    // Show stats tab if not started in mobile
+
+
 }
 
 // ===================== DOCUMENT READY =====================
