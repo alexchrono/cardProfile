@@ -408,7 +408,7 @@ riseSun({
 
   duration: 3000,        // sun
   fadeDuration: 7500,   // total overlay time  4000 and 13000 look pretty good
-  postSunFadeSpeed: 3,   // 🚀 SPEED BOOST AFTER SUN
+  postSunFadeSpeed: 4,   // 🚀 SPEED BOOST AFTER SUN    3000 and 7500 BEST
 
   brightnessFrom: 0.2,
   brightnessTo: 1
