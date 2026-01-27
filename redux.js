@@ -462,6 +462,7 @@ async function runMobileStartupIntro() {
     theWaveOpacity.style.opacity="0";
     theWaveLOpacity.style.opacity="0"
     statTabsMobile.style.visibility = "hidden";
+    statTabsMobile.style.opacity = "0";
     bottomButtonMenu.style.height = "0%";
     topViewMobileInner.style.backgroundColor = "transparent";
 
@@ -487,7 +488,7 @@ async function runMobileStartupIntro() {
     topTextLogo.style.opacity = "0";
     containerOfCutout.style.opacity = "0";
     // // waitingWheel.style.opacity = "0";
-    await wait(700);
+    await wait(500);
 
     containerOfCutout.style.visibility = "hidden";
     topTextLogo.style.visibility = "hidden";
@@ -522,19 +523,20 @@ async function runMobileStartupIntro() {
     topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
     bottomButtonMenu.style.opacity = "1";
     bottomButtonMenu.style.pointerEvents = "auto";
-    statTabsMobile.style.opacity = "1";
-    await wait(1500)
     statTabsMobile.style.visibility = "visible";
+    statTabsMobile.style.opacity = "1";
+    // await wait(1500)
+
 
     applyBgMasks(isMobile);
 
     // startUpFlashPics.style.opacity = "0";
     // await wait(1800);
     // startUpFlashPics.style.visibility = "hidden";
-    startedInMobile = false;
-    startedInMobile2 = true;
-    await wait(700)
-    mainFunction()
+    // startedInMobile = false;
+    // startedInMobile2 = true;
+    // await wait(700)
+    // mainFunction()
 }
 
 // ===================== ROOT FONT SIZE =====================
@@ -640,8 +642,11 @@ function applyBgMasks() {
     if (isMobile) {
         bgBack.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
         bgBack.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
-        bgFront.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
-        bgFront.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+        // bgFront.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+        // bgFront.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
+        bgFront.style.maskImage = "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 100%)";
+        bgFront.style.WebkitMaskImage = "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 100%)";
+
     } else {
         bgBack.style.maskImage = "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
         bgBack.style.WebkitMaskImage = "linear-gradient(to right, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
@@ -1069,18 +1074,18 @@ if (isMobile) {
     // Show stats tab if not started in mobile
     const statsTab = isMobile ? document.getElementById("statsTabMobile") : document.getElementById("statsTab");
     if (statsTab && !startedInMobile && !startedInMobile2) { statsTab.style.visibility="visible"; statsTab.style.opacity="1"; }
-    else if (statsTab && !startedInMobile && startedInMobile2) {
+//     else if (statsTab && startedInMobile && startedInMobile2) {
 
 
-    // 🔥 NOW ACTUALLY SHOW IT
+//     // 🔥 NOW ACTUALLY SHOW IT
+//       statsTab.style.visibility = "visible";
+//     requestAnimationFrame(() => {
+//         statsTab.style.opacity = "1";
+//     });
 
-    requestAnimationFrame(() => {
-        statsTab.style.opacity = "1";
-    });
-    statsTab.style.visibility = "visible";
-    await wait(1000);
-    startedInMobile2=false;
-}
+//     await wait(1000);
+//     startedInMobile2=false;
+// }
 
     // Show stats tab if not started in mobile
 
