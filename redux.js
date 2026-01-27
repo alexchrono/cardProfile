@@ -311,6 +311,7 @@ function riseSun({
   duration = 4000,
   fadeDuration = duration,
   postSunFadeSpeed = 2,
+  usePostSunOpacity = false,   // 👈 TOGGLE
   easing = (t) => t
 }) {
   let startTime = null;
@@ -323,9 +324,9 @@ function riseSun({
     const sunProgress = Math.min(elapsed / duration, 1);
     const sunEased = easing(sunProgress);
 
-    // 🌅 Fade progress (with acceleration)
+    // 🌅 Fade progress (with optional acceleration)
     let effectiveFadeElapsed = elapsed;
-    if (elapsed > duration) {
+    if (usePostSunOpacity && elapsed > duration) {
       const extraTime = elapsed - duration;
       effectiveFadeElapsed =
         duration + extraTime * postSunFadeSpeed;
@@ -352,9 +353,8 @@ function riseSun({
 
     // 🌅 Top overlay behavior
     if (topOverlay) {
-// sunProgress < 1
-      if (sunProgress < 1) {
-        // BEFORE SUN DONE → gradient reveal
+      if (!usePostSunOpacity) {
+        // ✅ SIMPLE MODE — gradient the whole time
         const reveal = fadeEased * 100;
 
         const gradient = `linear-gradient(
@@ -365,22 +365,34 @@ function riseSun({
 
         topOverlay.style.maskImage = gradient;
         topOverlay.style.webkitMaskImage = gradient;
-
-        // keep opacity subtle during reveal
-        topOverlay.style.opacity = fadeEased * 0.5;
+        topOverlay.style.opacity = 1;
       }
       else {
-        // AFTER SUN DONE → full opacity fade
-        const opacityProgress =
-          (fadeProgress - (duration / fadeDuration)) /
-          (1 - (duration / fadeDuration));
+        // 🔥 COMPLEX MODE — gradient → opacity
+        if (sunProgress < .85) {
+          const reveal = fadeEased * 100;
 
-        const safeOpacity = Math.max(0, Math.min(opacityProgress, 1));
+          const gradient = `linear-gradient(
+            to top,
+            rgba(255,255,255,1) ${reveal}%,
+            rgba(255,255,255,0) ${reveal + 15}%
+          )`;
 
-        topOverlay.style.maskImage = "none";
-        topOverlay.style.webkitMaskImage = "none";
+          topOverlay.style.maskImage = gradient;
+          topOverlay.style.webkitMaskImage = gradient;
+          topOverlay.style.opacity = fadeEased * 0.5;
+        }
+        else {
+          const opacityProgress =
+            (fadeProgress - (duration / fadeDuration)) /
+            (1 - (duration / fadeDuration));
 
-        topOverlay.style.opacity = safeOpacity;
+          const safeOpacity = Math.max(0, Math.min(opacityProgress, 1));
+
+          topOverlay.style.maskImage = "none";
+          topOverlay.style.webkitMaskImage = "none";
+          topOverlay.style.opacity = safeOpacity;
+        }
       }
     }
 
@@ -406,13 +418,16 @@ riseSun({
   overlays: [ourDarkBgImage, normOverlayImg],
   topOverlay: topOverlayImg,
 
-  duration: 3000,        // sun
-  fadeDuration: 7500,   // total overlay time  4000 and 13000 look pretty good
-  postSunFadeSpeed: 4,   // 🚀 SPEED BOOST AFTER SUN    3000 and 7500 BEST
+  duration: 3000,
+  fadeDuration: 10000,
+  postSunFadeSpeed: 4,
+
+  usePostSunOpacity: true, // 👈 SIMPLE MODE
 
   brightnessFrom: 0.2,
-  brightnessTo: 1
+  brightnessTo: .6
 });
+
 
 }
 
