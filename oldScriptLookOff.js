@@ -1,5 +1,4 @@
 async function mainFunction() {
-    console.log("📌 mainFunction started");
 
     // ===================== CAROUSEL LOGIC (UNCHANGED) =====================
     let imageToGrab;
@@ -196,7 +195,7 @@ async function mainFunction() {
                         speed: 0.70,
                         zoom: 0.90,
                     });
-                    console.log("VANTA Back Fog initialized ✅");
+
                 } else console.error("Cannot initialize BACK VANTA Fog!");
                 if (bgTestCoverFront && window.VANTA && window.VANTA.FOG) {
                     vantaFront = VANTA.FOG({
@@ -214,7 +213,6 @@ async function mainFunction() {
                         speed: 0.70,
                         zoom: 0.90,
                     });
-                    console.log("VANTA Front Fog initialized ✅");
                 } else console.error("Cannot initialize FRONT VANTA Fog!");
             };
             document.body.appendChild(vantaScript);

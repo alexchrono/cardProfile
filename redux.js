@@ -261,12 +261,7 @@ function logFontDebugInfo() {
     if (isMobile) suggestedFontSize = Math.max(14, Math.min(18, width / 25));
     else suggestedFontSize = Math.max(13, Math.min(16, width / 80));
 
-    console.log(`
-📐 Window: ${width}px × ${height}px
-🔎 Zoom: ${zoom}%
-🅰️ Current root font-size: ${computedFontSize}px
-💡 Suggested font-size: ${suggestedFontSize}px
-`);
+
 }
 
 // ===================== MOBILE DETECTION =====================
@@ -277,14 +272,6 @@ async function updateIsMobile() {
     if (prev !== isMobile){
         syncLayoutState()
         await wait(40)
-    }
-
-    if (prev === false && isMobile === true) {
-        console.log("📱 it WAS desktop... but now is mobile");
-    }
-
-    if (prev === true && isMobile === false) {
-        console.log("🖥️ it WAS mobile... but now is desktop");
     }
 
     return isMobile;
@@ -487,37 +474,12 @@ async function runMobileStartupIntro() {
 
     topTextLogo.style.opacity = "0";
     containerOfCutout.style.opacity = "0";
-    // // waitingWheel.style.opacity = "0";
+
     await wait(500);
 
     containerOfCutout.style.visibility = "hidden";
     topTextLogo.style.visibility = "hidden";
-    // // waitingWheel.style.visibility = "hidden";
 
-    // const images = [
-    //     "https://i.ibb.co/Q3jjbsCY/first-Up-G.webp",
-    //     "https://i.ibb.co/ns3bfsWq/2nd-Up-G.jpg",
-    //     "https://i.ibb.co/sd7h9qZK/third-Up-G.jpg"
-    // ];
-
-    // actualImage.src = images[0];
-    // actualImage.style.opacity = "1";
-    // await wait(1500);
-
-    // actualImage.style.opacity = "0";
-    // await wait(1500);
-    // actualImage.src = images[1];
-    // actualImage.style.opacity = "1";
-    // await wait(1500);
-
-    // actualImage.style.opacity = "0";
-    // await wait(1500);
-    // actualImage.src = images[2];
-    // actualImage.style.opacity = "1";
-    // await wait(1500);
-
-    // actualImage.style.opacity = "0";
-    // await wait(2200); // final fade → full black moment
 
     bottomButtonMenu.style.height = "12%";
     topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
@@ -551,8 +513,6 @@ const vh = window.visualViewport?.height || window.innerHeight;
 
     let fontSize;
 
-    console.log("🖥️🟢 updateRootFontSize called");
-    console.log(`Window size: ${vw}×${vh}, isMobile: ${isMobile}`);
 
     // =====================
     // MOBILE — DISCRETE STEPS
@@ -574,7 +534,7 @@ const vh = window.visualViewport?.height || window.innerHeight;
 
     await wait(200)
 
-    console.log(`✅ Applied root font-size: ${fontSize}px`);
+
 
     return {
         fontsize: "2.4vh",
@@ -623,7 +583,7 @@ const vh = window.visualViewport?.height || window.innerHeight;
 
     await wait(200)
 
-    console.log(`✅ Applied root font-size: ${fontSize}px`);
+
 
     return {
         fontSize,
@@ -1086,23 +1046,9 @@ if (isMobile) {
 
     if (activePics.length>0) setActivePic(0);
 
-    // Show stats tab if not started in mobile
+
     const statsTab = isMobile ? document.getElementById("statsTabMobile") : document.getElementById("statsTab");
     if (statsTab && !startedInMobile && !startedInMobile2) { statsTab.style.visibility="visible"; statsTab.style.opacity="1"; }
-//     else if (statsTab && startedInMobile && startedInMobile2) {
-
-
-//     // 🔥 NOW ACTUALLY SHOW IT
-//       statsTab.style.visibility = "visible";
-//     requestAnimationFrame(() => {
-//         statsTab.style.opacity = "1";
-//     });
-
-//     await wait(1000);
-//     startedInMobile2=false;
-// }
-
-    // Show stats tab if not started in mobile
 
 
 }
@@ -1113,13 +1059,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     await updateRootFontSize();
 
 updateRootFontSize().then(info => {
-    console.log("Font sizing complete:", info);
+
 });
-    // updateRootFontSize();  // <--- THIS MUST RUN
+
     logFontDebugInfo();
 
     if (isMobile) startedInMobile = true;
-    console.log(isMobile ? "📱 STARTED IN MOBILE MODE" : "🖥️ STARTED IN DESKTOP MODE");
 
     await mainFunction();
     await initVantaFog();
