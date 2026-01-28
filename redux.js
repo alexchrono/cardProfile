@@ -533,10 +533,10 @@ async function runMobileStartupIntro() {
     // startUpFlashPics.style.opacity = "0";
     // await wait(1800);
     // startUpFlashPics.style.visibility = "hidden";
-    // startedInMobile = false;
+    startedInMobile = false;
     // startedInMobile2 = true;
     // await wait(700)
-    // mainFunction()
+    mainFunction()
 }
 
 // ===================== ROOT FONT SIZE =====================
@@ -903,6 +903,22 @@ async function switchMobileDesktop() {
   await updateRootFontSize();
 
   if (wasMobile === isMobile) return;
+
+  if(!wasMobile && isMobile && !startedInMobile){
+
+  // let bottomButtonMenu = document.getElementById("")
+  let bottomButtonMenu = document.getElementById("mainMenuMobile");
+  if (bottomButtonMenu){
+  bottomButtonMenu.style.display = "flex";
+  bottomButtonMenu.style.height = "12%";
+  bottomButtonMenu.style.opacity = "1";
+  bottomButtonMenu.style.pointerEvents = "auto";
+  bottomButtonMenu.style.transform = "translateY(0)";
+  bottomButtonMenu.style.visibility = "visible";
+    bottomButtonMenu.style.transition = "none";
+
+  }
+  }
 
   const sourceId = wasMobile
     ? mainTracker.previousClickedIdMobile
