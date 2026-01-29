@@ -739,9 +739,7 @@ function bindFakeScrollbar({ clickedId, isMobile, overrideRemove = false }) {
     const scrollHolder = document.getElementById(SCROLL.holderId);
     const el = document.getElementById(SCROLL.scrollFindId);
 
-    console.log('IN OUR TROUBLESHOOTING, LETS FIGURE THIS OUT',overrideRemove)
-    console.log('scroll is',SCROLL)
-    console.log('is there a scrollholder?', scrollHolder)
+
     if (!scrollHolder) return;
 
     // ===== If overrideRemove is true, remove the scrollbar and exit =====
