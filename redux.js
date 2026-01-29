@@ -975,8 +975,8 @@ if (isMobile) {
 
     // Initialize carousel
     const imageToGrab = isMobile ? document.getElementById('sexyKyraMobile') : document.getElementById('sexyKyra');
-    const leftChev = isMobile ? document.getElementById('leftChevMobile') : document.getElementById('leftChev');
-    const rightChev = isMobile ? document.getElementById('rightChevMobile') : document.getElementById('rightChev');
+    let leftChev = isMobile ? document.getElementById('leftChevMobile') : document.getElementById('leftChev');
+    let rightChev = isMobile ? document.getElementById('rightChevMobile') : document.getElementById('rightChev');
     const previewContainer = isMobile ? document.getElementById('topGalleryBotMobile') : document.getElementById('topGalleryBot');
     const classNameForPreviews = isMobile ? 'picturePreviewMobile' : 'picturePreview';
 
