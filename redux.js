@@ -10,7 +10,8 @@ let theWaveLOpacity;
 let mainTracker = {
     previousClickedId: "statsButton",
     previousClickedIdMobile: "statsButtonMobile",
-    variableForDesktopGallery: "statsButton"
+    variableForDesktopGallery: "statsButton",
+    toggleOff: false
 };
 
 let galleryButton, closeButton;
@@ -420,10 +421,65 @@ riseSun({
 
 
 }
+// back to business make prettiness go away =============================
+async function backToBusiness() {
+  await wait(200)
+  // if (mainTracker.toggleOff !== "justTurnedOn") {
+  //   return
+  // }
+    if (startedInMobile) {
+    return
+  }
+      const topTextLogo = document.getElementById("just4StartupCharaNameTopVertical");
+    const containerOfCutout = document.getElementById("just4StartupColumn4Chara");
+        const topViewMobileInner = document.getElementById("topViewMobileInner");
+
+    topTextLogo.style.opacity = "0";
+    containerOfCutout.style.opacity = "0";
+    applyBgMasks();
+
+    await wait(500);
+
+    containerOfCutout.style.visibility = "hidden";
+    topTextLogo.style.visibility = "hidden";
+    topViewMobileInner.style.backgroundColor = "rgba(28, 46, 131, 0.5)";
+
+    mainTracker.toggleOff = false;
+
+}
 
 
+// ================= bring back the prettiness======================
+async function bringBackPretty() {
+  if (!isMobile){
+    return;
+  }
+  // bindFakeScrollbar({ clickedId: mainTracker.previousClickedIdMobile, isMobile: true, overrideRemove: true });
+
+  await wait(200)
+  if (mainTracker.toggleOff !== "justTurnedOff") {
+    return
+  }
+      const scrollHolderMobile = document.getElementById("scrollHolderMobile");
+      const topTextLogo = document.getElementById("just4StartupCharaNameTopVertical");
+    const containerOfCutout = document.getElementById("just4StartupColumn4Chara");
+        const topViewMobileInner = document.getElementById("topViewMobileInner");
+
+        if (scrollHolderMobile){
+          scrollHolderMobile.style.opacity = "0";
+          scrollHolderMobile.style.visibility = "hidden"
+        }
+containerOfCutout.style.visibility = "visible";
+    containerOfCutout.style.opacity = "1";
+  topTextLogo.style.visibility = "visible";
+    topTextLogo.style.opacity = "1";
+    applyBgMasks(true);
+    await wait(200);
+    topViewMobileInner.style.backgroundColor = "transparent";
+    mainTracker.toggleOff = "justTurnedOn"
 
 
+}
 
 
 
@@ -490,7 +546,7 @@ async function runMobileStartupIntro() {
     // await wait(1500)
 
 
-    applyBgMasks(isMobile);
+    applyBgMasks();
 
     // startUpFlashPics.style.opacity = "0";
     // await wait(1800);
@@ -594,12 +650,12 @@ const vh = window.visualViewport?.height || window.innerHeight;
 }
 
 // ===================== BACKGROUND MASKS =====================
-function applyBgMasks() {
+function applyBgMasks(overRide) {
     const bgBack = document.getElementById("bgTestCover");
     const bgFront = document.getElementById("bgTestCoverFront");
     if (!bgBack || !bgFront) return;
 
-    if (isMobile) {
+    if (isMobile && !overRide) {
         bgBack.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
         bgBack.style.WebkitMaskImage = "linear-gradient(to left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.5) 100%)";
         bgFront.style.maskImage = "linear-gradient(to left, rgba(0,0,0,.1) 0%, rgba(0,0,0,.1) 100%)";
@@ -672,7 +728,7 @@ async function closeGallery() {
 
 // ===================== FAKE SCROLLBAR =====================
 // (same as your original bindFakeScrollbar function)
-function bindFakeScrollbar({ clickedId, isMobile }) {
+function bindFakeScrollbar({ clickedId, isMobile, overrideRemove = false }) {
     const SCROLL = {
         holderId: isMobile ? 'scrollHolderMobile' : 'scrollHolder',
         trackClass: isMobile ? '.scroll-trackMobile' : '.scroll-track',
@@ -683,10 +739,36 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     const scrollHolder = document.getElementById(SCROLL.holderId);
     const el = document.getElementById(SCROLL.scrollFindId);
 
-    // Cleanup previous binding
+    console.log('IN OUR TROUBLESHOOTING, LETS FIGURE THIS OUT',overrideRemove)
+    console.log('scroll is',SCROLL)
+    console.log('is there a scrollholder?', scrollHolder)
+    if (!scrollHolder) return;
+
+    // ===== If overrideRemove is true, remove the scrollbar and exit =====
+if (overrideRemove) {
+    scrollHolder.style.visibility = 'hidden';
+    scrollHolder.style.opacity = '0';
+    scrollHolder.classList.remove('visible');
+
+    // Unbind previous scroll events if present
+    if (scrollHolder.dataset.boundTo) {
+        const prevEl = document.getElementById(scrollHolder.dataset.boundTo);
+        if (prevEl && prevEl.__syncThumb) {
+            prevEl.removeEventListener('scroll', prevEl.__syncThumb);
+            delete prevEl.__syncThumb;
+        }
+    }
+
+    // Clear the boundTo so next binding works
+    scrollHolder.dataset.boundTo = '';
+
+    return; // skip the rest of the binding
+}
+
+
+    // ===== Existing cleanup & binding logic =====
     if (scrollHolder?.dataset?.boundTo) {
         const prevEl = document.getElementById(scrollHolder.dataset.boundTo);
-
         if (prevEl && prevEl.__syncThumb) {
             prevEl.removeEventListener('scroll', prevEl.__syncThumb);
             delete prevEl.__syncThumb;
@@ -697,31 +779,16 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
         delete scrollHolder.dataset.boundTo;
     }
 
-    if (!scrollHolder || !el) {
-
-        return;
-    }
-
-    if (el.scrollHeight <= el.clientHeight) {
-
-        return;
-    }
+    if (!el || el.scrollHeight <= el.clientHeight) return;
 
     const track = scrollHolder.querySelector(SCROLL.trackClass);
     const thumb = scrollHolder.querySelector(SCROLL.thumbClass);
-    if (!track || !thumb) {
-        console.warn('[FAKE SCROLLBAR] Track or thumb missing');
-        return;
-    }
+    if (!track || !thumb) return;
 
-    // Show scrollbar
     scrollHolder.style.visibility = 'visible';
     scrollHolder.style.opacity = '1';
     scrollHolder.classList.add('visible');
 
-
-
-    // Thumb sync
     function syncThumb() {
         const ratio = el.clientHeight / el.scrollHeight;
         const thumbHeight = Math.max(ratio * track.clientHeight, track.clientHeight * 0.08);
@@ -737,7 +804,6 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     el.addEventListener('scroll', syncThumb);
     syncThumb();
 
-    // Drag logic
     let dragging = false;
     let startY = 0;
     let startScroll = 0;
@@ -761,7 +827,6 @@ function bindFakeScrollbar({ clickedId, isMobile }) {
     };
 
     scrollHolder.dataset.boundTo = el.id;
-
 }
 
 // ===================== BUTTON / TAB LOGIC =====================
@@ -797,6 +862,7 @@ function handleButtonClickNotStupid(event) {
 
     // === GALLERY SPECIAL CASE ===
 if (baseId === "gallery") {
+
     if (isMobile) {
         resetAllButtonsAndTabs(true);
         mainTracker.previousClickedIdMobile = "galleryButtonMobile";
@@ -815,21 +881,48 @@ if (baseId === "gallery") {
     // NORMAL TAB SWITCH
     let oldButton, oldTab, newTab;
     if (isMobile) {
-        if (mainTracker.previousClickedIdMobile && btnId !== mainTracker.previousClickedIdMobile) {
-            oldButton = document.getElementById(mainTracker.previousClickedIdMobile);
-            oldTab = document.getElementById(mainTracker.previousClickedIdMobile.replace("ButtonMobile", "TabMobile"));
-        }
+    // REMOVE OLD SCROLLBAR BEFORE DOING ANYTHING ELSE
+    if (mainTracker.previousClickedIdMobile) {
+        bindFakeScrollbar({ clickedId: mainTracker.previousClickedIdMobile, isMobile: true, overrideRemove: true });
+    }
+
+    if (mainTracker.previousClickedIdMobile && btnId !== mainTracker.previousClickedIdMobile) {
+        oldButton = document.getElementById(mainTracker.previousClickedIdMobile);
+        oldTab = document.getElementById(mainTracker.previousClickedIdMobile.replace("ButtonMobile", "TabMobile"));
         newTab = document.getElementById(btnId.replace("ButtonMobile", "TabMobile"));
-    } else {
+
+    } else if (mainTracker.previousClickedIdMobile && btnId === mainTracker.previousClickedIdMobile && mainTracker.toggleOff !== "justTurnedOn") {
+        oldButton = document.getElementById(mainTracker.previousClickedIdMobile);
+        oldTab = document.getElementById(mainTracker.previousClickedIdMobile.replace("ButtonMobile", "TabMobile"));
+        newTab = document.getElementById(btnId.replace("ButtonMobile", "TabMobile"));
+        mainTracker.toggleOff = "justTurnedOff";
+
+        bringBackPretty();
+    } else if (mainTracker.previousClickedIdMobile && mainTracker.toggleOff === "justTurnedOn"){
+        newTab = document.getElementById(btnId.replace("ButtonMobile", "TabMobile"));
+    }
+}
+ else {
         if (mainTracker.previousClickedId && btnId !== mainTracker.previousClickedId) {
             oldButton = document.getElementById(mainTracker.previousClickedId);
             oldTab = document.getElementById(mainTracker.previousClickedId.replace("Button", "Tab"));
         }
         newTab = document.getElementById(btnId.replace("Button", "Tab"));
     }
-
-    if (oldButton) oldButton.classList.remove("active"), oldButton.classList.add("inactive");
-    btn.classList.remove("inactive"), btn.classList.add("active");
+    // if (isMobile && mainTracker.toggleOff === "justTurnedOn"){
+    //   continue;
+    // }
+    if (!(isMobile && mainTracker.toggleOff === "justTurnedOn")) {
+    if (oldButton) {
+        oldButton.classList.remove("active");
+        oldButton.classList.add("inactive");
+    }
+}
+    // else if (oldButton) {
+    //   oldButton.classList.remove("active"), oldButton.classList.add("inactive");}
+    //naruto
+    if (mainTracker.toggleOff !== "justTurnedOff"){
+    btn.classList.remove("inactive"), btn.classList.add("active");}
 
     // Close gallery if switching away
     if ((isMobile && mainTracker.previousClickedIdMobile === "galleryButtonMobile") ||
@@ -843,14 +936,33 @@ if (baseId === "gallery") {
         oldTab.style.opacity = "0";
         setTimeout(() => oldTab.style.visibility = "hidden", 600);
     }
+    //naruto
 
     if (newTab) {
+      if (isMobile && mainTracker.toggleOff !== "justTurnedOff"){
+        if (mainTracker.toggleOff === "justTurnedOn"){
+          backToBusiness()
+        }
         newTab.style.visibility = "visible";
         requestAnimationFrame(() => newTab.style.opacity = "1");
+      }
+      else if (!isMobile){
+        newTab.style.visibility = "visible";
+        requestAnimationFrame(() => newTab.style.opacity = "1");
+
+      }
+
     }
 
-    if (isMobile) mainTracker.previousClickedIdMobile = btnId;
-    else mainTracker.previousClickedId = btnId;
+    //naruto.  only update previousclicked id if we haven't just turned it off
+
+    if (isMobile && mainTracker.toggleOff !== "justTurnedOff") mainTracker.previousClickedIdMobile = btnId;
+    // else if (isMobile && unselect) mainTracker.previousClickedIdMobile = btnId;
+
+    else if (!isMobile) {
+      mainTracker.previousClickedId = btnId;
+    }
+
 
     bindFakeScrollbar({ clickedId, isMobile });
 }
@@ -875,7 +987,9 @@ async function switchMobileDesktop() {
   bottomButtonMenu.style.pointerEvents = "auto";
   bottomButtonMenu.style.transform = "translateY(0)";
   bottomButtonMenu.style.visibility = "visible";
-    bottomButtonMenu.style.transition = "none";
+  bottomButtonMenu.style.transition = "none";
+
+  backToBusiness()
 
   }
   }
